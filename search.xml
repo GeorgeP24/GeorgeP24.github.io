@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[thread]]></title>
+    <url>%2F2019%2F07%2F18%2Fthread%2F</url>
+    <content type="text"><![CDATA[多进程并发将应用程序分为多个独立的进程，它们在同一时刻运行，就像同时进行网页浏览和文字处理一样。独立的进程可以通过进程间常规的通信渠道传递讯息。 + 缺点 因为OS的保护措施，进程之间的通信通常复杂或者慢。 运行多个进程需要时间启动进程，操作系统需要内部资源来管理进程。 + 优点 OS 在进程间提供附加的保护操作和高级别的通信机制，使得更容易编写安全的并发代码。 可以使用远程连接的方式，在不同的机器上运行独立的进程。多线程并发并发的另一个途径是在单个进程中运行多个线程。线程类似于轻量级的进程。 + 缺点 缺少线程间的数据保护，如果数据要被多个线程访问，我们必须确保每个线程所访问的的数据是一致的，因此需要对线程通信做大量的工作。 + 优点 共享地址空间，缺少数据保护，所以工作量小，多线程开销远小于多进程。C++ 11 std::thread+ C++ 11 引入了&lt;atomic&gt; ,&lt;thread&gt;,&lt;mutex&gt;,&lt;condition_variable&gt;和&lt;future&gt;。+ 声明了 std::atomic和 std::atomic_flag + 生命了一套C风格的原子类型及兼容C的操作函数。+ 声明了 std::thread,std::this_thread+ 声明了相关mutex类。 + std::mutex,std::lock_guard,std::unique_lock.+ 相关condition_variable 类， std::condition_variable和std::condition_variable_any+ std::promise,std::package_task.std 线程类+ std::thread 类的构造函数使用可变参数模板。 1template&lt;typename _Callable, typename... _Args&gt; 1. 函数指针 2. 重载运算符的类对象,仿函数 3. lambda表达式 4. std::function函数指针1234567891011void func1()&#123;&#125;void func2(int i)&#123;&#125;void func3(int i,std::string m)&#123;&#125;std::thread t1(func1);std::thread t2(func2,1);std::thread t3(func3,1,"abc");t1.join();t2.join();t3.join(); 仿函数123456789101112class Fctor &#123;public: // 具有一个参数 void operator() () &#123; &#125;&#125;;Fctor f;std::thread t1(f); std::thread t2(Fctor()); // falsestd::thread t3((Fctor())); // okstd::thread t4&#123;Fctor()&#125;; // ok 一个仿函数类生成的对象，使用起来就像一个函数一样. t2错误，编译器把Fctor()解释为函数声明，并非是临时对象。 在参数添加小括号，进行调用。 使用{}进行构造。 lambda 函数123456std::thread t1([]()&#123; std::cout&lt;&lt;"lambda"&lt;&lt;std::endl;&#125;);//无参std::thread t2([](std::int m)&#123; std::cout&lt;&lt;"lambda"&lt;&lt;m&lt;&lt;std::endl;&#125;,1);//有参 std::fucntion1234567891011121314151617181920212223class A&#123;public: void func1()&#123; &#125; void func2(int i)&#123; &#125; void func3(int i, int j)&#123; &#125;&#125;;A a;std::function&lt;void(void)&gt; f1 = std::bind(&amp;A::func1, &amp;a);std::function&lt;void(void)&gt; f2 = std::bind(&amp;A::func2, &amp;a, 1);std::function&lt;void(int)&gt; f3 = std::bind(&amp;A::func2, &amp;a, std::placeholders::_1);std::function&lt;void(int)&gt; f4 = std::bind(&amp;A::func3, &amp;a, 1, std::placeholders::_1);std::function&lt;void(int, int)&gt; f5 = std::bind(&amp;A::func3, &amp;a, std::placeholders::_1, std::placeholders::_2);std::thread t1(f1);std::thread t2(f2);std::thread t3(f3, 1);std::thread t4(f4, 1);std::thread t5(f5, 1, 2); 构造函数的第一个参数是可调用对象，默认情况下传递的是一个副本。当使用构造函数创建对象的时候，是将参数先赋值给这些变量，所以这些变量只是个副本，然后在线程启动并调用线程入口函数时，传递的参数只是这些副本。 线程对象只能移动不可复制将线程的所有权在std::thread实例间进行转移。1234void f1();void f2();std::thread t1(f1);std::thread t2 = std::move(t1);]]></content>
+      <tags>
+        <tag>线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[exception]]></title>
+    <url>%2F2019%2F07%2F18%2Fexception%2F</url>
+    <content type="text"><![CDATA[中定义了一系列标准的异常。 std::exceptionstd::bad_alloc 该异常可以通过 new 抛出。std::bad_cast 该异常通过dynamic_cast抛出。std::bad_exception std::bad_typeid 该异常可以通过 typeid 抛出。std::logic_error 理论上可以通过读取代码来检测到的异常。std::domain_error 当使用了一个无效的数学域时，会抛出该异常。std::invalid_argument 当使用了无效的参数时，会抛出该异常。std::length_error 当创建了太长的 std::string 时，会抛出该异常。std::out_of_range 该异常可以通过方法抛出，例如 std::vector 和 std::bitset&lt;&gt;::operator。std::runtime_error 理论上不可以通过读取代码来检测到的异常。std::overflow_error 当发生数学上溢时，会抛出该异常。std::range_error 当尝试存储超出范围的值时，会抛出该异常。std::underflow_error 当发生数学下溢时，会抛出该异常。]]></content>
+      <tags>
+        <tag>异常</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[memo]]></title>
+    <url>%2F2019%2F07%2F15%2Fmemo%2F</url>
+    <content type="text"><![CDATA[方法一：暴力法12345678910int climb(int i,int n)&#123;if(i&gt;n) return 0;if(i ==n) return 1;return climb(i+1,n)+climb(i+2,n);&#125;int climbs(int n)&#123; return climb(0,n);&#125; 时间复杂度：O(2n)O(2^n)O(2n)。树形递归的大小为 2n2^n2n . 空间复杂度：O(n)。递归树的深度可以达到 nn 方法 2：记忆化递归12345678910111213class Solution&#123; public: climbs(int n)&#123; vector&lt;int&gt; memo; return climbs(0,n,memo); &#125; int climb_memo(int i,int n,vector&lt;int&gt; memo)&#123; if(i&gt;n) return 0; if(i ==n) return 1; if(memo[i]&gt;0) return memo[i]; return climb_memo(i+1,n,memo)+climb_memo(i+2,n,memo); &#125;&#125; 时间复杂度：O(n) 。树形递归的大小可以达到 n. 空间复杂度：O(n) 。递归树的深度可以达到 n. 方法 3：动态规划12345678910111213class Solution&#123; public: climbs(int n)&#123; if(n==1) return 1; &#125; vector&lt;int&gt; dp; dp[1] = 1; dp[2] = 2; for(int i = 3; i&lt;=n; i++)&#123; dp[i] = dp[i-1] + dp[i-2] &#125; return dp[n];&#125; 时间复杂度：O(n)，单循环到 n 。 空间复杂度：O(n), dp 数组用了 n 的空间]]></content>
+      <tags>
+        <tag>memo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[jupyter notebook 导入conda环境]]></title>
     <url>%2F2019%2F07%2F10%2Fjupyter%2F</url>
     <content type="text"><![CDATA[jupyter notebook导入conda环境 不使用ipykernel，采用nb_condaconda install nb_conda 注意安装的时候不要激活环境 可以直接在jupyter里面安装包 可以在ipynb里面更改环境]]></content>

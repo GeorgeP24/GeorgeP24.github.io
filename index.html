@@ -416,6 +416,591 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/18/thread/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="保密局">
+      <meta itemprop="description" content="保密组合">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思乡乔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/18/thread/" class="post-title-link" itemprop="url">thread</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-18 09:56:46 / 修改时间：10:03:07" itemprop="dateCreated datePublished" datetime="2019-07-18T09:56:46+08:00">2019-07-18</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/07/18/thread/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/18/thread/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/07/18/thread/" class="post-meta-item leancloud_visitors" data-flag-title="thread">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="多进程并发"><a href="#多进程并发" class="headerlink" title="多进程并发"></a>多进程并发</h1><pre><code>将应用程序分为多个独立的进程，它们在同一时刻运行，就像同时进行网页浏览和文字处理一样。独立的进程可以通过进程间常规的通信渠道传递讯息。
+    + 缺点
+        因为OS的保护措施，进程之间的通信通常复杂或者慢。
+        运行多个进程需要时间启动进程，操作系统需要内部资源来管理进程。
+    + 优点 
+        OS 在进程间提供附加的保护操作和高级别的通信机制，使得更容易编写安全的并发代码。
+        可以使用远程连接的方式，在不同的机器上运行独立的进程。</code></pre><h1 id="多线程并发"><a href="#多线程并发" class="headerlink" title="多线程并发"></a>多线程并发</h1><pre><code>并发的另一个途径是在单个进程中运行多个线程。线程类似于轻量级的进程。
+    + 缺点
+        缺少线程间的数据保护，如果数据要被多个线程访问，我们必须确保每个线程所访问的的数据是一致的，因此需要对线程通信做大量的工作。
+    + 优点
+        共享地址空间，缺少数据保护，所以工作量小，多线程开销远小于多进程。</code></pre><h2 id="C-11-std-thread"><a href="#C-11-std-thread" class="headerlink" title="C++ 11 std::thread"></a>C++ 11 std::thread</h2><pre><code>+ C++ 11 引入了&lt;atomic&gt; ,&lt;thread&gt;,&lt;mutex&gt;,&lt;condition_variable&gt;和&lt;future&gt;。</code></pre><h3 id><a href="#" class="headerlink" title></a><atomic></atomic></h3><pre><code>+ 声明了 std::atomic和 std::atomic_flag
++ 生命了一套C风格的原子类型及兼容C的操作函数。</code></pre><h3 id="-1"><a href="#-1" class="headerlink" title></a><thread></thread></h3><pre><code>+ 声明了 std::thread,std::this_thread</code></pre><h3 id="-2"><a href="#-2" class="headerlink" title></a><mutex></mutex></h3><pre><code>+ 声明了相关mutex类。
++ std::mutex,std::lock_guard,std::unique_lock.</code></pre><h3 id="-3"><a href="#-3" class="headerlink" title></a><condition_variable></condition_variable></h3><pre><code>+ 相关condition_variable 类， std::condition_variable和std::condition_variable_any</code></pre><h3 id="-4"><a href="#-4" class="headerlink" title></a><future></future></h3><pre><code>+ std::promise,std::package_task.</code></pre><h1 id="std-线程类"><a href="#std-线程类" class="headerlink" title="std 线程类"></a>std 线程类</h1><pre><code>+ std::thread 类的构造函数使用可变参数模板。
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Callable, <span class="keyword">typename</span>... _Args&gt;</span><br></pre></td></tr></table></figure>
+
+    1. 函数指针
+    2. 重载运算符的类对象,仿函数
+    3. lambda表达式
+    4. std::function</code></pre><h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func1</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func2</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func3</span><span class="params">(<span class="keyword">int</span> i,<span class="built_in">std</span>::<span class="built_in">string</span> m)</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t1</span><span class="params">(func1)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t2</span><span class="params">(func2,<span class="number">1</span>)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t3</span><span class="params">(func3,<span class="number">1</span>,<span class="string">"abc"</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">t1.join();</span><br><span class="line">t2.join();</span><br><span class="line">t3.join();</span><br></pre></td></tr></table></figure>
+
+<h3 id="仿函数"><a href="#仿函数" class="headerlink" title="仿函数"></a>仿函数</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fctor</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 具有一个参数</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span> <span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Fctor f;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t1</span><span class="params">(f)</span></span>;  </span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t2</span><span class="params">(Fctor())</span></span>; <span class="comment">// false</span></span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t3</span><span class="params">((Fctor()))</span></span>; <span class="comment">// ok</span></span><br><span class="line"><span class="built_in">std</span>::thread t4&#123;Fctor()&#125;; <span class="comment">// ok</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>一个仿函数类生成的对象，使用起来就像一个函数一样.</li>
+<li>t2错误，编译器把Fctor()解释为函数声明，并非是临时对象。</li>
+<li>在参数添加小括号，进行调用。</li>
+<li>使用{}进行构造。</li>
+</ol>
+<h3 id="lambda-函数"><a href="#lambda-函数" class="headerlink" title="lambda 函数"></a>lambda 函数</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t1</span><span class="params">([]()&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"lambda"</span>&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span></span></span><br><span class="line"><span class="function"><span class="params">&#125;)</span></span>;<span class="comment">//无参</span></span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t2</span><span class="params">([](<span class="built_in">std</span>::<span class="keyword">int</span> m)&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;<span class="string">"lambda"</span>&lt;&lt;m&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span></span></span><br><span class="line"><span class="function"><span class="params">&#125;,<span class="number">1</span>)</span></span>;<span class="comment">//有参</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="std-fucntion"><a href="#std-fucntion" class="headerlink" title="std::fucntion"></a>std::fucntion</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func2</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func3</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">A a;</span><br><span class="line"><span class="built_in">std</span>::function&lt;<span class="keyword">void</span>(<span class="keyword">void</span>)&gt; f1 = <span class="built_in">std</span>::bind(&amp;A::func1, &amp;a);</span><br><span class="line"><span class="built_in">std</span>::function&lt;<span class="keyword">void</span>(<span class="keyword">void</span>)&gt; f2 = <span class="built_in">std</span>::bind(&amp;A::func2, &amp;a, <span class="number">1</span>);</span><br><span class="line"><span class="built_in">std</span>::function&lt;<span class="keyword">void</span>(<span class="keyword">int</span>)&gt; f3 = <span class="built_in">std</span>::bind(&amp;A::func2, &amp;a, <span class="built_in">std</span>::placeholders::_1);</span><br><span class="line"><span class="built_in">std</span>::function&lt;<span class="keyword">void</span>(<span class="keyword">int</span>)&gt; f4 = <span class="built_in">std</span>::bind(&amp;A::func3, &amp;a, <span class="number">1</span>, <span class="built_in">std</span>::placeholders::_1);</span><br><span class="line"><span class="built_in">std</span>::function&lt;<span class="keyword">void</span>(<span class="keyword">int</span>, <span class="keyword">int</span>)&gt; f5 = <span class="built_in">std</span>::bind(&amp;A::func3, &amp;a, <span class="built_in">std</span>::placeholders::_1, <span class="built_in">std</span>::placeholders::_2);</span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t1</span><span class="params">(f1)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t2</span><span class="params">(f2)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t3</span><span class="params">(f3, <span class="number">1</span>)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t4</span><span class="params">(f4, <span class="number">1</span>)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t5</span><span class="params">(f5, <span class="number">1</span>, <span class="number">2</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>构造函数的第一个参数是可调用对象，默认情况下传递的是一个副本。<br>当使用构造函数创建对象的时候，是将参数先赋值给这些变量，所以这些变量只是个副本，然后在线程启动并调用线程入口函数时，传递的参数只是这些副本。</p>
+<h3 id="线程对象只能移动不可复制"><a href="#线程对象只能移动不可复制" class="headerlink" title="线程对象只能移动不可复制"></a>线程对象只能移动不可复制</h3><pre><code>将线程的所有权在std::thread实例间进行转移。</code></pre><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">()</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t1</span><span class="params">(f1)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::thread t2 = <span class="built_in">std</span>::move(t1);</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/18/exception/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="保密局">
+      <meta itemprop="description" content="保密组合">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思乡乔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/18/exception/" class="post-title-link" itemprop="url">exception</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-18 08:56:46 / 修改时间：10:02:24" itemprop="dateCreated datePublished" datetime="2019-07-18T08:56:46+08:00">2019-07-18</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/07/18/exception/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/18/exception/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/07/18/exception/" class="post-meta-item leancloud_visitors" data-flag-title="exception">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong><exception>中定义了一系列标准的异常。</exception></strong></p>
+<h1 id="std-exception"><a href="#std-exception" class="headerlink" title="std::exception"></a>std::exception</h1><h2 id="std-bad-alloc"><a href="#std-bad-alloc" class="headerlink" title="std::bad_alloc"></a>std::bad_alloc</h2><ul>
+<li>该异常可以通过 new 抛出。<h2 id="std-bad-cast"><a href="#std-bad-cast" class="headerlink" title="std::bad_cast"></a>std::bad_cast</h2></li>
+<li>该异常通过dynamic_cast抛出。<h2 id="std-bad-exception"><a href="#std-bad-exception" class="headerlink" title="std::bad_exception"></a>std::bad_exception</h2></li>
+</ul>
+<h2 id="std-bad-typeid"><a href="#std-bad-typeid" class="headerlink" title="std::bad_typeid"></a>std::bad_typeid</h2><ul>
+<li>该异常可以通过 typeid 抛出。<h2 id="std-logic-error"><a href="#std-logic-error" class="headerlink" title="std::logic_error"></a>std::logic_error</h2></li>
+<li>理论上可以通过读取代码来检测到的异常。<h3 id="std-domain-error"><a href="#std-domain-error" class="headerlink" title="std::domain_error"></a>std::domain_error</h3></li>
+<li>当使用了一个无效的数学域时，会抛出该异常。<h3 id="std-invalid-argument"><a href="#std-invalid-argument" class="headerlink" title="std::invalid_argument"></a>std::invalid_argument</h3></li>
+<li>当使用了无效的参数时，会抛出该异常。<h3 id="std-length-error"><a href="#std-length-error" class="headerlink" title="std::length_error"></a>std::length_error</h3></li>
+<li>当创建了太长的 std::string 时，会抛出该异常。<h3 id="std-out-of-range"><a href="#std-out-of-range" class="headerlink" title="std::out_of_range"></a>std::out_of_range</h3></li>
+<li>该异常可以通过方法抛出，例如 std::vector 和 std::bitset&lt;&gt;::operator<a href></a>。<h2 id="std-runtime-error"><a href="#std-runtime-error" class="headerlink" title="std::runtime_error"></a>std::runtime_error</h2></li>
+<li>理论上不可以通过读取代码来检测到的异常。<h3 id="std-overflow-error"><a href="#std-overflow-error" class="headerlink" title="std::overflow_error"></a>std::overflow_error</h3></li>
+<li>当发生数学上溢时，会抛出该异常。<h3 id="std-range-error"><a href="#std-range-error" class="headerlink" title="std::range_error"></a>std::range_error</h3></li>
+<li>当尝试存储超出范围的值时，会抛出该异常。<h3 id="std-underflow-error"><a href="#std-underflow-error" class="headerlink" title="std::underflow_error"></a>std::underflow_error</h3></li>
+<li>当发生数学下溢时，会抛出该异常。</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/15/memo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="保密局">
+      <meta itemprop="description" content="保密组合">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="思乡乔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/15/memo/" class="post-title-link" itemprop="url">memo</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-15 08:56:46" itemprop="dateCreated datePublished" datetime="2019-07-15T08:56:46+08:00">2019-07-15</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-18 10:03:38" itemprop="dateModified" datetime="2019-07-18T10:03:38+08:00">2019-07-18</time>
+              </span>
+            
+          
+
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/07/15/memo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/15/memo/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/07/15/memo/" class="post-meta-item leancloud_visitors" data-flag-title="memo">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="方法一：暴力法"><a href="#方法一：暴力法" class="headerlink" title="方法一：暴力法"></a>方法一：暴力法</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">climb</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(i&gt;n) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span>(i ==n) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">return</span> climb(i+<span class="number">1</span>,n)+climb(i+<span class="number">2</span>,n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">climbs</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> climb(<span class="number">0</span>,n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>时间复杂度：O(2n)O(2^n)O(2n)。树形递归的大小为 2n2^n2n .</li>
+<li>空间复杂度：O(n)。递归树的深度可以达到 nn</li>
+</ul>
+<h1 id="方法-2：记忆化递归"><a href="#方法-2：记忆化递归" class="headerlink" title="方法 2：记忆化递归"></a>方法 2：记忆化递归</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    climbs(<span class="keyword">int</span> n)&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; memo;</span><br><span class="line">        <span class="keyword">return</span> climbs(<span class="number">0</span>,n,memo);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">climb_memo</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> n,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; memo)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(i&gt;n) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(i ==n) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(memo[i]&gt;<span class="number">0</span>) <span class="keyword">return</span> memo[i];</span><br><span class="line">        <span class="keyword">return</span> climb_memo(i+<span class="number">1</span>,n,memo)+climb_memo(i+<span class="number">2</span>,n,memo);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>时间复杂度：O(n) 。树形递归的大小可以达到 n.</p>
+</li>
+<li><p>空间复杂度：O(n) 。递归树的深度可以达到 n.</p>
+</li>
+</ul>
+<h1 id="方法-3：动态规划"><a href="#方法-3：动态规划" class="headerlink" title="方法 3：动态规划"></a>方法 3：动态规划</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    climbs(<span class="keyword">int</span> n)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dp;</span><br><span class="line">    dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    dp[<span class="number">2</span>] = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>; i&lt;=n; i++)&#123;</span><br><span class="line">        dp[i] = dp[i<span class="number">-1</span>] + dp[i<span class="number">-2</span>]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>时间复杂度：O(n)，单循环到 n 。</p>
+</li>
+<li><p>空间复杂度：O(n), dp 数组用了 n 的空间</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/10/jupyter/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1083,7 +1668,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1102,7 +1687,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">标签</span>
                   
                 </div>
