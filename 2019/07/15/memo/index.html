@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="方法一：暴力法12345678910int climb(int i,int n)&amp;#123;if(i&amp;gt;n) return 0;if(i ==n) return 1;return climb(i+1,n)+climb(i+2,n);&amp;#125;int climbs(int n)&amp;#123;    return climb(0,n);&amp;#125;   时间复杂度：O(2n)O(2^n)O(2n)">
+  <meta name="description" content="方法一：暴力法123456789int climb(int i,int n)&amp;#123;if(i&amp;gt;n) return 0;if(i ==n) return 1;return climb(i+1,n)+climb(i+2,n);&amp;#125;int climbs(int n)&amp;#123;    return climb(0,n);&amp;#125;   时间复杂度：O(2n)O(2^n)O(2n)。树">
 <meta name="keywords" content="memo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="memo">
 <meta property="og:url" content="http://yoursite.com/2019/07/15/memo/index.html">
 <meta property="og:site_name" content="思乡乔">
-<meta property="og:description" content="方法一：暴力法12345678910int climb(int i,int n)&amp;#123;if(i&amp;gt;n) return 0;if(i ==n) return 1;return climb(i+1,n)+climb(i+2,n);&amp;#125;int climbs(int n)&amp;#123;    return climb(0,n);&amp;#125;   时间复杂度：O(2n)O(2^n)O(2n)">
+<meta property="og:description" content="方法一：暴力法123456789int climb(int i,int n)&amp;#123;if(i&amp;gt;n) return 0;if(i ==n) return 1;return climb(i+1,n)+climb(i+2,n);&amp;#125;int climbs(int n)&amp;#123;    return climb(0,n);&amp;#125;   时间复杂度：O(2n)O(2^n)O(2n)。树">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-18T02:03:38.090Z">
+<meta property="og:updated_time" content="2019-07-18T02:07:18.518Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="memo">
-<meta name="twitter:description" content="方法一：暴力法12345678910int climb(int i,int n)&amp;#123;if(i&amp;gt;n) return 0;if(i ==n) return 1;return climb(i+1,n)+climb(i+2,n);&amp;#125;int climbs(int n)&amp;#123;    return climb(0,n);&amp;#125;   时间复杂度：O(2n)O(2^n)O(2n)">
+<meta name="twitter:description" content="方法一：暴力法123456789int climb(int i,int n)&amp;#123;if(i&amp;gt;n) return 0;if(i ==n) return 1;return climb(i+1,n)+climb(i+2,n);&amp;#125;int climbs(int n)&amp;#123;    return climb(0,n);&amp;#125;   时间复杂度：O(2n)O(2^n)O(2n)。树">
 
 
 
@@ -475,7 +475,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-18 10:03:38" itemprop="dateModified" datetime="2019-07-18T10:03:38+08:00">2019-07-18</time>
+                <time title="修改时间：2019-07-18 10:07:18" itemprop="dateModified" datetime="2019-07-18T10:07:18+08:00">2019-07-18</time>
               </span>
             
           
@@ -542,7 +542,7 @@
       
 
       
-        <h1 id="方法一：暴力法"><a href="#方法一：暴力法" class="headerlink" title="方法一：暴力法"></a>方法一：暴力法</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">climb</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(i&gt;n) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span>(i ==n) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">return</span> climb(i+<span class="number">1</span>,n)+climb(i+<span class="number">2</span>,n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">climbs</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> climb(<span class="number">0</span>,n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="方法一：暴力法"><a href="#方法一：暴力法" class="headerlink" title="方法一：暴力法"></a>方法一：暴力法</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">climb</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(i&gt;n) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span>(i ==n) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">return</span> climb(i+<span class="number">1</span>,n)+climb(i+<span class="number">2</span>,n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">climbs</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> climb(<span class="number">0</span>,n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>时间复杂度：O(2n)O(2^n)O(2n)。树形递归的大小为 2n2^n2n .</li>

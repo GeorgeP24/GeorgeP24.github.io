@@ -862,7 +862,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-18 10:03:38" itemprop="dateModified" datetime="2019-07-18T10:03:38+08:00">2019-07-18</time>
+                <time title="修改时间：2019-07-18 10:07:18" itemprop="dateModified" datetime="2019-07-18T10:07:18+08:00">2019-07-18</time>
               </span>
             
           
@@ -923,7 +923,7 @@
       
         
           
-            <h1 id="方法一：暴力法"><a href="#方法一：暴力法" class="headerlink" title="方法一：暴力法"></a>方法一：暴力法</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">climb</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(i&gt;n) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span>(i ==n) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">return</span> climb(i+<span class="number">1</span>,n)+climb(i+<span class="number">2</span>,n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">climbs</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> climb(<span class="number">0</span>,n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h1 id="方法一：暴力法"><a href="#方法一：暴力法" class="headerlink" title="方法一：暴力法"></a>方法一：暴力法</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">climb</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(i&gt;n) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span>(i ==n) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">return</span> climb(i+<span class="number">1</span>,n)+climb(i+<span class="number">2</span>,n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">climbs</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> climb(<span class="number">0</span>,n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>时间复杂度：O(2n)O(2^n)O(2n)。树形递归的大小为 2n2^n2n .</li>
@@ -1482,7 +1482,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-09 15:48:43" itemprop="dateModified" datetime="2019-07-09T15:48:43+08:00">2019-07-09</time>
+                <time title="修改时间：2019-07-18 10:06:57" itemprop="dateModified" datetime="2019-07-18T10:06:57+08:00">2019-07-18</time>
               </span>
             
           
@@ -1580,7 +1580,12 @@
 </li>
 <li><p>栈解旋:从进入try块到抛出异常之前，栈中构造的所有对象将被析构，析构顺序和构造顺序相反。</p>
 </li>
-<li><p>栈上：<br>A a();//这里声明了一个函数，没有传入的参数，返回值为类类型<br>A b;//默认调用“对象名()”这个构造函数构造对象<br>A c(1);//默认调用相应的构造函数构造对象<br>堆上:<br>加括号不加括号一般无差别，都调用默认的构造函数(参考条例7)<br>A *d = new A();<br>A *e = new A;<br>对于内置类型而言:<br>加括号是进行了初始化，不加是未进行初始化<br>int *f = new int();<br>int *g = new int;</p>
+<li><p>栈上：<br>A a();//这里声明了一个函数，没有传入的参数，返回值为类类型<br>A b;//默认调用“对象名()”这个构造函数构造对象<br>A c(1);//默认调用相应的构造函数构造对象<br>堆上:<br>加括号不加括号一般无差别，都调用默认的构造函数(参考条例7)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   A *d = <span class="keyword">new</span> A();</span><br><span class="line">A *e = <span class="keyword">new</span> A;</span><br></pre></td></tr></table></figure>
+
+<p>对于内置类型而言:<br>加括号是进行了初始化，不加是未进行初始化</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *f = <span class="keyword">new</span> <span class="keyword">int</span>();</span><br><span class="line"><span class="keyword">int</span> *g = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br></pre></td></tr></table></figure>
+
 </li>
 </ol>
 <p><strong>未完待续</strong></p>
