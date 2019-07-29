@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://georgep24.github.io/categories/index.html</loc>
+    
+    <lastmod>2019-07-29T09:31:04.742Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://georgep24.github.io/2019/07/02/pytorch/</loc>
     
     <lastmod>2019-07-29T09:08:49.890Z</lastmod>
