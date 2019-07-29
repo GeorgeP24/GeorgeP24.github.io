@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://georgep24.github.io/2019/07/02/pytorch/</loc>
+    
+    <lastmod>2019-07-29T09:08:49.890Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://georgep24.github.io/2019/07/29/interview_one/</loc>
     
-    <lastmod>2019-07-29T08:47:36.871Z</lastmod>
+    <lastmod>2019-07-29T09:08:29.975Z</lastmod>
     
   </url>
   
@@ -40,13 +47,6 @@
     <loc>https://georgep24.github.io/2019/07/10/jupyter/</loc>
     
     <lastmod>2019-07-10T08:48:09.519Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://georgep24.github.io/2019/07/02/pytorch/</loc>
-    
-    <lastmod>2019-07-09T06:12:13.437Z</lastmod>
     
   </url>
   
