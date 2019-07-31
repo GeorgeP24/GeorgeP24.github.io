@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://georgep24.github.io/2019/07/02/pytorch/</loc>
-    <lastmod>2019-07-29</lastmod>
+    <loc>https://georgep24.github.io/2019/07/30/interview_two/</loc>
+    <lastmod>2019-07-31</lastmod>
   </url>  <url>
     <loc>https://georgep24.github.io/2019/07/29/interview_one/</loc>
-    <lastmod>2019-07-29</lastmod>
+    <lastmod>2019-07-31</lastmod>
+  </url>  <url>
+    <loc>https://georgep24.github.io/2019/07/30/datastructure/</loc>
+    <lastmod>2019-07-31</lastmod>
   </url>  <url>
     <loc>https://georgep24.github.io/2019/06/08/cppnote/</loc>
+    <lastmod>2019-07-31</lastmod>
+  </url>  <url>
+    <loc>https://georgep24.github.io/2019/07/02/pytorch/</loc>
     <lastmod>2019-07-29</lastmod>
   </url>  <url>
     <loc>https://georgep24.github.io/2019/07/15/memo/</loc>
