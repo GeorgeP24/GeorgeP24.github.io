@@ -97,7 +97,7 @@
 
 
   <meta name="description" content="顺序结构顺序栈12345678910111213template &amp;lt;class T&amp;gt;class sq_stack&amp;#123;private:    T val;    int top;    int size;public:    sq_stack();    ~sq_stack();    T pop();    void insert(T val);    int get_size">
-<meta name="keywords" content="数据结构,红黑树,B树">
+<meta name="keywords" content="未完待续,数据结构,红黑树,B树">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基本数据结构整理">
 <meta property="og:url" content="https://georgep24.github.io/数据结构/datastructure/index.html">
@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://georgep24.github.io/images/redblack.jpeg">
 <meta property="og:image" content="https://georgep24.github.io/images/redback2.jpeg">
-<meta property="og:updated_time" content="2019-07-31T13:12:20.209Z">
+<meta property="og:updated_time" content="2019-08-07T06:12:48.680Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基本数据结构整理">
 <meta name="twitter:description" content="顺序结构顺序栈12345678910111213template &amp;lt;class T&amp;gt;class sq_stack&amp;#123;private:    T val;    int top;    int size;public:    sq_stack();    ~sq_stack();    T pop();    void insert(T val);    int get_size">
@@ -442,7 +442,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-31 21:12:20" itemprop="dateModified" datetime="2019-07-31T21:12:20+08:00">2019-07-31</time>
+                <time title="修改时间：2019-08-07 14:12:48" itemprop="dateModified" datetime="2019-08-07T14:12:48+08:00">2019-08-07</time>
               </span>
             
           
@@ -556,7 +556,9 @@
 2. 链式存储</code></pre><h3 id="遍历方式"><a href="#遍历方式" class="headerlink" title="遍历方式"></a>遍历方式</h3><pre><code>1. 先序
 2. 后序
 3. 中序
-4. 层次</code></pre><h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><ul>
+4. 层次</code></pre><h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">binary_node</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    binary_node *left;</span><br><span class="line">    binary_node *right;</span><br><span class="line">    T val;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    binary_node(<span class="keyword">int</span> x):val(x),left(<span class="literal">nullptr</span>),right(<span class="literal">nullptr</span>)&#123;&#125;</span><br><span class="line">    ~binary_node();</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">in_order</span><span class="params">(binary_node *root)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pre_order</span><span class="params">(binary_node *root)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">post_order</span><span class="params">(binary_node *root)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">level_order</span><span class="params">(binary_node *root)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><ul>
 <li>满二叉🌲</li>
 <li>完全二叉🌲(堆)<ul>
 <li>大根堆</li>
@@ -588,7 +590,7 @@
 </ol>
 <ul>
 <li>变色</li>
-<li>旋转<br>  左旋转<br>  逆时针旋转红黑树的两个节点，使得父节点被自己的右孩子取代，而自己成为自己的左孩子。<br>  <img src="/images/redblack.jpeg" alt><br>  右旋转<br>  顺时针旋转红黑树的两个节点，使得父节点被自己的左孩子取代，而自己成为自己的右孩子。<br>  <img src="/images/redback2.jpeg" alt><h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><pre><code class="c++"><span class="function"><span class="keyword">enum</span> <span class="title">tree_color</span><span class="params">(RED,BLACK)</span></span>;
+<li>旋转<br>  左旋转<br>  逆时针旋转红黑树的两个节点，使得父节点被自己的右孩子取代，而自己成为自己的左孩子。<br><img src="/images/redblack.jpeg" alt><br>  右旋转<br>  顺时针旋转红黑树的两个节点，使得父节点被自己的左孩子取代，而自己成为自己的右孩子。<br><img src="/images/redback2.jpeg" alt><h3 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h3><pre><code class="c++"><span class="function"><span class="keyword">enum</span> <span class="title">tree_color</span><span class="params">(RED,BLACK)</span></span>;
 <span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span>
 <span class="class"><span class="title">class</span> <span class="title">rb_node</span>{</span>
 <span class="keyword">public</span>:
@@ -603,7 +605,7 @@ rb_node(T val,rb_color c,rb_node l,rb_node r,rb_node p):key(val),color(c),left(l
 <span class="class"><span class="title">class</span> <span class="title">rb_tree</span>{</span>
 rb_tree();
 ~rb_tree();
-<span class="function"><span class="keyword">void</span> <span class="title">pre_order</span><span class="params">()</span></span>;
+<span class="function"><span class="keyword">void</span> <span class="title">pre_order</span><span class="params">()</span></span>;   
 <span class="function"><span class="keyword">void</span> <span class="title">in_order</span><span class="params">()</span></span>;
 <span class="function"><span class="keyword">void</span> <span class="title">post_order</span><span class="params">()</span></span>;
 rb_node&lt;T&gt;* re_search(T key); <span class="comment">//递归查找</span>
@@ -684,6 +686,8 @@ rb_node&lt;T&gt;* predecessor(rb_node&lt;T&gt; *x);
         
         <div class="post-tags">
           
+            <a href="/tags/未完待续/" rel="tag"># 未完待续</a>
+          
             <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
           
             <a href="/tags/红黑树/" rel="tag"># 红黑树</a>
@@ -701,8 +705,8 @@ rb_node&lt;T&gt;* predecessor(rb_node&lt;T&gt; *x);
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/语言/interview_two/" rel="next" title="c++基础总结">
-                <i class="fa fa-chevron-left"></i> c++基础总结
+              <a href="/语言/interview_two/" rel="next" title="c++基础总结2">
+                <i class="fa fa-chevron-left"></i> c++基础总结2
               </a>
             
           </div>
@@ -710,6 +714,10 @@ rb_node&lt;T&gt;* predecessor(rb_node&lt;T&gt; *x);
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/uncategorized/Cpp11/" rel="prev" title="c++11新特性">
+                c++11新特性 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -782,7 +790,7 @@ rb_node&lt;T&gt;* predecessor(rb_node&lt;T&gt; *x);
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -844,7 +852,11 @@ rb_node&lt;T&gt;* predecessor(rb_node&lt;T&gt; *x);
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -908,7 +920,7 @@ rb_node&lt;T&gt;* predecessor(rb_node&lt;T&gt; *x);
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#顺序结构"><span class="nav-number">1.</span> <span class="nav-text">顺序结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#顺序栈"><span class="nav-number">1.1.</span> <span class="nav-text">顺序栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#队列"><span class="nav-number">1.2.</span> <span class="nav-text">队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#顺序表"><span class="nav-number">1.3.</span> <span class="nav-text">顺序表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#链式结构"><span class="nav-number">2.</span> <span class="nav-text">链式结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#哈希表"><span class="nav-number">3.</span> <span class="nav-text">哈希表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#🌲"><span class="nav-number">4.</span> <span class="nav-text">🌲</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉🌲"><span class="nav-number">4.1.</span> <span class="nav-text">二叉🌲</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存储结构"><span class="nav-number">4.1.1.</span> <span class="nav-text">存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遍历方式"><span class="nav-number">4.1.2.</span> <span class="nav-text">遍历方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型"><span class="nav-number">4.1.3.</span> <span class="nav-text">类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#红黑🌲"><span class="nav-number">4.2.</span> <span class="nav-text">红黑🌲</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自平衡"><span class="nav-number">4.2.1.</span> <span class="nav-text">自平衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">4.2.2.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B🌲"><span class="nav-number">4.3.</span> <span class="nav-text">B🌲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B"><span class="nav-number">4.4.</span> <span class="nav-text">B+</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八叉树"><span class="nav-number">4.5.</span> <span class="nav-text">八叉树</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图"><span class="nav-number">5.</span> <span class="nav-text">图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排序"><span class="nav-number">6.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查找"><span class="nav-number">7.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归"><span class="nav-number">8.</span> <span class="nav-text">递归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#折半查找"><span class="nav-number">8.1.</span> <span class="nav-text">折半查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并查找"><span class="nav-number">8.2.</span> <span class="nav-text">归并查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序"><span class="nav-number">8.3.</span> <span class="nav-text">快速排序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迭代"><span class="nav-number">9.</span> <span class="nav-text">迭代</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#折半查找-1"><span class="nav-number">9.1.</span> <span class="nav-text">折半查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并查找-1"><span class="nav-number">9.2.</span> <span class="nav-text">归并查找</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#顺序结构"><span class="nav-number">1.</span> <span class="nav-text">顺序结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#顺序栈"><span class="nav-number">1.1.</span> <span class="nav-text">顺序栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#队列"><span class="nav-number">1.2.</span> <span class="nav-text">队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#顺序表"><span class="nav-number">1.3.</span> <span class="nav-text">顺序表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#链式结构"><span class="nav-number">2.</span> <span class="nav-text">链式结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#哈希表"><span class="nav-number">3.</span> <span class="nav-text">哈希表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#🌲"><span class="nav-number">4.</span> <span class="nav-text">🌲</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉🌲"><span class="nav-number">4.1.</span> <span class="nav-text">二叉🌲</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存储结构"><span class="nav-number">4.1.1.</span> <span class="nav-text">存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遍历方式"><span class="nav-number">4.1.2.</span> <span class="nav-text">遍历方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">4.1.3.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型"><span class="nav-number">4.1.4.</span> <span class="nav-text">类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#红黑🌲"><span class="nav-number">4.2.</span> <span class="nav-text">红黑🌲</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自平衡"><span class="nav-number">4.2.1.</span> <span class="nav-text">自平衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B🌲"><span class="nav-number">4.3.</span> <span class="nav-text">B🌲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B"><span class="nav-number">4.4.</span> <span class="nav-text">B+</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八叉树"><span class="nav-number">4.5.</span> <span class="nav-text">八叉树</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图"><span class="nav-number">5.</span> <span class="nav-text">图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排序"><span class="nav-number">6.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查找"><span class="nav-number">7.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归"><span class="nav-number">8.</span> <span class="nav-text">递归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#折半查找"><span class="nav-number">8.1.</span> <span class="nav-text">折半查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并查找"><span class="nav-number">8.2.</span> <span class="nav-text">归并查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序"><span class="nav-number">8.3.</span> <span class="nav-text">快速排序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迭代"><span class="nav-number">9.</span> <span class="nav-text">迭代</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#折半查找-1"><span class="nav-number">9.1.</span> <span class="nav-text">折半查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并查找-1"><span class="nav-number">9.2.</span> <span class="nav-text">归并查找</span></a></li></ol></li></ol></div>
             
 
           </div>
