@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://georgep24.github.io/uncategorized/Cpp11/</loc>
+    
+    <lastmod>2019-09-11T02:42:33.373Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://georgep24.github.io/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/datastructure/</loc>
+    
+    <lastmod>2019-09-11T02:42:22.232Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://georgep24.github.io/uncategorized/exception/</loc>
     
     <lastmod>2019-09-11T02:29:23.306Z</lastmod>
@@ -26,20 +40,6 @@
     <loc>https://georgep24.github.io/uncategorized/cppnote/</loc>
     
     <lastmod>2019-09-11T02:28:16.522Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://georgep24.github.io/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/datastructure/</loc>
-    
-    <lastmod>2019-09-10T07:00:42.344Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://georgep24.github.io/uncategorized/Cpp11/</loc>
-    
-    <lastmod>2019-09-06T08:49:54.613Z</lastmod>
     
   </url>
   
