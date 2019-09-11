@@ -106,7 +106,8 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://georgep24.github.io/images/redblack.jpeg">
 <meta property="og:image" content="https://georgep24.github.io/images/redback2.jpeg">
-<meta property="og:updated_time" content="2019-08-07T06:12:48.680Z">
+<meta property="og:image" content="https://georgep24.github.io/images/Bplustree.png">
+<meta property="og:updated_time" content="2019-09-10T07:00:42.344Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基本数据结构整理">
 <meta name="twitter:description" content="顺序结构顺序栈12345678910111213template &amp;lt;class T&amp;gt;class sq_stack&amp;#123;private:    T val;    int top;    int size;public:    sq_stack();    ~sq_stack();    T pop();    void insert(T val);    int get_size">
@@ -442,7 +443,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-07 14:12:48" itemprop="dateModified" datetime="2019-08-07T14:12:48+08:00">2019-08-07</time>
+                <time title="修改时间：2019-09-10 15:00:42" itemprop="dateModified" datetime="2019-09-10T15:00:42+08:00">2019-09-10</time>
               </span>
             
           
@@ -545,19 +546,27 @@
 <li>平方取中法</li>
 </ol>
 </li>
-<li><p>冲突解决方法<br>  链地址法：key相同用单链表链接<br>  开放定址法：</p>
-<pre><code>* 线性探测法：放到key的下一个位置，Hi = (H(key) + i) % m
-* 二次探测法：Hi = (H(key) + i) % m
-* 随机探测法：Hi= (H(key) + 伪随机数) % m</code></pre></li>
+<li><p>冲突解决方法<br>链地址法：key相同用单链表链接<br>开放定址法：</p>
+</li>
+<li><p>线性探测法：放到key的下一个位置，Hi = (H(key) + i) % m</p>
+</li>
+<li><p>二次探测法：Hi = (H(key) + i) % m</p>
+</li>
+<li><p>随机探测法：Hi= (H(key) + 伪随机数) % m</p>
+</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> KeyType;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    KeyType key;</span><br><span class="line">&#125;RcdType;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    RcdType *rcd;</span><br><span class="line">    <span class="keyword">int</span> size;</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line">    <span class="keyword">bool</span> *tag;</span><br><span class="line">&#125;HashTable;</span><br></pre></td></tr></table></figure>
 
-<h1 id="🌲"><a href="#🌲" class="headerlink" title="🌲"></a>🌲</h1><h2 id="二叉🌲"><a href="#二叉🌲" class="headerlink" title="二叉🌲"></a>二叉🌲</h2><h3 id="存储结构"><a href="#存储结构" class="headerlink" title="存储结构"></a>存储结构</h3><pre><code>1. 顺序存储
-2. 链式存储</code></pre><h3 id="遍历方式"><a href="#遍历方式" class="headerlink" title="遍历方式"></a>遍历方式</h3><pre><code>1. 先序
-2. 后序
-3. 中序
-4. 层次</code></pre><h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">binary_node</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    binary_node *left;</span><br><span class="line">    binary_node *right;</span><br><span class="line">    T val;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    binary_node(<span class="keyword">int</span> x):val(x),left(<span class="literal">nullptr</span>),right(<span class="literal">nullptr</span>)&#123;&#125;</span><br><span class="line">    ~binary_node();</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">in_order</span><span class="params">(binary_node *root)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pre_order</span><span class="params">(binary_node *root)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">post_order</span><span class="params">(binary_node *root)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">level_order</span><span class="params">(binary_node *root)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="🌲"><a href="#🌲" class="headerlink" title="🌲"></a>🌲</h1><h2 id="二叉🌲"><a href="#二叉🌲" class="headerlink" title="二叉🌲"></a>二叉🌲</h2><h3 id="存储结构"><a href="#存储结构" class="headerlink" title="存储结构"></a>存储结构</h3><ol>
+<li>顺序存储</li>
+<li>链式存储<h3 id="遍历方式"><a href="#遍历方式" class="headerlink" title="遍历方式"></a>遍历方式</h3></li>
+<li>先序</li>
+<li>后序</li>
+<li>中序</li>
+<li>层次<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">binary_node</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    binary_node *left;</span><br><span class="line">    binary_node *right;</span><br><span class="line">    T val;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    binary_node(<span class="keyword">int</span> x):val(x),left(<span class="literal">nullptr</span>),right(<span class="literal">nullptr</span>)&#123;&#125;</span><br><span class="line">    ~binary_node();</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">in_order</span><span class="params">(binary_node *root)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pre_order</span><span class="params">(binary_node *root)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">post_order</span><span class="params">(binary_node *root)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">level_order</span><span class="params">(binary_node *root)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+</li>
+</ol>
 <h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><ul>
 <li>满二叉🌲</li>
 <li>完全二叉🌲(堆)<ul>
@@ -627,7 +636,15 @@ rb_node&lt;T&gt;* predecessor(rb_node&lt;T&gt; *x);
 </ul>
 </li>
 </ul>
-<h2 id="B🌲"><a href="#B🌲" class="headerlink" title="B🌲"></a>B🌲</h2><h2 id="B"><a href="#B" class="headerlink" title="B+"></a>B+</h2><h2 id="八叉树"><a href="#八叉树" class="headerlink" title="八叉树"></a>八叉树</h2><h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><h1 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h1><h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><h2 id="折半查找"><a href="#折半查找" class="headerlink" title="折半查找"></a>折半查找</h2><h2 id="归并查找"><a href="#归并查找" class="headerlink" title="归并查找"></a>归并查找</h2><h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><h1 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h1><h2 id="折半查找-1"><a href="#折半查找-1" class="headerlink" title="折半查找"></a>折半查找</h2><h2 id="归并查找-1"><a href="#归并查找-1" class="headerlink" title="归并查找"></a>归并查找</h2>
+<h2 id="B🌲"><a href="#B🌲" class="headerlink" title="B🌲"></a>B🌲</h2><h2 id="B"><a href="#B" class="headerlink" title="B+"></a>B+</h2><ul>
+<li>M阶B+🌲<ol>
+<li>内结点存有关键字和指向孩子结点指针。外结点存有关键字和数据。</li>
+<li>叶子结点还有关键字，按照关键字大小排序，叶子结点中存在指向兄弟结点的指针。</li>
+<li>一颗B+🌲存在两个指针，一个指向根结点，一个指向存有最小关键字的结点。<br><img src="/images/Bplustree.png" alt></li>
+</ol>
+</li>
+</ul>
+<h2 id="八叉树"><a href="#八叉树" class="headerlink" title="八叉树"></a>八叉树</h2><h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><h1 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h1><h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><h2 id="折半查找"><a href="#折半查找" class="headerlink" title="折半查找"></a>折半查找</h2><h2 id="归并查找"><a href="#归并查找" class="headerlink" title="归并查找"></a>归并查找</h2><h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><h1 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h1><h2 id="折半查找-1"><a href="#折半查找-1" class="headerlink" title="折半查找"></a>折半查找</h2><h2 id="归并查找-1"><a href="#归并查找-1" class="headerlink" title="归并查找"></a>归并查找</h2>
       
     </div>
 
@@ -715,8 +732,8 @@ rb_node&lt;T&gt;* predecessor(rb_node&lt;T&gt; *x);
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/uncategorized/Cpp11/" rel="prev" title="c++11新特性">
-                c++11新特性 <i class="fa fa-chevron-right"></i>
+              <a href="/uncategorized/memory_control/" rel="prev" title="内存管理侯捷">
+                内存管理侯捷 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -856,7 +873,13 @@ rb_node&lt;T&gt;* predecessor(rb_node&lt;T&gt; *x);
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

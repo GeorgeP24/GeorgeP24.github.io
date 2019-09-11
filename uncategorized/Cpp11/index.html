@@ -97,14 +97,14 @@
 
 
   <meta name="description" content="auto auto不能用来声明函数的返回值。但是如果函数有一个尾随的返回类型，auto是可以声明返回值。1234template&amp;lt;class T1, class T2&amp;gt;auto test(T1 t1,T2 t2) -&amp;gt; **decltype**(t1 + t2)&amp;#123;    return t1+t2;&amp;#125;    std::array array对象的长度是固定的，使">
-<meta name="keywords" content="c++,c++11,未完待续">
+<meta name="keywords" content="c++,未完待续,c++11">
 <meta property="og:type" content="article">
 <meta property="og:title" content="c++11新特性">
 <meta property="og:url" content="https://georgep24.github.io/uncategorized/Cpp11/index.html">
 <meta property="og:site_name" content="渣渣日志">
 <meta property="og:description" content="auto auto不能用来声明函数的返回值。但是如果函数有一个尾随的返回类型，auto是可以声明返回值。1234template&amp;lt;class T1, class T2&amp;gt;auto test(T1 t1,T2 t2) -&amp;gt; **decltype**(t1 + t2)&amp;#123;    return t1+t2;&amp;#125;    std::array array对象的长度是固定的，使">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-07T06:12:06.521Z">
+<meta property="og:updated_time" content="2019-09-06T08:49:54.613Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c++11新特性">
 <meta name="twitter:description" content="auto auto不能用来声明函数的返回值。但是如果函数有一个尾随的返回类型，auto是可以声明返回值。1234template&amp;lt;class T1, class T2&amp;gt;auto test(T1 t1,T2 t2) -&amp;gt; **decltype**(t1 + t2)&amp;#123;    return t1+t2;&amp;#125;    std::array array对象的长度是固定的，使">
@@ -439,7 +439,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-07 14:12:06" itemprop="dateModified" datetime="2019-08-07T14:12:06+08:00">2019-08-07</time>
+                <time title="修改时间：2019-09-06 16:49:54" itemprop="dateModified" datetime="2019-09-06T16:49:54+08:00">2019-09-06</time>
               </span>
             
           
@@ -532,7 +532,7 @@
 
 </li>
 </ul>
-<h1 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h1><p><code>#include&lt;memoray&gt;</code></p>
+<h1 id="智能指针-pointer-like-classess"><a href="#智能指针-pointer-like-classess" class="headerlink" title="智能指针 pointer-like classess"></a>智能指针 pointer-like classess</h1><p><code>#include&lt;memoray&gt;</code></p>
 <ul>
 <li><p>智能指针构造函数是explicit,拒绝隐式转换。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">double</span>&gt;pd;</span><br><span class="line"><span class="keyword">double</span> *p_reg = <span class="keyword">new</span> <span class="keyword">double</span>;</span><br><span class="line">pd = p_reg;<span class="comment">//错误，不允许隐式转换</span></span><br><span class="line">pd = <span class="built_in">shared_ptr</span>&lt;<span class="keyword">double</span>&gt;(p_reg);<span class="comment">//正确</span></span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">double</span>&gt;pshared = p_reg;<span class="comment">//错误，不允许隐式转换</span></span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">double</span>&gt;pshared(p_reg);<span class="comment">//正确</span></span><br></pre></td></tr></table></figure>
@@ -541,7 +541,11 @@
 </li>
 </ul>
 <h2 id="aoto-ptrp-new-T"><a href="#aoto-ptrp-new-T" class="headerlink" title="aoto_ptrp(new T);"></a>aoto_ptr<t>p(new T);</t></h2><h2 id="auto-ptrp-new-T"><a href="#auto-ptrp-new-T" class="headerlink" title="auto_ptrp(new T);"></a>auto_ptr<t>p(new T);</t></h2><h2 id="unique-ptrp-new-T"><a href="#unique-ptrp-new-T" class="headerlink" title="unique_ptrp(new T);"></a>unique_ptr<t>p(new T);</t></h2><p>##shared_ptr<t>p(new T);</t></p>
-<h1 id="std-function-std-bind"><a href="#std-function-std-bind" class="headerlink" title="std::function std::bind"></a>std::function std::bind</h1><h2 id="std-bind"><a href="#std-bind" class="headerlink" title="std::bind"></a>std::bind</h2><ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt; <span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">shared_ptr</span>&#123;</span></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    T *p;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">shared_ptr</span>(T *pm):p(pm)&#123;&#125;</span><br><span class="line">    T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span>&#123;<span class="keyword">return</span> *p;&#125;</span><br><span class="line">    T* <span class="keyword">operator</span>-&gt;() <span class="keyword">const</span>&#123;<span class="keyword">return</span> p;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//-&gt;运算符作用之后得到的输出继续用-&gt;作用。</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="迭代器-pointer-like-classes"><a href="#迭代器-pointer-like-classes" class="headerlink" title="迭代器 pointer-like classes"></a>迭代器 pointer-like classes</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt; <span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> __<span class="title">list_node</span>&#123;</span></span><br><span class="line">    <span class="keyword">void</span> *prev;</span><br><span class="line">    <span class="keyword">void</span> *next;</span><br><span class="line">    T data;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">template</span>&lt; <span class="class"><span class="keyword">class</span> <span class="title">T</span>,<span class="title">class</span> <span class="title">Ref</span>, <span class="title">class</span> <span class="title">Ptr</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> __<span class="title">list_iterator</span>&#123;</span></span><br><span class="line">    <span class="keyword">typedef</span> __list_iterator&lt;T,Ref,Ptr&gt; self;</span><br><span class="line">    <span class="keyword">typedef</span> Ptr pointer;</span><br><span class="line">    <span class="keyword">typedef</span> Ref reference;</span><br><span class="line">    <span class="keyword">typedef</span> __list_node&lt;T&gt;* link_type;</span><br><span class="line">    link_type node;</span><br><span class="line">    <span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> self&amp;x)<span class="keyword">const</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> node == x.node;</span><br><span class="line">        &#125;</span><br><span class="line">    reference <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123;<span class="keyword">return</span> (*node).data;&#125;</span><br><span class="line">    pointer <span class="keyword">operator</span>-&gt;() <span class="keyword">const</span> &#123;<span class="keyword">return</span> &amp;(<span class="keyword">operator</span>*());&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="std-bind"><a href="#std-bind" class="headerlink" title="std::bind"></a>std::bind</h1><ul>
 <li><p>将函数、成员函数和闭包转成function函数对象</p>
 </li>
 <li><p>将多元(n&gt;1)函数转成一元函数或者(n-1)元函数。</p>
@@ -621,9 +625,9 @@
           
             <a href="/tags/c/" rel="tag"># c++</a>
           
-            <a href="/tags/c-11/" rel="tag"># c++11</a>
-          
             <a href="/tags/未完待续/" rel="tag"># 未完待续</a>
+          
+            <a href="/tags/c-11/" rel="tag"># c++11</a>
           
         </div>
       
@@ -636,8 +640,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/数据结构/datastructure/" rel="next" title="基本数据结构整理">
-                <i class="fa fa-chevron-left"></i> 基本数据结构整理
+              <a href="/uncategorized/memory_control/" rel="next" title="内存管理侯捷">
+                <i class="fa fa-chevron-left"></i> 内存管理侯捷
               </a>
             
           </div>
@@ -645,10 +649,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/uncategorized/memory_control/" rel="prev" title>
-                 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -787,7 +787,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -851,7 +857,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#auto"><span class="nav-number">1.</span> <span class="nav-text">auto</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#std-array"><span class="nav-number">2.</span> <span class="nav-text">std::array</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nullptr"><span class="nav-number">3.</span> <span class="nav-text">nullptr</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于范围的for循环"><span class="nav-number">4.</span> <span class="nav-text">基于范围的for循环</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#override-final"><span class="nav-number">5.</span> <span class="nav-text">override final</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#强类型枚举"><span class="nav-number">6.</span> <span class="nav-text">强类型枚举</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#智能指针"><span class="nav-number">7.</span> <span class="nav-text">智能指针</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#aoto-ptrp-new-T"><span class="nav-number">7.1.</span> <span class="nav-text">aoto_ptrp(new T);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#auto-ptrp-new-T"><span class="nav-number">7.2.</span> <span class="nav-text">auto_ptrp(new T);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unique-ptrp-new-T"><span class="nav-number">7.3.</span> <span class="nav-text">unique_ptrp(new T);</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#std-function-std-bind"><span class="nav-number">8.</span> <span class="nav-text">std::function std::bind</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#std-bind"><span class="nav-number">8.1.</span> <span class="nav-text">std::bind</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#auto"><span class="nav-number">1.</span> <span class="nav-text">auto</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#std-array"><span class="nav-number">2.</span> <span class="nav-text">std::array</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nullptr"><span class="nav-number">3.</span> <span class="nav-text">nullptr</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于范围的for循环"><span class="nav-number">4.</span> <span class="nav-text">基于范围的for循环</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#override-final"><span class="nav-number">5.</span> <span class="nav-text">override final</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#强类型枚举"><span class="nav-number">6.</span> <span class="nav-text">强类型枚举</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#智能指针-pointer-like-classess"><span class="nav-number">7.</span> <span class="nav-text">智能指针 pointer-like classess</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#aoto-ptrp-new-T"><span class="nav-number">7.1.</span> <span class="nav-text">aoto_ptrp(new T);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#auto-ptrp-new-T"><span class="nav-number">7.2.</span> <span class="nav-text">auto_ptrp(new T);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unique-ptrp-new-T"><span class="nav-number">7.3.</span> <span class="nav-text">unique_ptrp(new T);</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迭代器-pointer-like-classes"><span class="nav-number">8.</span> <span class="nav-text">迭代器 pointer-like classes</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#std-bind"><span class="nav-number">9.</span> <span class="nav-text">std::bind</span></a></li></ol></div>
             
 
           </div>
