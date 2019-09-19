@@ -97,16 +97,16 @@
 
 
   <meta name="description" content="auto auto不能用来声明函数的返回值。但是如果函数有一个尾随的返回类型，auto是可以声明返回值。1234template&amp;lt;class T1, class T2&amp;gt;auto test(T1 t1,T2 t2) -&amp;gt; **decltype**(t1 + t2)&amp;#123;    return t1+t2;&amp;#125;    std::array array对象的长度是固定的，使">
-<meta name="keywords" content="c++,c++11,未完待续">
+<meta name="keywords" content="未完待续,c++,c++11">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c++11新特性">
+<meta property="og:title" content="c++2.0">
 <meta property="og:url" content="https://georgep24.github.io/uncategorized/Cpp11/index.html">
 <meta property="og:site_name" content="渣渣日志">
 <meta property="og:description" content="auto auto不能用来声明函数的返回值。但是如果函数有一个尾随的返回类型，auto是可以声明返回值。1234template&amp;lt;class T1, class T2&amp;gt;auto test(T1 t1,T2 t2) -&amp;gt; **decltype**(t1 + t2)&amp;#123;    return t1+t2;&amp;#125;    std::array array对象的长度是固定的，使">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-11T02:42:33.373Z">
+<meta property="og:updated_time" content="2019-09-17T12:01:06.085Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="c++11新特性">
+<meta name="twitter:title" content="c++2.0">
 <meta name="twitter:description" content="auto auto不能用来声明函数的返回值。但是如果函数有一个尾随的返回类型，auto是可以声明返回值。1234template&amp;lt;class T1, class T2&amp;gt;auto test(T1 t1,T2 t2) -&amp;gt; **decltype**(t1 + t2)&amp;#123;    return t1+t2;&amp;#125;    std::array array对象的长度是固定的，使">
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>c++11新特性 | 渣渣日志</title>
+  <title>c++2.0 | 渣渣日志</title>
   
 
 
@@ -398,7 +398,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">c++11新特性
+          <h2 class="post-title" itemprop="name headline">c++2.0
 
               
             
@@ -439,7 +439,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-09-11 10:42:33" itemprop="dateModified" datetime="2019-09-11T10:42:33+08:00">2019-09-11</time>
+                <time title="修改时间：2019-09-17 20:01:06" itemprop="dateModified" datetime="2019-09-17T20:01:06+08:00">2019-09-17</time>
               </span>
             
           
@@ -465,7 +465,7 @@
 
           
           
-            <span id="/uncategorized/Cpp11/" class="post-meta-item leancloud_visitors" data-flag-title="c++11新特性">
+            <span id="/uncategorized/Cpp11/" class="post-meta-item leancloud_visitors" data-flag-title="c++2.0">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -515,16 +515,17 @@
 <li>array对象的长度是固定的，使用了静态存储区，即存储在栈上，效率跟数组相同，但是更加的安全。</li>
 </ul>
 <h1 id="nullptr"><a href="#nullptr" class="headerlink" title="nullptr"></a>nullptr</h1><ul>
+<li>nullptr-&gt;void*</li>
 <li>nullptr是std::nullptr_t。存在和任何指针类型以及类成员指针类型的空值，bool类型的隐式转换。</li>
 <li>不存在整型的隐式转换。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">f(<span class="keyword">int</span> *p)&#123;&#125;</span><br><span class="line">f1(<span class="keyword">bool</span> o)&#123;&#125;</span><br><span class="line">f2(<span class="built_in">std</span>::share_ptr&lt;<span class="keyword">int</span>&gt; p)&#123;&#125; </span><br><span class="line"><span class="keyword">int</span> p1 = <span class="literal">NULL</span>;</span><br><span class="line"><span class="keyword">int</span> p2 = <span class="literal">nullptr</span>;</span><br><span class="line"><span class="keyword">if</span>(p1==p2);</span><br><span class="line">f(p2);</span><br><span class="line">f1(p2);</span><br><span class="line">f2(p2);</span><br><span class="line"><span class="keyword">int</span> i = <span class="literal">nullptr</span>; <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
-<h1 id="基于范围的for循环"><a href="#基于范围的for循环" class="headerlink" title="基于范围的for循环"></a>基于范围的for循环</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ( <span class="keyword">for</span>-range-declaration : expression )</span><br><span class="line">    statement</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> e : arr)</span><br><span class="line">&#123;</span><br><span class="line">    e = e*e;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;e&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">InputIterator</span>, <span class="title">class</span> <span class="title">Function</span>&gt;</span></span><br><span class="line"><span class="class">   <span class="title">Function</span> <span class="title">for_each</span>(</span></span><br><span class="line"><span class="class">      <span class="title">InputIterator</span> _<span class="title">First</span>, </span></span><br><span class="line"><span class="class">      <span class="title">InputIterator</span> _<span class="title">Last</span>, </span></span><br><span class="line"><span class="class">      <span class="title">Function</span> _<span class="title">Func</span></span></span><br><span class="line"><span class="class">   );</span></span><br></pre></td></tr></table></figure>
+<h1 id="基于范围的for循环"><a href="#基于范围的for循环" class="headerlink" title="基于范围的for循环"></a>基于范围的for循环</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ( val declare : collection )</span><br><span class="line">    statement</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> e : arr)</span><br><span class="line">&#123;</span><br><span class="line">    e = e*e;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;e&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">InputIterator</span>, <span class="title">class</span> <span class="title">Function</span>&gt;</span></span><br><span class="line"><span class="class">   <span class="title">Function</span> <span class="title">for_each</span>(</span></span><br><span class="line"><span class="class">      <span class="title">InputIterator</span> _<span class="title">First</span>, </span></span><br><span class="line"><span class="class">      <span class="title">InputIterator</span> _<span class="title">Last</span>, </span></span><br><span class="line"><span class="class">      <span class="title">Function</span> _<span class="title">Func</span></span></span><br><span class="line"><span class="class">   );</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="override-final"><a href="#override-final" class="headerlink" title="override final"></a>override final</h1><ul>
 <li>override:表示函数应当重写基类中的虚函数。 </li>
-<li>final:表示派生类不应当重写这个虚函数。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"A::f"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">long</span> l)</span> final </span>&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"B::f"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> :</span> <span class="keyword">public</span> A&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> i)</span> override </span>&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"B::f"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<li>final:表示派生类不应当重写这个虚函数。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"A::f"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">long</span> l)</span> final </span>&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"B::f"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> :</span> <span class="keyword">public</span> A&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> i)</span> override </span>&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"B::f"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -534,6 +535,8 @@
 
 </li>
 </ul>
+<h1 id="variadic-templates-可变参数列表-类型和个数任意"><a href="#variadic-templates-可变参数列表-类型和个数任意" class="headerlink" title="variadic templates  可变参数列表, 类型和个数任意"></a>variadic templates  可变参数列表, 类型和个数任意</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>, <span class="title">class</span>... <span class="title">Args</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">print</span>(<span class="title">const</span> <span class="title">T</span> &amp;<span class="title">first</span>, <span class="title">const</span> <span class="title">Args</span> &amp;... <span class="title">args</span>)&#123;</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;first&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    print(args...);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt; <span class="class"><span class="keyword">class</span>...<span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">print</span>(<span class="title">const</span> <span class="title">Args</span> &amp;... <span class="title">args</span>)&#123;</span></span><br><span class="line">        <span class="comment">/**/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h1 id="智能指针-pointer-like-classess"><a href="#智能指针-pointer-like-classess" class="headerlink" title="智能指针 pointer-like classess"></a>智能指针 pointer-like classess</h1><p><code>#include&lt;memoray&gt;</code></p>
 <ul>
 <li><p>智能指针构造函数是explicit,拒绝隐式转换。</p>
@@ -625,11 +628,11 @@
         
         <div class="post-tags">
           
+            <a href="/tags/未完待续/" rel="tag"># 未完待续</a>
+          
             <a href="/tags/c/" rel="tag"># c++</a>
           
             <a href="/tags/c-11/" rel="tag"># c++11</a>
-          
-            <a href="/tags/未完待续/" rel="tag"># 未完待续</a>
           
         </div>
       
@@ -723,7 +726,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -744,9 +747,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -791,11 +792,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -859,7 +856,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#auto"><span class="nav-number">1.</span> <span class="nav-text">auto</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#std-array"><span class="nav-number">2.</span> <span class="nav-text">std::array</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nullptr"><span class="nav-number">3.</span> <span class="nav-text">nullptr</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于范围的for循环"><span class="nav-number">4.</span> <span class="nav-text">基于范围的for循环</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#override-final"><span class="nav-number">5.</span> <span class="nav-text">override final</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#强类型枚举"><span class="nav-number">6.</span> <span class="nav-text">强类型枚举</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#智能指针-pointer-like-classess"><span class="nav-number">7.</span> <span class="nav-text">智能指针 pointer-like classess</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#aoto-ptrp-new-T"><span class="nav-number">7.1.</span> <span class="nav-text">aoto_ptrp(new T);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#auto-ptrp-new-T"><span class="nav-number">7.2.</span> <span class="nav-text">auto_ptrp(new T);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unique-ptrp-new-T"><span class="nav-number">7.3.</span> <span class="nav-text">unique_ptrp(new T);</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迭代器-pointer-like-classes"><span class="nav-number">8.</span> <span class="nav-text">迭代器 pointer-like classes</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#std-bind"><span class="nav-number">9.</span> <span class="nav-text">std::bind</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#auto"><span class="nav-number">1.</span> <span class="nav-text">auto</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#std-array"><span class="nav-number">2.</span> <span class="nav-text">std::array</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nullptr"><span class="nav-number">3.</span> <span class="nav-text">nullptr</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于范围的for循环"><span class="nav-number">4.</span> <span class="nav-text">基于范围的for循环</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#override-final"><span class="nav-number">5.</span> <span class="nav-text">override final</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#强类型枚举"><span class="nav-number">6.</span> <span class="nav-text">强类型枚举</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#variadic-templates-可变参数列表-类型和个数任意"><span class="nav-number">7.</span> <span class="nav-text">variadic templates  可变参数列表, 类型和个数任意</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#智能指针-pointer-like-classess"><span class="nav-number">8.</span> <span class="nav-text">智能指针 pointer-like classess</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#aoto-ptrp-new-T"><span class="nav-number">8.1.</span> <span class="nav-text">aoto_ptrp(new T);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#auto-ptrp-new-T"><span class="nav-number">8.2.</span> <span class="nav-text">auto_ptrp(new T);</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unique-ptrp-new-T"><span class="nav-number">8.3.</span> <span class="nav-text">unique_ptrp(new T);</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迭代器-pointer-like-classes"><span class="nav-number">9.</span> <span class="nav-text">迭代器 pointer-like classes</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#std-bind"><span class="nav-number">10.</span> <span class="nav-text">std::bind</span></a></li></ol></div>
             
 
           </div>
