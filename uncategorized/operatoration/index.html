@@ -96,20 +96,26 @@
 
 
 
-  <meta name="description" content="OOP 多态 C++多态分类及其实现 重载多态(Ad-hoc Polymorphism,编译期) 函数重载，运算符重载 子类型多态(Subtype Polymorphism,运行期) 虚函数 参数多态性(Parametric PolyMorphism) 编译期 类模板，函数模板 强制多态(Coerion PolyMorphism 编译期,运行期) 类型转换     静态多态（编译期间，早绑定） 函">
-<meta name="keywords" content="c++,面试">
+  <meta name="description" content="概要基本特征 共享-互斥共享和同时共享 并发与并行 虚拟-时（时间）分复用技术和空（空间）分复用技术 异步基本功能进程管理进程与线程 进程是资源分配的基本单位。进程控制块 (Process Control Block, PCB) 描述进程的基本信息和运行状态，所谓的创建进程和撤销进程，都是指对 PCB 的操作。 线程是独立调度的基本单位。 区别： 线程不占有资源 同一进程中的线程切换不会导致进程切">
+<meta name="keywords" content="操作系统">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c++基础总结2">
-<meta property="og:url" content="https://georgep24.github.io/语言/interview_two/index.html">
+<meta property="og:title" content="操作系统">
+<meta property="og:url" content="https://georgep24.github.io/uncategorized/operatoration/index.html">
 <meta property="og:site_name" content="渣渣日志">
-<meta property="og:description" content="OOP 多态 C++多态分类及其实现 重载多态(Ad-hoc Polymorphism,编译期) 函数重载，运算符重载 子类型多态(Subtype Polymorphism,运行期) 虚函数 参数多态性(Parametric PolyMorphism) 编译期 类模板，函数模板 强制多态(Coerion PolyMorphism 编译期,运行期) 类型转换     静态多态（编译期间，早绑定） 函">
+<meta property="og:description" content="概要基本特征 共享-互斥共享和同时共享 并发与并行 虚拟-时（时间）分复用技术和空（空间）分复用技术 异步基本功能进程管理进程与线程 进程是资源分配的基本单位。进程控制块 (Process Control Block, PCB) 描述进程的基本信息和运行状态，所谓的创建进程和撤销进程，都是指对 PCB 的操作。 线程是独立调度的基本单位。 区别： 线程不占有资源 同一进程中的线程切换不会导致进程切">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://georgep24.github.io/images/oop.png">
-<meta property="og:updated_time" content="2019-12-04T06:08:57.078Z">
+<meta property="og:image" content="https://georgep24.github.io/uncategorized/images/process_state.png">
+<meta property="og:image" content="https://georgep24.github.io/uncategorized/images/locked.png">
+<meta property="og:image" content="https://georgep24.github.io/uncategorized/images/bank.png">
+<meta property="og:image" content="https://georgep24.github.io/uncategorized/images/disk.jpeg">
+<meta property="og:image" content="https://georgep24.github.io/uncategorized/images/system_called.png">
+<meta property="og:image" content="https://georgep24.github.io/uncategorized/images/micro_kernel.jpeg">
+<meta property="og:image" content="https://georgep24.github.io/uncategorized/images/compile.jpeg">
+<meta property="og:updated_time" content="2020-01-05T08:47:50.774Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="c++基础总结2">
-<meta name="twitter:description" content="OOP 多态 C++多态分类及其实现 重载多态(Ad-hoc Polymorphism,编译期) 函数重载，运算符重载 子类型多态(Subtype Polymorphism,运行期) 虚函数 参数多态性(Parametric PolyMorphism) 编译期 类模板，函数模板 强制多态(Coerion PolyMorphism 编译期,运行期) 类型转换     静态多态（编译期间，早绑定） 函">
-<meta name="twitter:image" content="https://georgep24.github.io/images/oop.png">
+<meta name="twitter:title" content="操作系统">
+<meta name="twitter:description" content="概要基本特征 共享-互斥共享和同时共享 并发与并行 虚拟-时（时间）分复用技术和空（空间）分复用技术 异步基本功能进程管理进程与线程 进程是资源分配的基本单位。进程控制块 (Process Control Block, PCB) 描述进程的基本信息和运行状态，所谓的创建进程和撤销进程，都是指对 PCB 的操作。 线程是独立调度的基本单位。 区别： 线程不占有资源 同一进程中的线程切换不会导致进程切">
+<meta name="twitter:image" content="https://georgep24.github.io/uncategorized/images/process_state.png">
 
 
 
@@ -117,7 +123,7 @@
 
   
   
-  <link rel="canonical" href="https://georgep24.github.io/语言/interview_two/">
+  <link rel="canonical" href="https://georgep24.github.io/uncategorized/operatoration/">
 
 
 
@@ -127,7 +133,7 @@
   };
 </script>
 
-  <title>c++基础总结2 | 渣渣日志</title>
+  <title>操作系统 | 渣渣日志</title>
   
 
 
@@ -383,7 +389,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://georgep24.github.io/语言/interview_two/">
+    <link itemprop="mainEntityOfPage" href="https://georgep24.github.io/uncategorized/operatoration/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="coder">
@@ -400,7 +406,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">c++基础总结2
+          <h2 class="post-title" itemprop="name headline">操作系统
 
               
             
@@ -426,7 +432,7 @@
                 
               
 
-              <time title="创建时间：2019-07-30 13:38:54" itemprop="dateCreated datePublished" datetime="2019-07-30T13:38:54+08:00">2019-07-30</time>
+              <time title="创建时间：2020-01-05 10:42:06 / 修改时间：16:47:50" itemprop="dateCreated datePublished" datetime="2020-01-05T10:42:06+08:00">2020-01-05</time>
             </span>
           
 
@@ -434,33 +440,8 @@
             
 
             
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-12-04 14:08:57" itemprop="dateModified" datetime="2019-12-04T14:08:57+08:00">2019-12-04</time>
-              </span>
-            
           
 
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/语言/" itemprop="url" rel="index"><span itemprop="name">语言</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -473,8 +454,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/语言/interview_two/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/语言/interview_two/" itemprop="commentCount"></span>
+                <a href="/uncategorized/operatoration/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/uncategorized/operatoration/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -482,7 +463,7 @@
 
           
           
-            <span id="/语言/interview_two/" class="post-meta-item leancloud_visitors" data-flag-title="c++基础总结2">
+            <span id="/uncategorized/operatoration/" class="post-meta-item leancloud_visitors" data-flag-title="操作系统">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -523,81 +504,160 @@
       
 
       
-        <h2 id="OOP"><a href="#OOP" class="headerlink" title="OOP"></a>OOP</h2><p><img src="/images/oop.png" alt></p>
-<h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><ul>
-<li>C++多态分类及其实现<ol>
-<li>重载多态(Ad-hoc Polymorphism,编译期) 函数重载，运算符重载</li>
-<li>子类型多态(Subtype Polymorphism,运行期) 虚函数</li>
-<li>参数多态性(Parametric PolyMorphism) 编译期 类模板，函数模板</li>
-<li>强制多态(Coerion PolyMorphism 编译期,运行期) 类型转换 </li>
+        <h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><h2 id="基本特征"><a href="#基本特征" class="headerlink" title="基本特征"></a>基本特征</h2><ul>
+<li>共享-互斥共享和同时共享</li>
+<li>并发与并行</li>
+<li>虚拟-时（时间）分复用技术和空（空间）分复用技术</li>
+<li>异步<h2 id="基本功能"><a href="#基本功能" class="headerlink" title="基本功能"></a>基本功能</h2><h3 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h3><h4 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h4></li>
+<li>进程是资源分配的基本单位。进程控制块 (Process Control Block, PCB) 描述进程的基本信息和运行状态，所谓的创建进程和撤销进程，都是指对 PCB 的操作。</li>
+<li>线程是独立调度的基本单位。</li>
+<li>区别：<ol>
+<li>线程不占有资源</li>
+<li>同一进程中的线程切换不会导致进程切换</li>
+<li>线程间可以通过直接读写同一进程中的数据进行通信，但是进程通信需要借助 IPC。</li>
+<li>由于创建或撤销进程时，系统都要为之分配或回收资源，如内存空间、I/O 设备等，所付出的开销远大于创建或撤销线程时的开销。类似地，在进行进程切换时，涉及当前执行进程 CPU 环境的保存及新调度进程 CPU 环境的设置，而线程切换时只需保存和设置少量寄存器内容，开销很小。<h4 id="切换"><a href="#切换" class="headerlink" title="切换"></a>切换</h4><img src="../images/process_state.png" alt><br>就绪态，运行态，阻塞态<h4 id="进程调度算法"><a href="#进程调度算法" class="headerlink" title="进程调度算法"></a>进程调度算法</h4><h5 id="批处理系统"><a href="#批处理系统" class="headerlink" title="批处理系统"></a>批处理系统</h5>批处理系统没有太多的用户操作，在该系统中，调度算法目标是保证吞吐量和周转时间（从提交到终止的时间）。</li>
 </ol>
 </li>
 </ul>
-<h4 id="静态多态（编译期间，早绑定）"><a href="#静态多态（编译期间，早绑定）" class="headerlink" title="静态多态（编译期间，早绑定）"></a>静态多态（编译期间，早绑定）</h4><ul>
-<li><p>函数重载,模板</p>
-<h4 id="动态多态（运行期间，晚绑定）"><a href="#动态多态（运行期间，晚绑定）" class="headerlink" title="动态多态（运行期间，晚绑定）"></a>动态多态（运行期间，晚绑定）</h4></li>
-<li><p>虚函数</p>
-<p>  tips:</p>
-<ul>
-<li>普通函数不可是virtual</li>
-<li>static 不可为virtual</li>
-<li>构造函数不可为virtual,因为在调用构造函数时，虚表指针并没有在对象的内存空间中，必须要构造函数调用完成后才会形成虚表指针</li>
-</ul>
-</li>
-</ul>
-<h4 id="virtual"><a href="#virtual" class="headerlink" title="virtual ~"></a>virtual ~</h4><pre><code>作用
-* 解决based point-&gt; derived object,用based point 删除derived object.</code></pre><h2 id="虚函数指针，虚函数表"><a href="#虚函数指针，虚函数表" class="headerlink" title="虚函数指针，虚函数表"></a>虚函数指针，虚函数表</h2><h2 id="虚继承"><a href="#虚继承" class="headerlink" title="虚继承"></a>虚继承</h2><pre><code>虚继承用于解决多继承条件下的菱形继承问题浪(费存储空间、存在二义性)
-
-* 底层实现原理与编译器相关，一般通过虚基类指针和虚基类表实现，每个虚继承的子类都有一个虚基类指针(占用一个指针的存储空间，4字节）和虚基类表(不占用类对象的存储空间)(需要强调的是，虚基类依旧会在子类里面存在拷贝，只是仅仅最多存在一份而已，并不是不在子类里面了);当虚继承的子类被当做父类继承时，虚基类指针也会被继承。
-
-* 实际上，vbptr 指的是虚基类表指针（virtual base table pointer），该指针指向了一个虚基类表（virtual table），虚表中记录了虚基类与本类的偏移地址；通过偏移地址，这样就找到了虚基类成员，而虚继承也不用像普通多继承那样维持着公共基类（虚基类）的两份同样的拷贝，节省了存储空间。</code></pre><h2 id="虚函数和虚继承"><a href="#虚函数和虚继承" class="headerlink" title="虚函数和虚继承"></a>虚函数和虚继承</h2><ul>
-<li>都使用了虚指针(占用类的存储空间)和虚表（不占类存储空间）</li>
-<li>虚函数表存储的是虚函数地址，虚基类表存储相对直接继承类的位偏移。</li>
-<li>虚基类在子类中存在一份拷贝，而虚函数不占用存储空间。</li>
-</ul>
-<p>tips:</p>
-<ul>
-<li>模板类可以使用虚函数。</li>
-<li>但任何类的成员模板函数不能是虚函数。</li>
-</ul>
-<h2 id="聚合类"><a href="#聚合类" class="headerlink" title="聚合类"></a>聚合类</h2><pre><code>用户可以直接访问其成员，并且具有特殊的初始化语法形式。满足如下特点：</code></pre><ul>
-<li>所有成员都是 public</li>
-<li>没有定义任何构造函数</li>
-<li>没有类内初始化</li>
-<li>没有基类，也没有 virtual 函数</li>
-</ul>
-<h2 id="内存分配管理"><a href="#内存分配管理" class="headerlink" title="内存分配管理"></a>内存分配管理</h2><ol>
-<li>malloc<br> 申请指定字节内存，初始值不确定。</li>
+<ol>
+<li>先来先服务 first-come first-serverd（FCFS）</li>
 </ol>
-<p><code>char *str = (char*) malloc(100);</code></p>
+<p>非抢占式的调度算法，按照请求的顺序进行调度。有利于长作业，但不利于短作业，因为短作业必须一直等待前面的长作业执行完毕才能执行，而长作业又需要执行很长时间，造成了短作业等待时间过长。</p>
 <ol start="2">
-<li>calloc<br> 为指定长度的对象，分配能容纳其指定个数的内存。申请到的内存的每一位（bit）都初始化为 0。</li>
-<li>realloc<br> 更改以前分配的内存长度（增加或减少）。当增加长度时，可能需将以前分配区的内容移到另一个足够大的区域，而新增区域内的初始值则不确定。</li>
-<li>alloca<br> 在栈上申请内存。程序在出栈的时候，会自动释放内存。但是需要注意的是，alloca 不具可移植性, 而且在没有传统堆栈的机器上很难实现。alloca 不宜使用在必须广泛移植的程序中。C99 中支持变长数组 (VLA)，可以用来替代 alloca。</li>
+<li>先来先服务 first-come first-serverd（FCFS）</li>
 </ol>
-<ul>
-<li>new/new[]先底层调用malloc，然后调用构造函数。</li>
-<li>delete/delete[]先调用析构函数，然后free，指针置为空。</li>
-<li>new能自动计算所需字节数，无需像malloc一样手动操作。</li>
-</ul>
-<h3 id="pacement-new"><a href="#pacement-new" class="headerlink" title="pacement new"></a>pacement new</h3><p>允许传递额外的地址参数，预先在指定的内存区域创建对象。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> (place_address) type</span><br><span class="line"><span class="keyword">new</span> (place_address) type (initializers)</span><br><span class="line"><span class="keyword">new</span> (place_address) type [size]</span><br><span class="line"><span class="keyword">new</span> (place_address) type [size] &#123; braced initializer <span class="built_in">list</span>&#125;</span><br><span class="line"><span class="comment">//place_address 为 point</span></span><br><span class="line"><span class="comment">//initializers可能为空的初始化列表</span></span><br></pre></td></tr></table></figure>
+<p>非抢占式的调度算法，按估计运行时间最短的顺序进行调度。长作业有可能会饿死，处于一直等待短作业执行完毕的状态。因为如果一直有短作业到来，那么长作业永远得不到调度。</p>
+<ol start="3">
+<li>先来先服务 first-come first-serverd（FCFS）</li>
+</ol>
+<p>最短作业优先的抢占式版本，按剩余运行时间的顺序进行调度。 当一个新的作业到达时，其整个运行时间与当前进程的剩余时间作比较。如果新的进程需要的时间更少，则挂起当前进程，运行新的进程。否则新的进程等待。</p>
+<h5 id="交互式系统"><a href="#交互式系统" class="headerlink" title="交互式系统"></a>交互式系统</h5><p>批处理系统没有太多的用户操作，在该系统中，调度算法目标是保证吞吐量和周转时间（从提交到终止的时间）。</p>
+<ol>
+<li>时间片轮转</li>
+</ol>
+<p>将所有就绪进程按 FCFS 的原则排成一个队列，每次调度时，把 CPU 时间分配给队首进程，该进程可以执行一个时间片。当时间片用完时，由计时器发出时钟中断，调度程序便停止该进程的执行，并将它送往就绪队列的末尾，同时继续把 CPU 时间分配给队首的进程。时间片轮转算法的效率和时间片的大小有很大关系。</p>
+<ol start="2">
+<li>优先度调度</li>
+</ol>
+<p>为每个进程分配一个优先级，按优先级进行调度。为了防止低优先级的进程永远等不到调度，可以随着时间的推移增加等待进程的优先级。</p>
+<ol start="3">
+<li>多级反馈队列</li>
+</ol>
+<p>多级队列是为这种需要连续执行多个时间片的进程考虑，它设置了多个队列，每个队列时间片大小都不同。进程在第一个队列没执行完，就会被移到下一个队列。</p>
+<p>每个队列优先权也不同，最上面的优先权最高。因此只有上一个队列没有进程在排队，才能调度当前队列上的进程。</p>
+<p>可以看成是时间片轮转调度算法和优先级调度算法的结合。</p>
+<h5 id="实时系统"><a href="#实时系统" class="headerlink" title="实时系统"></a>实时系统</h5><p>实时系统要求一个请求在一个确定时间内得到响应。分为硬实时和软实时，前者必须满足绝对的截止时间，后者可以容忍一定的超时。</p>
+<h4 id="同步互斥"><a href="#同步互斥" class="headerlink" title="同步互斥"></a>同步互斥</h4><ul>
+<li>对临界资源进行访问的那段代码称为临界区。</li>
+<li>管程</li>
+<li>同步互斥<h4 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h4><h5 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h5>管道是通过调用 pipe 函数创建的，fd[0] 用于读，fd[1] 用于写。<br>unistd.h<br>int pipe(int fd[2]);</li>
+<li>半双工通信。</li>
+<li>只能在父子进程和兄弟进程中使用。<h5 id="FIFO"><a href="#FIFO" class="headerlink" title="FIFO"></a>FIFO</h5>命名管道，去除了管道只能在父子进程中使用的限制<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mkfifo</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *path, <span class="keyword">mode_t</span> mode)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mkfifoat</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">const</span> <span class="keyword">char</span> *path, <span class="keyword">mode_t</span> mode)</span></span>;</span><br></pre></td></tr></table></figure>
 
-<p>tips:</p>
-<ul>
-<li>delete this 合法前提<ul>
-<li>之后不再调用this指针(任何调用)</li>
-<li>this对象由new而不是其他任何方式分配的。</li>
-<li>该成员函数是this对象最后调用的的成员函数。</li>
-<li>剩下的成员函数（delete this之后的)不接触到this对象,包括调用任何其他成员函数或访问任何数据成员。</li>
-</ul>
 </li>
 </ul>
-<h2 id="只在堆上生成对象的类"><a href="#只在堆上生成对象的类" class="headerlink" title="只在堆上生成对象的类"></a>只在堆上生成对象的类</h2><pre><code>方法：将虚构函数私有。</code></pre><ul>
-<li>(C++ 是静态绑定语言，编译器管理栈上对象的生命周期，编译器在为类对象分配栈空间时，会先检查类的析构函数的访问性。若析构函数不可访问，则不能在栈上创建对象。)</li>
+<p>FIFO 常用于客户-服务器应用程序中，FIFO 用作汇聚点，在客户进程和服务器进程之间传递数据。</p>
+<h5 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h5><ul>
+<li>消息队列可以独立于读写进程存在，从而避免了 FIFO 中同步管道的打开和关闭时可能产生的困难。</li>
+<li>避免了 FIFO 的同步阻塞问题，不需要进程自己提供同步方法。</li>
+<li>读进程可以根据消息类型有选择地接收消息，而不像 FIFO 那样只能默认地接收。<h5 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h5><h5 id="共享存储"><a href="#共享存储" class="headerlink" title="共享存储"></a>共享存储</h5><h5 id="套接字"><a href="#套接字" class="headerlink" title="套接字"></a>套接字</h5><h5 id="共享存储-1"><a href="#共享存储-1" class="headerlink" title="共享存储"></a>共享存储</h5><h4 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h4><h5 id="必要条件"><a href="#必要条件" class="headerlink" title="必要条件"></a>必要条件</h5>  资源互斥 占有和等待 不可抢占 死循环<h5 id="处理方法"><a href="#处理方法" class="headerlink" title="处理方法"></a>处理方法</h5><h6 id="鸵鸟策略"><a href="#鸵鸟策略" class="headerlink" title="鸵鸟策略"></a>鸵鸟策略</h6><h6 id="死锁检测"><a href="#死锁检测" class="headerlink" title="死锁检测"></a>死锁检测</h6>不试图阻止死锁，而是当检测到死锁发生时，采取措施进行恢复。</li>
 </ul>
-<h2 id="只在栈上生成对象的类"><a href="#只在栈上生成对象的类" class="headerlink" title="只在栈上生成对象的类"></a>只在栈上生成对象的类</h2><pre><code>方法：将new和delete操作符重载为私有。</code></pre><ul>
-<li>：C++ 是静态绑定语言，编译器管理栈上对象的生命周期，编译器在为类对象分配栈空间时，会先检查类的析构函数的访问性。若析构函数不可访问，则不能在栈上创建对象。</li>
+<ol>
+<li>每种类型一个资源的死锁检测</li>
+</ol>
+<p>从一个节点开始深度优先遍历，查找是否存在有向环。</p>
+<ol start="2">
+<li>每种类型多个资源的死锁检测<br><img src="../images/locked.png" alt><br>上图中，有三个进程四个资源，每个数据代表的含义如下：</li>
+</ol>
+<ul>
+<li>E 向量：资源总量</li>
+<li>A 向量：资源剩余量</li>
+<li>C 矩阵：每个进程所拥有的资源数量，每一行都代表一个进程拥有资源的数量</li>
+<li>R 矩阵：每个进程请求的资源数量</li>
+</ul>
+<p>递归，直到所有进程均被访问，若存在未被访问进程，则产生死锁。</p>
+<h5 id="死锁恢复"><a href="#死锁恢复" class="headerlink" title="死锁恢复"></a>死锁恢复</h5><ul>
+<li>利用抢占恢复</li>
+<li>利用回滚恢复</li>
+<li>通过杀死进程恢复<h5 id="死锁预防"><a href="#死锁预防" class="headerlink" title="死锁预防"></a>死锁预防</h5>破坏4个必要条件</li>
+</ul>
+<ol>
+<li>要求进程一次性的请求所有需要的资源，并且阻塞这个进程直到所有请求都同时满足。</li>
+<li>要求进程一次性的请求所有需要的资源，并且阻塞这个进程直到所有请求都同时满足。</li>
+<li>资源编号，顺序请求。<h5 id="死锁避免"><a href="#死锁避免" class="headerlink" title="死锁避免"></a>死锁避免</h5></li>
+</ol>
+<ul>
+<li>进程启动拒绝：如果一个进程的请求会导致死锁，则不启动该进程</li>
+<li>资源分配拒绝：如果一个进程增加的资源请求会导致死锁，则不允许此分配 银行家算法</li>
+</ul>
+<p>安全状态</p>
+<ul>
+<li>即使所有进程突然请求对资源的最大需求，也仍然存在某种调度次序能够使得每一个进程运行完毕，则称该状态是安全的。<h6 id="银行家算法"><a href="#银行家算法" class="headerlink" title="银行家算法"></a>银行家算法</h6></li>
+<li>单个资源的银行家算法</li>
+<li>多资源的银行家算法</li>
+</ul>
+<p><img src="../images/bank.png" alt><br>上图中有五个进程，四个资源。左边的图表示已经分配的资源，右边的图表示还需要分配的资源。最右边的 E、P 以及 A 分别表示：总资源、已分配资源以及可用资源，注意这三个为向量，而不是具体数值，例如 A=(1020)，表示 4 个资源分别还剩下 1/0/2/0。<br>算法：<br>按照分配矩阵进行分配，寻找小于等于可用资源的行，如果不存在则状态不安全。存在则释放该行继续迭代。<br>状态不安全。</p>
+<h3 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h3><h3 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h3><h3 id="设备管理"><a href="#设备管理" class="headerlink" title="设备管理"></a>设备管理</h3><h4 id="磁盘结构"><a href="#磁盘结构" class="headerlink" title="磁盘结构"></a>磁盘结构</h4><ul>
+<li><p>盘面（Platter）：一个磁盘有多个盘面；</p>
+</li>
+<li><p>磁道（Track）：盘面上的圆形带状区域，一个盘面可以有多个磁道；</p>
+</li>
+<li><p>扇区（Track Sector）：磁道上的一个弧段，一个磁道可以有多个扇区，它是最小的物理储存单位，目前主要有 512 bytes 与 4 K 两种大小；</p>
+</li>
+<li><p>磁头（Head）：与盘面非常接近，能够将盘面上的磁场转换为电信号（读），或者将电信号转换为盘面的磁场（写）；</p>
+</li>
+<li><p>制动手臂（Actuator arm）：用于在磁道之间移动磁头；</p>
+</li>
+<li><p>主轴（Spindle）：使整个盘面转动。<br><img src="../images/disk.jpeg" alt></p>
+<h4 id="磁盘调度算法"><a href="#磁盘调度算法" class="headerlink" title="磁盘调度算法"></a>磁盘调度算法</h4><p>读写一个磁盘块的时间的影响因素有：</p>
+</li>
+<li><p>旋转时间（主轴转动盘面，使得磁头移动到适当的扇区上）</p>
+</li>
+<li><p>寻道时间（制动手臂移动，使得磁头移动到适当的磁道上）</p>
+</li>
+<li><p>实际的数据传输时间<br>其中，寻道时间最长，因此磁盘调度的主要目标是使磁盘的平均寻道时间最短。</p>
+</li>
+</ul>
+<ol>
+<li>FCFS frist come frist served</li>
+<li>SSTF shortest seek time frist</li>
+</ol>
+<p>优先调度与当前磁头所在磁道距离最近的磁道。容易产生饥饿现象。远端请求长时间无法响应。</p>
+<ol start="3">
+<li>SCAN </li>
+</ol>
+<p>电梯总是保持一个方向运行，直到该方向没有请求为止，然后改变运行方向。单向访问距离最近的磁道。直到该方向上没有未完成的磁盘请求，然后改变方向。</p>
+<ol start="4">
+<li>CSCAN</li>
+</ol>
+<p>保持最大磁道挨着最小磁道和SCAN相似，但是到达内部之后立即调整到最外层，继续往内。或者相反。</p>
+<h2 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h2><p>Linux 系统调用<br><img src="../images/system_called.png" alt><br>|task|command|<br>| —- | —-|<br>|进程控制|fork();exit();wait()|<br>|进程通信|    pipe(); shmget(); mmap()|<br>|文件操作|    open(); read();write()|<br>|设备操作|    ioctl();read();write()|<br>|信息维护|    getpid(); alarm(); sleep()|<br>|安全|    chmod();umask();chown()|</p>
+<h2 id="内核"><a href="#内核" class="headerlink" title="内核"></a>内核</h2><h3 id="大内核"><a href="#大内核" class="headerlink" title="大内核"></a>大内核</h3><pre><code>大内核是将操作系统功能作为一个紧密结合的整体放到内核。由于各模块共享信息，因此有很高的性能。</code></pre><h3 id="微内核"><a href="#微内核" class="headerlink" title="微内核"></a>微内核</h3><pre><code>由于操作系统不断复杂，因此将一部分操作系统功能移出内核，从而降低内核的复杂性。移出的部分根据分层的原则划分成若干服务，相互独立。
+在微内核结构下，操作系统被划分成小的、定义良好的模块，只有微内核这一个模块运行在内核态，其余模块运行在用户态。因为需要频繁地在用户态和核心态之间进行切换，所以会有一定的性能损失。</code></pre><p><img src="../images/micro_kernel.jpeg" alt></p>
+<h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><h3 id="外中断"><a href="#外中断" class="headerlink" title="外中断"></a>外中断</h3><pre><code>由 CPU 执行指令以外的事件引起，如 I/O 完成中断，表示设备输入/输出处理已经完成，处理器能够发送下一个输入/输出请求。此外还有时钟中断、控制台中断等。</code></pre><h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><pre><code>由 CPU 执行指令的内部事件引起，如非法操作码、地址越界、算术溢出等。</code></pre><h3 id="陷入"><a href="#陷入" class="headerlink" title="陷入"></a>陷入</h3><pre><code>用户系统调用</code></pre><h2 id="链接装载"><a href="#链接装载" class="headerlink" title="链接装载"></a>链接装载</h2><p><img src="../images/compile.jpeg" alt></p>
+<ul>
+<li>预处理阶段：处理以 # 开头的预处理命令；</li>
+<li>编译阶段：翻译成汇编文件；</li>
+<li>汇编阶段：将汇编文件翻译成可重定位目标文件；</li>
+<li>链接阶段：将可重定位目标文件和 printf.o 等单独预编译好的目标文件进行合并，得到最终的可执行目标文件。<h3 id="静态链接"><a href="#静态链接" class="headerlink" title="静态链接"></a>静态链接</h3></li>
+</ul>
+<ol>
+<li>符号解析：每个符号对应于一个函数、一个全局变量或一个静态变量，符号解析的目的是将每个符号引用与一个符号定义关联起来。</li>
+<li>重定位：链接器通过把每个符号定义与一个内存位置关联起来，然后修改所有对这些符号的引用，使得它们指向这个内存位置。</li>
+<li>在可执行文件中产生一份拷贝。<h3 id="目标文件"><a href="#目标文件" class="headerlink" title="目标文件"></a>目标文件</h3></li>
+</ol>
+<ul>
+<li><p>可执行目标文件：可以直接在内存中执行；</p>
+</li>
+<li><p>可重定位目标文件：可与其它可重定位目标文件在链接阶段合并，创建一个可执行目标文件；</p>
+</li>
+<li><p>共享目标文件：这是一种特殊的可重定位目标文件，可以在运行时被动态加载进内存并链接；</p>
+<h3 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h3><p>在内存中一般只保留该编译单元的一份拷贝。</p>
+</li>
+<li><p>装载时动态链接(Load-time Dynamic Linking)：这种用法的前提是在编译之前已经明确知道要调用DLL中的哪几个函数，编译时在目标文件中只保留必要的链接信息，而不含DLL函数的代码；当程序执行时，调用函数的时候利用链接信息加载DLL函数代码并在内存中将其链接入调用程序的执行空间中(全部函数加载进内存），其主要目的是便于代码共享。（动态加载程序，处在加载阶段，主要为了共享代码，共享代码内存）</p>
+</li>
+<li><p>运行时动态链接(Run-time Dynamic Linking)：这种方式是指在编译之前并不知道将会调用哪些DLL函数，完全是在运行过程中根据需要决定应调用哪个函数，将其加载到内存中（只加载调用的函数进内存），并标识内存地址，其他程序也可以使用该程序，并用LoadLibrary和GetProcAddress动态获得DLL函数的入口地址。（dll在内存中只存在一份，处在运行阶段）</p>
+</li>
 </ul>
 
       
@@ -658,9 +718,7 @@
         
         <div class="post-tags">
           
-            <a href="/tags/c/" rel="tag"># c++</a>
-          
-            <a href="/tags/面试/" rel="tag"># 面试</a>
+            <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
           
         </div>
       
@@ -673,8 +731,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/语言/interview_one/" rel="next" title="c++基础总结1">
-                <i class="fa fa-chevron-left"></i> c++基础总结1
+              <a href="/uncategorized/Cpp11/" rel="next" title="c++2.0">
+                <i class="fa fa-chevron-left"></i> c++2.0
               </a>
             
           </div>
@@ -682,10 +740,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/数据结构/datastructure/" rel="prev" title="基本数据结构整理">
-                基本数据结构整理 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -894,7 +948,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OOP"><span class="nav-number">1.</span> <span class="nav-text">OOP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多态"><span class="nav-number">1.1.</span> <span class="nav-text">多态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#静态多态（编译期间，早绑定）"><span class="nav-number">1.1.1.</span> <span class="nav-text">静态多态（编译期间，早绑定）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态多态（运行期间，晚绑定）"><span class="nav-number">1.1.2.</span> <span class="nav-text">动态多态（运行期间，晚绑定）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#virtual"><span class="nav-number">1.1.3.</span> <span class="nav-text">virtual ~</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数指针，虚函数表"><span class="nav-number">2.</span> <span class="nav-text">虚函数指针，虚函数表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚继承"><span class="nav-number">3.</span> <span class="nav-text">虚继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数和虚继承"><span class="nav-number">4.</span> <span class="nav-text">虚函数和虚继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚合类"><span class="nav-number">5.</span> <span class="nav-text">聚合类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分配管理"><span class="nav-number">6.</span> <span class="nav-text">内存分配管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pacement-new"><span class="nav-number">6.1.</span> <span class="nav-text">pacement new</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#只在堆上生成对象的类"><span class="nav-number">7.</span> <span class="nav-text">只在堆上生成对象的类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#只在栈上生成对象的类"><span class="nav-number">8.</span> <span class="nav-text">只在栈上生成对象的类</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本特征"><span class="nav-number">1.1.</span> <span class="nav-text">基本特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本功能"><span class="nav-number">1.2.</span> <span class="nav-text">基本功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程管理"><span class="nav-number">1.2.1.</span> <span class="nav-text">进程管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程与线程"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">进程与线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#切换"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">切换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程调度算法"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">进程调度算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#批处理系统"><span class="nav-number">1.2.1.3.1.</span> <span class="nav-text">批处理系统</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#交互式系统"><span class="nav-number">1.2.1.3.2.</span> <span class="nav-text">交互式系统</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实时系统"><span class="nav-number">1.2.1.3.3.</span> <span class="nav-text">实时系统</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同步互斥"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">同步互斥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程通信"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">进程通信</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#管道"><span class="nav-number">1.2.1.5.1.</span> <span class="nav-text">管道</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FIFO"><span class="nav-number">1.2.1.5.2.</span> <span class="nav-text">FIFO</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#消息队列"><span class="nav-number">1.2.1.5.3.</span> <span class="nav-text">消息队列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#信号量"><span class="nav-number">1.2.1.5.4.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#共享存储"><span class="nav-number">1.2.1.5.5.</span> <span class="nav-text">共享存储</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#套接字"><span class="nav-number">1.2.1.5.6.</span> <span class="nav-text">套接字</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#共享存储-1"><span class="nav-number">1.2.1.5.7.</span> <span class="nav-text">共享存储</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁"><span class="nav-number">1.2.1.6.</span> <span class="nav-text">死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#必要条件"><span class="nav-number">1.2.1.6.1.</span> <span class="nav-text">必要条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#处理方法"><span class="nav-number">1.2.1.6.2.</span> <span class="nav-text">处理方法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#鸵鸟策略"><span class="nav-number">1.2.1.6.2.1.</span> <span class="nav-text">鸵鸟策略</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#死锁检测"><span class="nav-number">1.2.1.6.2.2.</span> <span class="nav-text">死锁检测</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#死锁恢复"><span class="nav-number">1.2.1.6.3.</span> <span class="nav-text">死锁恢复</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#死锁预防"><span class="nav-number">1.2.1.6.4.</span> <span class="nav-text">死锁预防</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#死锁避免"><span class="nav-number">1.2.1.6.5.</span> <span class="nav-text">死锁避免</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#银行家算法"><span class="nav-number">1.2.1.6.5.1.</span> <span class="nav-text">银行家算法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存管理"><span class="nav-number">1.2.2.</span> <span class="nav-text">内存管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件管理"><span class="nav-number">1.2.3.</span> <span class="nav-text">文件管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设备管理"><span class="nav-number">1.2.4.</span> <span class="nav-text">设备管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#磁盘结构"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">磁盘结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#磁盘调度算法"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">磁盘调度算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统调用"><span class="nav-number">1.3.</span> <span class="nav-text">系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内核"><span class="nav-number">1.4.</span> <span class="nav-text">内核</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#大内核"><span class="nav-number">1.4.1.</span> <span class="nav-text">大内核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#微内核"><span class="nav-number">1.4.2.</span> <span class="nav-text">微内核</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断"><span class="nav-number">1.5.</span> <span class="nav-text">中断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#外中断"><span class="nav-number">1.5.1.</span> <span class="nav-text">外中断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常"><span class="nav-number">1.5.2.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#陷入"><span class="nav-number">1.5.3.</span> <span class="nav-text">陷入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链接装载"><span class="nav-number">1.6.</span> <span class="nav-text">链接装载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#静态链接"><span class="nav-number">1.6.1.</span> <span class="nav-text">静态链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目标文件"><span class="nav-number">1.6.2.</span> <span class="nav-text">目标文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态链接"><span class="nav-number">1.6.3.</span> <span class="nav-text">动态链接</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
