@@ -437,7 +437,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-10-02 00:11:10" itemprop="dateModified" datetime="2019-10-02T00:11:10+08:00">2019-10-02</time>
+                <time title="修改时间：2019-12-09 10:06:14" itemprop="dateModified" datetime="2019-12-09T10:06:14+08:00">2019-12-09</time>
               </span>
             
           
@@ -516,7 +516,7 @@
 <h1 id="基于范围的for循环"><a href="#基于范围的for循环" class="headerlink" title="基于范围的for循环"></a>基于范围的for循环</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ( val declare : collection )</span><br><span class="line">    statement</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> e : arr)</span><br><span class="line">&#123;</span><br><span class="line">    e = e*e;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;e&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">InputIterator</span>, <span class="title">class</span> <span class="title">Function</span>&gt;</span></span><br><span class="line"><span class="class">   <span class="title">Function</span> <span class="title">for_each</span>(</span></span><br><span class="line"><span class="class">      <span class="title">InputIterator</span> _<span class="title">First</span>, </span></span><br><span class="line"><span class="class">      <span class="title">InputIterator</span> _<span class="title">Last</span>, </span></span><br><span class="line"><span class="class">      <span class="title">Function</span> _<span class="title">Func</span></span></span><br><span class="line"><span class="class">   );</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="override-final"><a href="#override-final" class="headerlink" title="override final"></a>override final</h1><ul>
-<li>override:表示函数应当重写基类中的虚函数。 </li>
+<li>override:表示函数应当重写基类中的虚函数。（纯虚函数，抽象类）</li>
 <li>final:表示派生类不应当重写这个虚函数。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"A::f"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">long</span> l)</span> final </span>&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"B::f"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> :</span> <span class="keyword">public</span> A&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> i)</span> override </span>&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"B::f"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 </li>
@@ -696,7 +696,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-09-11 10:42:22" itemprop="dateModified" datetime="2019-09-11T10:42:22+08:00">2019-09-11</time>
+                <time title="修改时间：2019-10-25 10:13:51" itemprop="dateModified" datetime="2019-10-25T10:13:51+08:00">2019-10-25</time>
               </span>
             
           
@@ -831,6 +831,12 @@
 </ul>
 </li>
 <li>平衡二叉🌲(AVL)</li>
+</ul>
+<ol>
+<li>平衡因子BF 左高-右高 ,根节点BF&gt;1 右旋 顺时针  &lt;-1 左旋</li>
+<li>插入结点后，最小不平衡子树的BF与它的子树的BF符号相反时，就需要对结点先进行一次旋转以使得符号相同后，再反向旋转一次才能够完成平衡操作</li>
+</ol>
+<ul>
 <li>最小失衡🌲(平衡二叉树插入新的节点导致失衡的子🌲):调整策略<ul>
 <li>LL 左孩子右旋</li>
 <li>RR 右孩子左旋</li>
@@ -980,7 +986,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-09-11 10:29:19" itemprop="dateModified" datetime="2019-09-11T10:29:19+08:00">2019-09-11</time>
+                <time title="修改时间：2019-12-04 14:08:57" itemprop="dateModified" datetime="2019-12-04T14:08:57+08:00">2019-12-04</time>
               </span>
             
           
@@ -1067,7 +1073,7 @@
 </li>
 </ul>
 <h4 id="静态多态（编译期间，早绑定）"><a href="#静态多态（编译期间，早绑定）" class="headerlink" title="静态多态（编译期间，早绑定）"></a>静态多态（编译期间，早绑定）</h4><ul>
-<li><p>函数重载</p>
+<li><p>函数重载,模板</p>
 <h4 id="动态多态（运行期间，晚绑定）"><a href="#动态多态（运行期间，晚绑定）" class="headerlink" title="动态多态（运行期间，晚绑定）"></a>动态多态（运行期间，晚绑定）</h4></li>
 <li><p>虚函数</p>
 <p>  tips:</p>
@@ -1759,6 +1765,10 @@
                     
                       
                     
+                      
+                    
+                      
+                    
                     <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1827,7 +1837,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
