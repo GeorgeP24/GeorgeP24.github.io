@@ -422,13 +422,23 @@
                 
               
 
-              <time title="创建时间：2020-01-05 10:42:06 / 修改时间：16:47:50" itemprop="dateCreated datePublished" datetime="2020-01-05T10:42:06+08:00">2020-01-05</time>
+              <time title="创建时间：2020-01-05 10:42:06" itemprop="dateCreated datePublished" datetime="2020-01-05T10:42:06+08:00">2020-01-05</time>
             </span>
           
 
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-01-06 10:55:21" itemprop="dateModified" datetime="2020-01-06T10:55:21+08:00">2020-01-06</time>
+              </span>
             
           
 
@@ -532,11 +542,19 @@
 <p>可以看成是时间片轮转调度算法和优先级调度算法的结合。</p>
 <h5 id="实时系统"><a href="#实时系统" class="headerlink" title="实时系统"></a>实时系统</h5><p>实时系统要求一个请求在一个确定时间内得到响应。分为硬实时和软实时，前者必须满足绝对的截止时间，后者可以容忍一定的超时。</p>
 <h4 id="同步互斥"><a href="#同步互斥" class="headerlink" title="同步互斥"></a>同步互斥</h4><ul>
-<li>对临界资源进行访问的那段代码称为临界区。</li>
-<li>管程</li>
-<li>同步互斥<h4 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h4><h5 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h5>管道是通过调用 pipe 函数创建的，fd[0] 用于读，fd[1] 用于写。<br>unistd.h<br>int pipe(int fd[2]);</li>
-<li>半双工通信。</li>
-<li>只能在父子进程和兄弟进程中使用。<h5 id="FIFO"><a href="#FIFO" class="headerlink" title="FIFO"></a>FIFO</h5>命名管道，去除了管道只能在父子进程中使用的限制<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mkfifo</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *path, <span class="keyword">mode_t</span> mode)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mkfifoat</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">const</span> <span class="keyword">char</span> *path, <span class="keyword">mode_t</span> mode)</span></span>;</span><br></pre></td></tr></table></figure>
+<li><p>对临界资源进行访问的那段代码称为临界区。</p>
+</li>
+<li><p>管程</p>
+</li>
+<li><p>同步互斥</p>
+<h4 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h4><h5 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h5><p>管道是通过调用 pipe 函数创建的，fd[0] 用于读，fd[1] 用于写。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unistd.h </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pipe</span><span class="params">(<span class="keyword">int</span> fd[<span class="number">2</span>])</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>半双工通信。</p>
+</li>
+<li><p>只能在父子进程和兄弟进程中使用。</p>
+<h5 id="FIFO"><a href="#FIFO" class="headerlink" title="FIFO"></a>FIFO</h5><p>命名管道，去除了管道只能在父子进程中使用的限制</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mkfifo</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *path, <span class="keyword">mode_t</span> mode)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mkfifoat</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">const</span> <span class="keyword">char</span> *path, <span class="keyword">mode_t</span> mode)</span></span>;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -581,7 +599,52 @@
 <li>多资源的银行家算法</li>
 </ul>
 <p><img src="../images/bank.png" alt><br>上图中有五个进程，四个资源。左边的图表示已经分配的资源，右边的图表示还需要分配的资源。最右边的 E、P 以及 A 分别表示：总资源、已分配资源以及可用资源，注意这三个为向量，而不是具体数值，例如 A=(1020)，表示 4 个资源分别还剩下 1/0/2/0。<br>算法：<br>按照分配矩阵进行分配，寻找小于等于可用资源的行，如果不存在则状态不安全。存在则释放该行继续迭代。<br>状态不安全。</p>
-<h3 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h3><h3 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h3><h3 id="设备管理"><a href="#设备管理" class="headerlink" title="设备管理"></a>设备管理</h3><h4 id="磁盘结构"><a href="#磁盘结构" class="headerlink" title="磁盘结构"></a>磁盘结构</h4><ul>
+<h3 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h3><h4 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h4><p>虚拟内存允许程序不用将地址空间中的每一页都映射到物理内存.</p>
+<h4 id="分页系统映射"><a href="#分页系统映射" class="headerlink" title="分页系统映射"></a>分页系统映射</h4><p>内存管理单元（MMU）管理着地址空间和物理内存的转换，其中的页表（Page table）存储着页（程序地址空间）和页框（物理内存空间）的映射表。</p>
+<ul>
+<li>c++虚拟地址=页号+偏移量<br><img src="../images/page_control.png" alt><br>页表项最后一位表示是否存在于内存中，1 表示存在.0不存在,则需要进行页面替换.<h4 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h4><h5 id="OPT-Optimal-replacement-algorithm"><a href="#OPT-Optimal-replacement-algorithm" class="headerlink" title="OPT Optimal replacement algorithm"></a>OPT Optimal replacement algorithm</h5>选择被在此访问时间最长的那一页。是一种理想算法，实际无法实现。<br><img src="../images/OPT.png" alt><h5 id="FIFO-First-in-First-out"><a href="#FIFO-First-in-First-out" class="headerlink" title="FIFO First in First out"></a>FIFO First in First out</h5>FIFO 会产生Belady异常（当所分配的物理块数增大而页故障数不减反增的异常现象）</li>
+</ul>
+<ol>
+<li>改进的FIFO算法 第二次机会算法</li>
+</ol>
+<p>根据FIFO维护一只链表，尾插法，设置标志位R,页面被使用时，R=0。从头开始查找R=1的页面，如果存在说明该页最久未使用，进行置换。如果R=1，则将R=0，将该页面放在尾部。<br><img src="../images/FIFO.png" alt></p>
+<h5 id="LRU-Least-Recently-Used"><a href="#LRU-Least-Recently-Used" class="headerlink" title="LRU, Least Recently Used"></a>LRU, Least Recently Used</h5><p>实现 LRU，需要在内存中维护一个所有页面的链表。当一个页面被访问时，将这个页面移到链表表头。这样就能保证链表表尾的页面是最近最久未访问的。该方法代价较高。</p>
+<p>LRU需要寄存器和栈的硬件支持。LRU是堆栈类的算法。理论上可以证明，堆栈类算法不可能出现Belady异常。FIFO算法基于队列实现，不是堆栈类算法。<br><img src="../images/LRU.png" alt></p>
+<h5 id="NRU-Not-Recently-Used（clock算法）"><a href="#NRU-Not-Recently-Used（clock算法）" class="headerlink" title="NRU, Not Recently Used（clock算法）"></a>NRU, Not Recently Used（clock算法）</h5><ol>
+<li>简单clock算法</li>
+</ol>
+<p>维护一个标志位R(read),将内存中所有页面都通过链接指针链接成一个循环队列。换页时，按照FIFO的算法检查将R=O的页面置换。</p>
+<ol start="2">
+<li>改进的clock算法</li>
+</ol>
+<p>每个页面设置两个标志位，R(read)和M(modify)。被读时，R=1.被修改时，M=1，R=0。</p>
+<ul>
+<li>最近未被访问，也未被修改(R=0, M=0)。</li>
+<li>最近被访问，但未被修改(R=1, M=0)。</li>
+<li>最近未被访问，但被修改(R=0, M=1)。</li>
+<li>最近被访问，被修改(R=1, M=1)。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">deque</span>&lt;<span class="built_in">map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; *que;</span><br><span class="line"><span class="keyword">auto</span> deque_point = que.begin();</span><br><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line"><span class="keyword">while</span>(deque_point)&#123;</span><br><span class="line">    <span class="keyword">if</span>(R=<span class="number">0</span>,M=<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    ++deque_point;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span>(deque_point)&#123;</span><br><span class="line">    <span class="keyword">if</span>(R=<span class="number">0</span>,M=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    *deque_point-&gt;M = <span class="number">0</span>;</span><br><span class="line">    ++deque_point;</span><br><span class="line">&#125;</span><br><span class="line">deque_point = que.begin();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>优先换出已经被修改的脏页面（R=0，M=1），而不是被频繁使用的干净页面（R=1，M=0).</p>
+<h4 id="分段"><a href="#分段" class="headerlink" title="分段"></a>分段</h4><ol>
+<li>虚拟内存采用的是分页技术，也就是将地址空间划分成固定大小的页，每一页再与内存进行映射。</li>
+</ol>
+<ul>
+<li>段页式—程序的地址空间划分成多个拥有独立地址空间的段，每个段上的地址空间划分成大小相同的页。这样既拥有分段系统的共享和保护，又拥有分页系统的虚拟内存功能。<br><img src="../images/segment1.png" alt><br><img src="../images/segment2.png" alt><br><img src="../images/segment3.png" alt></li>
+</ul>
+<ol start="2">
+<li>分页与分段</li>
+</ol>
+<ul>
+<li><p>对程序员的透明性：分页透明，但是分段需要程序员显式划分每个段。</p>
+</li>
+<li><p>地址空间的维度：分页是一维地址空间，分段是二维的。</p>
+</li>
+<li><p>大 小是否可以改变：页的大小不可变，段的大小可以动态改变。</p>
+</li>
+<li><p>出现的原因：分页主要用于实现虚拟内存，从而获得更大的地址空间；分段主要是为了使程序和数据可以被划分为逻辑上独立的地址空间并且有助于共享和保护。</p>
+<h3 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h3><h3 id="设备管理"><a href="#设备管理" class="headerlink" title="设备管理"></a>设备管理</h3><h4 id="磁盘结构"><a href="#磁盘结构" class="headerlink" title="磁盘结构"></a>磁盘结构</h4></li>
 <li><p>盘面（Platter）：一个磁盘有多个盘面；</p>
 </li>
 <li><p>磁道（Track）：盘面上的圆形带状区域，一个盘面可以有多个磁道；</p>
