@@ -105,7 +105,12 @@
 <meta property="og:description" content="OOP 多态 C++多态分类及其实现 重载多态(Ad-hoc Polymorphism,编译期) 函数重载，运算符重载 子类型多态(Subtype Polymorphism,运行期) 虚函数 参数多态性(Parametric PolyMorphism) 编译期 类模板，函数模板 强制多态(Coerion PolyMorphism 编译期,运行期) 类型转换     静态多态（编译期间，早绑定） 函">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://georgep24.github.io/images/oop.png">
-<meta property="og:updated_time" content="2019-12-04T06:08:57.078Z">
+<meta property="og:image" content="https://georgep24.github.io/images/virtual_table1">
+<meta property="og:image" content="https://georgep24.github.io/images/virtual_table2">
+<meta property="og:image" content="https://georgep24.github.io/images/virtual_table3">
+<meta property="og:image" content="https://georgep24.github.io/images/virtual_table4">
+<meta property="og:image" content="https://georgep24.github.io/images/virtual_table5">
+<meta property="og:updated_time" content="2020-03-11T04:09:46.256Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c++基础总结2">
 <meta name="twitter:description" content="OOP 多态 C++多态分类及其实现 重载多态(Ad-hoc Polymorphism,编译期) 函数重载，运算符重载 子类型多态(Subtype Polymorphism,运行期) 虚函数 参数多态性(Parametric PolyMorphism) 编译期 类模板，函数模板 强制多态(Coerion PolyMorphism 编译期,运行期) 类型转换     静态多态（编译期间，早绑定） 函">
@@ -441,7 +446,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-12-04 14:08:57" itemprop="dateModified" datetime="2019-12-04T14:08:57+08:00">2019-12-04</time>
+                <time title="修改时间：2020-03-11 12:09:46" itemprop="dateModified" datetime="2020-03-11T12:09:46+08:00">2020-03-11</time>
               </span>
             
           
@@ -524,7 +529,7 @@
 
       
         <h2 id="OOP"><a href="#OOP" class="headerlink" title="OOP"></a>OOP</h2><p><img src="/images/oop.png" alt></p>
-<h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><ul>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><ul>
 <li>C++多态分类及其实现<ol>
 <li>重载多态(Ad-hoc Polymorphism,编译期) 函数重载，运算符重载</li>
 <li>子类型多态(Subtype Polymorphism,运行期) 虚函数</li>
@@ -533,24 +538,31 @@
 </ol>
 </li>
 </ul>
-<h4 id="静态多态（编译期间，早绑定）"><a href="#静态多态（编译期间，早绑定）" class="headerlink" title="静态多态（编译期间，早绑定）"></a>静态多态（编译期间，早绑定）</h4><ul>
-<li><p>函数重载,模板</p>
-<h4 id="动态多态（运行期间，晚绑定）"><a href="#动态多态（运行期间，晚绑定）" class="headerlink" title="动态多态（运行期间，晚绑定）"></a>动态多态（运行期间，晚绑定）</h4></li>
-<li><p>虚函数</p>
-<p>  tips:</p>
-<ul>
+<h3 id="静态多态（编译期间，早绑定）"><a href="#静态多态（编译期间，早绑定）" class="headerlink" title="静态多态（编译期间，早绑定）"></a>静态多态（编译期间，早绑定）</h3><ul>
+<li>函数重载,模板<h3 id="动态多态（运行期间，晚绑定）"><a href="#动态多态（运行期间，晚绑定）" class="headerlink" title="动态多态（运行期间，晚绑定）"></a>动态多态（运行期间，晚绑定）</h3></li>
+<li>虚函数</li>
+<li>多态与非多态的实质区别就是函数地址是早绑定还是晚绑定<br>  tips:</li>
 <li>普通函数不可是virtual</li>
 <li>static 不可为virtual</li>
-<li>构造函数不可为virtual,因为在调用构造函数时，虚表指针并没有在对象的内存空间中，必须要构造函数调用完成后才会形成虚表指针</li>
+<li>构造函数不可为virtual,因为在调用构造函数时，虚表指针并没有在对象的内存空间中，必须要构造函数调用完成后才会形成虚表指针<br>  tips:C++ 隐藏</li>
+<li>如果派生类的函数与基类的函数同名，但是参数不同。此时，不论有无virtual关键字，基类的函数将被隐藏（注意别与重载混淆）。</li>
+<li>如果派生类的函数与基类的函数同名，并且参数也相同，但是基类函数没有virtual关键字。此时，基类的函数被隐藏（注意别与覆盖混淆）.</li>
 </ul>
+<h2 id="虚函数指针相关"><a href="#虚函数指针相关" class="headerlink" title="虚函数指针相关"></a>虚函数指针相关</h2><h3 id="虚函数指针和虚函数表"><a href="#虚函数指针和虚函数表" class="headerlink" title="虚函数指针和虚函数表"></a>虚函数指针和虚函数表</h3><ul>
+<li>A b;<br><img src="/images/virtual_table1" alt><br>父类虚函数表</li>
+<li>包含虚函数的类才会有虚函数表， 同属于一个类的对象共享虚函数表， 但是有各自的虚函数指针.虚函数表实质是一个指针数组，里面存的是虚函数的函数指针。</li>
+<li>虚表指针放在类成员中的第一个地址(C++的编译器应该是保证虚函数表的指针存在于对象实例中最前面的位置（)，可以通过(long<em>)(&amp;b) 访问虚表地址，(long</em>)<em>(long</em>)(&amp;b) 访问第一个第一个虚函数地址。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pFun = (Fun)*((<span class="keyword">int</span>*)*(<span class="keyword">int</span>*)(&amp;b));</span><br><span class="line">pFun();</span><br><span class="line"><span class="keyword">reinterpret_cast</span>&lt;Fun&gt;(*((<span class="keyword">long</span> *)*(<span class="keyword">long</span> *)(&amp;d)))();</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
-<h4 id="virtual"><a href="#virtual" class="headerlink" title="virtual ~"></a>virtual ~</h4><pre><code>作用
-* 解决based point-&gt; derived object,用based point 删除derived object.</code></pre><h2 id="虚函数指针，虚函数表"><a href="#虚函数指针，虚函数表" class="headerlink" title="虚函数指针，虚函数表"></a>虚函数指针，虚函数表</h2><h2 id="虚继承"><a href="#虚继承" class="headerlink" title="虚继承"></a>虚继承</h2><pre><code>虚继承用于解决多继承条件下的菱形继承问题浪(费存储空间、存在二义性)
+<p><img src="/images/virtual_table2" alt><br>单继承，不重写虚函数<br><img src="/images/virtual_table3" alt><br>单继承，重写虚函数<br><img src="/images/virtual_table4" alt><br>多继承，不重写虚函数<br><img src="/images/virtual_table5" alt><br>多继承，重写虚函数</p>
+<h3 id="virtual-f"><a href="#virtual-f" class="headerlink" title="virtual ~f()"></a>virtual ~f()</h3><pre><code>作用
+* 解决based point-&gt; derived object,用based point 删除derived object.
+* 如果父类的虚函数是private或是protected的，但这些非public的虚函数同样会存在于虚函数表中，所以，我们同样可以使用访问虚函数表的方式来访问这些non-public的虚函数.</code></pre><h3 id="虚继承"><a href="#虚继承" class="headerlink" title="虚继承"></a>虚继承</h3><pre><code>虚继承用于解决多继承条件下的菱形继承问题(费存储空间、存在二义性)
 
 * 底层实现原理与编译器相关，一般通过虚基类指针和虚基类表实现，每个虚继承的子类都有一个虚基类指针(占用一个指针的存储空间，4字节）和虚基类表(不占用类对象的存储空间)(需要强调的是，虚基类依旧会在子类里面存在拷贝，只是仅仅最多存在一份而已，并不是不在子类里面了);当虚继承的子类被当做父类继承时，虚基类指针也会被继承。
 
-* 实际上，vbptr 指的是虚基类表指针（virtual base table pointer），该指针指向了一个虚基类表（virtual table），虚表中记录了虚基类与本类的偏移地址；通过偏移地址，这样就找到了虚基类成员，而虚继承也不用像普通多继承那样维持着公共基类（虚基类）的两份同样的拷贝，节省了存储空间。</code></pre><h2 id="虚函数和虚继承"><a href="#虚函数和虚继承" class="headerlink" title="虚函数和虚继承"></a>虚函数和虚继承</h2><ul>
+* 实际上，vbptr 指的是虚基类表指针（virtual base table pointer），该指针指向了一个虚基类表（virtual table），虚表中记录了虚基类与本类的偏移地址；通过偏移地址，这样就找到了虚基类成员，而虚继承也不用像普通多继承那样维持着公共基类（虚基类）的两份同样的拷贝，节省了存储空间。</code></pre><h3 id="虚函数和虚继承"><a href="#虚函数和虚继承" class="headerlink" title="虚函数和虚继承"></a>虚函数和虚继承</h3><ul>
 <li>都使用了虚指针(占用类的存储空间)和虚表（不占类存储空间）</li>
 <li>虚函数表存储的是虚函数地址，虚基类表存储相对直接继承类的位偏移。</li>
 <li>虚基类在子类中存在一份拷贝，而虚函数不占用存储空间。</li>
@@ -593,11 +605,13 @@
 </ul>
 </li>
 </ul>
-<h2 id="只在堆上生成对象的类"><a href="#只在堆上生成对象的类" class="headerlink" title="只在堆上生成对象的类"></a>只在堆上生成对象的类</h2><pre><code>方法：将虚构函数私有。</code></pre><ul>
+<h2 id="只在堆上生成对象的类"><a href="#只在堆上生成对象的类" class="headerlink" title="只在堆上生成对象的类"></a>只在堆上生成对象的类</h2><pre><code>方法：将析构函数私有。</code></pre><ul>
 <li>(C++ 是静态绑定语言，编译器管理栈上对象的生命周期，编译器在为类对象分配栈空间时，会先检查类的析构函数的访问性。若析构函数不可访问，则不能在栈上创建对象。)</li>
+<li>在栈上建立一个类对象，是由编译器为对象在栈空间中分配内存，是通过直接移动栈顶指针，挪出适当的空间，然后在这片内存空间上调用构造函数形成一个栈对象。使用这种方法，直接调用类的构造函数。</li>
 </ul>
 <h2 id="只在栈上生成对象的类"><a href="#只在栈上生成对象的类" class="headerlink" title="只在栈上生成对象的类"></a>只在栈上生成对象的类</h2><pre><code>方法：将new和delete操作符重载为私有。</code></pre><ul>
 <li>：C++ 是静态绑定语言，编译器管理栈上对象的生命周期，编译器在为类对象分配栈空间时，会先检查类的析构函数的访问性。若析构函数不可访问，则不能在栈上创建对象。</li>
+<li>动态建立类对象，是使用new运算符将对象建立在堆空间中。这个过程分为两步，第一步是执行operator new()函数，在堆空间中搜索合适的内存并进行分配；第二步是调用构造函数构造对象，初始化这片内存空间。这种方法，间接调用类的构造函数。</li>
 </ul>
 
       
@@ -683,7 +697,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/数据结构/datastructure/" rel="prev" title="基本数据结构整理">
+              <a href="/foundation/datastructure/" rel="prev" title="基本数据结构整理">
                 基本数据结构整理 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -758,7 +772,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -774,6 +788,8 @@
                     
                   
                     
+                    
+                      
                     
                       
                     
@@ -832,7 +848,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">12</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -896,7 +920,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OOP"><span class="nav-number">1.</span> <span class="nav-text">OOP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多态"><span class="nav-number">1.1.</span> <span class="nav-text">多态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#静态多态（编译期间，早绑定）"><span class="nav-number">1.1.1.</span> <span class="nav-text">静态多态（编译期间，早绑定）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态多态（运行期间，晚绑定）"><span class="nav-number">1.1.2.</span> <span class="nav-text">动态多态（运行期间，晚绑定）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#virtual"><span class="nav-number">1.1.3.</span> <span class="nav-text">virtual ~</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数指针，虚函数表"><span class="nav-number">2.</span> <span class="nav-text">虚函数指针，虚函数表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚继承"><span class="nav-number">3.</span> <span class="nav-text">虚继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数和虚继承"><span class="nav-number">4.</span> <span class="nav-text">虚函数和虚继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚合类"><span class="nav-number">5.</span> <span class="nav-text">聚合类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分配管理"><span class="nav-number">6.</span> <span class="nav-text">内存分配管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pacement-new"><span class="nav-number">6.1.</span> <span class="nav-text">pacement new</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#只在堆上生成对象的类"><span class="nav-number">7.</span> <span class="nav-text">只在堆上生成对象的类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#只在栈上生成对象的类"><span class="nav-number">8.</span> <span class="nav-text">只在栈上生成对象的类</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OOP"><span class="nav-number">1.</span> <span class="nav-text">OOP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多态"><span class="nav-number">2.</span> <span class="nav-text">多态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#静态多态（编译期间，早绑定）"><span class="nav-number">2.1.</span> <span class="nav-text">静态多态（编译期间，早绑定）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态多态（运行期间，晚绑定）"><span class="nav-number">2.2.</span> <span class="nav-text">动态多态（运行期间，晚绑定）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数指针相关"><span class="nav-number">3.</span> <span class="nav-text">虚函数指针相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#虚函数指针和虚函数表"><span class="nav-number">3.1.</span> <span class="nav-text">虚函数指针和虚函数表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#virtual-f"><span class="nav-number">3.2.</span> <span class="nav-text">virtual ~f()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚继承"><span class="nav-number">3.3.</span> <span class="nav-text">虚继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚函数和虚继承"><span class="nav-number">3.4.</span> <span class="nav-text">虚函数和虚继承</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚合类"><span class="nav-number">4.</span> <span class="nav-text">聚合类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分配管理"><span class="nav-number">5.</span> <span class="nav-text">内存分配管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pacement-new"><span class="nav-number">5.1.</span> <span class="nav-text">pacement new</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#只在堆上生成对象的类"><span class="nav-number">6.</span> <span class="nav-text">只在堆上生成对象的类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#只在栈上生成对象的类"><span class="nav-number">7.</span> <span class="nav-text">只在栈上生成对象的类</span></a></li></ol></div>
             
 
           </div>
