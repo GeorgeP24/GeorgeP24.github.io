@@ -110,7 +110,7 @@
 <meta property="og:image" content="https://georgep24.github.io/语言/interview_two/virtual_table3.jpg">
 <meta property="og:image" content="https://georgep24.github.io/语言/interview_two/virtual_table4.jpg">
 <meta property="og:image" content="https://georgep24.github.io/语言/interview_two/virtual_table5.jpg">
-<meta property="og:updated_time" content="2020-06-05T12:00:47.387Z">
+<meta property="og:updated_time" content="2020-08-24T07:40:14.946Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c++杂乱笔记2">
 <meta name="twitter:description" content="OOP 多态 C++多态分类及其实现 重载多态(Ad-hoc Polymorphism,编译期) 函数重载，运算符重载 子类型多态(Subtype Polymorphism,运行期) 虚函数 参数多态性(Parametric PolyMorphism) 编译期 类模板，函数模板 强制多态(Coerion PolyMorphism 编译期,运行期) 类型转换     静态多态（编译期间，早绑定） 函">
@@ -446,7 +446,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-06-05 20:00:47" itemprop="dateModified" datetime="2020-06-05T20:00:47+08:00">2020-06-05</time>
+                <time title="修改时间：2020-08-24 15:40:14" itemprop="dateModified" datetime="2020-08-24T15:40:14+08:00">2020-08-24</time>
               </span>
             
           
@@ -550,7 +550,7 @@
 </ul>
 <h2 id="虚函数指针相关"><a href="#虚函数指针相关" class="headerlink" title="虚函数指针相关"></a>虚函数指针相关</h2><h3 id="虚函数指针和虚函数表"><a href="#虚函数指针和虚函数表" class="headerlink" title="虚函数指针和虚函数表"></a>虚函数指针和虚函数表</h3><ul>
 <li>A b;<br><img src="//georgep24.github.io/语言/interview_two/virtual_table1.jpg" alt><br>父类虚函数表</li>
-<li>包含虚函数的类才会有虚函数表， 同属于一个类的对象共享虚函数表， 但是有各自的虚函数指针.虚函数表实质是一个指针数组，里面存的是虚函数的函数指针。</li>
+<li>包含虚函数的类才会有虚函数表，同属于一个类的对象共享虚函数表， 但是有各自的虚函数指针.虚函数表实质是一个指针数组，里面存的是虚函数的函数指针。</li>
 <li>虚表指针放在类成员中的第一个地址(C++的编译器应该是保证虚函数表的指针存在于对象实例中最前面的位置（)，可以通过(long<em>)(&amp;b) 访问虚表地址，(long</em>)<em>(long</em>)(&amp;b) 访问第一个第一个虚函数地址。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pFun = (Fun)*((<span class="keyword">int</span>*)*(<span class="keyword">int</span>*)(&amp;b));</span><br><span class="line">pFun();</span><br><span class="line"><span class="keyword">reinterpret_cast</span>&lt;Fun&gt;(*((<span class="keyword">long</span> *)*(<span class="keyword">long</span> *)(&amp;d)))();</span><br></pre></td></tr></table></figure>
 
 </li>
@@ -772,7 +772,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -856,7 +856,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">14</span>
+                      
+                    
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
