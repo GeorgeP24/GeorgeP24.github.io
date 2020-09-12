@@ -437,7 +437,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-08-16 15:16:47" itemprop="dateModified" datetime="2020-08-16T15:16:47+08:00">2020-08-16</time>
+                <time title="修改时间：2020-09-10 10:06:40" itemprop="dateModified" datetime="2020-09-10T10:06:40+08:00">2020-09-10</time>
               </span>
             
           
@@ -519,7 +519,20 @@
 <h2 id="阻塞IO模型"><a href="#阻塞IO模型" class="headerlink" title="阻塞IO模型"></a>阻塞IO模型</h2><pre><code>应用程序调用一个IO函数，导致应用程序阻塞，等待数据准备好。从内核拷贝到用户空间,IO函数返回成功指示。</code></pre><p><img src="//georgep24.github.io/uncategorized/IO_model/model1.png" alt></p>
 <h2 id="非阻塞IO模型"><a href="#非阻塞IO模型" class="headerlink" title="非阻塞IO模型"></a>非阻塞IO模型</h2><pre><code>我们把一个SOCKET接口设置为非阻塞就是告诉内核，当所请求的IO操作无法完成时，不要将进程睡眠，而是返回一个错误。这样我们的IO操作函数将不断的测试数据是否已经准备好，如果没有准备好，继续测试，直到数据准备好为止。</code></pre><p><img src="//georgep24.github.io/uncategorized/IO_model/model2.png" alt></p>
 <h2 id="IO复用模型"><a href="#IO复用模型" class="headerlink" title="IO复用模型"></a>IO复用模型</h2><pre><code>I/O复用模型会用到select、poll、epoll函数，这几个函数也会使进程阻塞，但是和阻塞I/O所不同的的，这两个函数可以同时阻塞多个I/O操作。而且可以同时对多个读操作，多个写操作的I/O函数进行检测，直到有数据可读或可写时，才真正调用I/O操作函数。</code></pre><p><img src="//georgep24.github.io/uncategorized/IO_model/model3.png" alt></p>
-<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><pre><code>select系统调用的目的是：在一段指定时间内，监听用户感兴趣的文件描述符上的可读、可写和异常事件。poll和select应该被归类为这样的系统 调用，它们可以阻塞地同时探测一组支持非阻塞的IO设备，直至某一个设备触发了事件或者超过了指定的等待时间——也就是说它们的职责不是做IO，而是帮助 调用者寻找当前就绪的设备。</code></pre><p><img src="//georgep24.github.io/uncategorized/IO_model/select.png" alt></p>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><pre><code>select模型维护一个fd_set(long 数组)（维护文件句柄），查询就绪事件并返回。
+
+select系统调用的目的是：在一段指定时间内，监听用户感兴趣的文件描述符上的可读、可写和异常事件。poll和select应该被归类为这样的系统 调用，它们可以阻塞地同时探测一组支持非阻塞的IO设备，直至某一个设备触发了事件或者超过了指定的等待时间——也就是说它们的职责不是做IO，而是帮助 调用者寻找当前就绪的设备。</code></pre><ul>
+<li>优点<br>  在单一线程注册多个socket，并发处理多个IO请求。</li>
+<li>存在问题<ol>
+<li>fd_set在每次调用select都需要拷贝到内核态，拷贝开销大，同时查询操作需要遍历fd_set，速度慢。</li>
+<li>fd_set大小被内核宏定义为1024（32位，64位2048）,不可变。<br><img src="//georgep24.github.io/uncategorized/IO_model/select.png" alt></li>
+</ol>
+</li>
+</ul>
+<h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">poll</span><span class="params">(struct pollfd *fds, <span class="keyword">nfds_t</span> nfds, <span class="keyword">int</span> timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">pollfd</span> &#123;</span></span><br><span class="line">        <span class="keyword">int</span> fd;                         <span class="comment">// 需要被检测或选择的文件描述符</span></span><br><span class="line">        <span class="keyword">short</span> events;                   <span class="comment">// 对文件描述符fd上感兴趣的事件</span></span><br><span class="line">        <span class="keyword">short</span> revents;                  <span class="comment">// 文件描述符fd上当前实际发生的事件</span></span><br><span class="line">&#125; <span class="keyword">pollfd_t</span>;</span><br><span class="line"><span class="comment">//返回值为就绪文件数量，空为0，错误为1.</span></span><br></pre></td></tr></table></figure>
+
+<p>poll与select差距不大，用pollfd替代fd_set，解决了文件描述符大小上限问题。struct pollfd *fds fds是一个struct pollfd类型的数组，用于存放需要检测其状态的socket描述符，并且调用poll函数之后fds数组不会被清空；一个pollfd结构体表示一个被监视的文件描述符，通过传递fds指示 poll() 监视多个文件描述符。其中，结构体的events域是监视该文件描述符的事件掩码，由用户来设置这个域，结构体的revents域是文件描述符的操作结果事件掩码，内核在调用返回时设置这个域</p>
+<p>nfds_t nfds 记录数组fds中描述符的总数量</p>
 <h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3>
           
         
@@ -636,7 +649,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-06-05 20:53:40" itemprop="dateModified" datetime="2020-06-05T20:53:40+08:00">2020-06-05</time>
+                <time title="修改时间：2020-09-12 11:29:37" itemprop="dateModified" datetime="2020-09-12T11:29:37+08:00">2020-09-12</time>
               </span>
             
           
@@ -785,7 +798,7 @@
 <li>AS 之间的路由选择必须考虑有关的策略，比如有些 AS 不愿意让其它 AS 经过。<br>BGP 只能寻找一条比较好的路由，而不是最佳路由。每个 AS 都必须配置 BGP 发言人，通过在两个相邻 BGP 发言人之间建立 TCP 连接来交换路由信息。<h1 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h1><h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2>用户数据报协议 UDP（User Datagram Protocol）是无连接的，尽最大可能交付，没有拥塞控制，面向报文（对于应用程序传下来的报文不合并也不拆分，只是添加 UDP 首部），支持一对一、一对多、多对一和多对多的交互通信。</li>
 </ol>
 <p>首部字段只有 8 个字节，包括源端口、目的端口、长度、检验和。12 字节的伪首部是为了计算检验和临时添加的。</p>
-<p><img src="/computer_network/udp_format.jpeg" alt></p>
+<p><img src="//georgep24.github.io/uncategorized/computer_network/udp_format.jpeg" alt></p>
 <h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><p>传输控制协议 TCP（Transmission Control Protocol）是面向连接的，提供可靠交付，有流量控制，拥塞控制，提供全双工通信，面向字节流（把应用层传下来的报文看成字节流，把字节流组织成大小不等的数据块），每一条 TCP 连接只能是点对点的（一对一）。</p>
 <ul>
 <li>序号 ：用于对字节流进行编号，例如序号为 301，表示第一个字节的编号为 301，如果携带的数据长度为 100 字节，那么下一个报文段的序号应为 401。</li>
@@ -794,7 +807,7 @@
 <li>确认 ACK ：当 ACK=1 时确认号字段有效，否则无效。TCP 规定，在连接建立后所有传送的报文段都必须把 ACK 置 1。</li>
 <li>同步 SYN ：在连接建立时用来同步序号。当 SYN=1，ACK=0 时表示这是一个连接请求报文段。若对方同意建立连接，则响应报文中 SYN=1，ACK=1。</li>
 <li>终止 FIN ：用来释放一个连接，当 FIN=1 时，表示此报文段的发送方的数据已发送完毕，并要求释放连接。</li>
-<li>窗口 ：窗口值作为接收方让发送方设置其发送窗口的依据。之所以要有这个限制，是因为接收方的数据缓存空间是有限的。<br><img src="/computer_network/tcp_format.png" alt><h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><img src="/computer_network/connect.png" alt><br>假设 A 为客户端，B 为服务器端。</li>
+<li>窗口 ：窗口值作为接收方让发送方设置其发送窗口的依据。之所以要有这个限制，是因为接收方的数据缓存空间是有限的。<br><img src="//georgep24.github.io/uncategorized/computer_network/tcp_format.png" alt><h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><img src="//georgep24.github.io/uncategorized/computer_network/connect.png" alt><br>假设 A 为客户端，B 为服务器端。</li>
 </ul>
 <ol>
 <li>首先 B 处于 LISTEN（监听）状态，等待客户的连接请求。</li>
@@ -803,9 +816,9 @@
 <li>A 收到 B 的连接确认报文后，还要向 B 发出确认，确认号为 y+1，序号为 x+1。</li>
 <li>B 收到 A 的确认后，连接建立。</li>
 </ol>
-<p>第三次握手是为了防止失效的连接请求到达服务器，让服务器错误打开连接。</p>
+<p>第三次握手是为了防止失效的连接请求到达服务器，让服务器错误打开连接。<br>TCP 的可靠连接是靠 seq（ sequence numbers 序列号）来达成的。</p>
 <p>客户端发送的连接请求如果在网络中滞留，那么就会隔很长一段时间才能收到服务器端发回的连接确认。客户端等待一个超时重传时间之后，就会重新请求连接。但是这个滞留的连接请求最后还是会到达服务器，如果不进行三次握手，那么服务器就会打开两个连接。如果有第三次握手，客户端会忽略服务器之后发送的对滞留连接请求的连接确认，不进行第三次握手，因此就不会再次打开连接。</p>
-<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><p><img src="/computer_network/close.jpeg" alt></p>
+<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><p><img src="//georgep24.github.io/uncategorized/computer_network/close.jpeg" alt></p>
 <ol>
 <li>A 发送连接释放报文，FIN=1。</li>
 <li>B 收到之后发出确认，此时 TCP 属于半关闭状态，B 能向 A 发送数据但是 A 不能向 B 发送数据。</li>
@@ -822,7 +835,7 @@
 <p>TCP 主要通过四个算法来进行拥塞控制：慢开始、拥塞避免、快重传、快恢复。</p>
 <ol>
 <li>慢开始<br>发送的最初执行慢开始，令 cwnd = 1，发送方只能发送 1 个报文段；当收到确认后，将 cwnd 加倍，因此之后发送方能够发送的报文段数量为：2、4、8 …。cwnd 指数增长。设置一个慢开始门限 ssthresh，当 cwnd &gt;= ssthresh 时，进入拥塞避免，每个轮次只将 cwnd 加 1，cwnd线性增长。<br>如果出现了超时，则令 ssthresh = cwnd / 2，然后重新执行慢开始。</li>
-<li>快重传和快恢复<br>在接收方，要求每次接收到报文段都应该对最后一个已收到的有序报文段进行确认。例如已经接收到 M1 和 M2，此时收到 M4，应当发送对 M2 的确认。在发送方，如果收到三个重复确认，那么可以知道下一个报文段丢失，此时执行快重传，立即重传下一个报文段。例如收到三个 M2，则 M3 丢失，立即重传 M3。在这种情    况下，只是丢失个别报文段，而不是网络拥塞。因此执行快恢复，令 ssthresh = cwnd / 2 ，cwnd = ssthresh，注意到此时直接进入拥塞避免。慢开始和快恢复的快慢指的是 cwnd 的设定值，而不是 cwnd 的增长速率。慢开始 cwnd 设定为 1，而快恢复 cwnd 设定为 ssthresh。<h1 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h1><h2 id="域名系统"><a href="#域名系统" class="headerlink" title="域名系统"></a>域名系统</h2>DNS 是一个分布式数据库，提供了主机名和 IP 地址之间相互转换的服务。这里的分布式数据库是指，每个站点只保留它自己的那部分数据。域名具有层次结构，从上到下依次为：根域名、顶级域名、二级域名。<br>DNS 可以使用 UDP 或者 TCP 进行传输，使用的端口号都为 53。大多数情况下 DNS 使用 UDP 进行传输，这就要求域名解析器和域名服务器都必须自己处理超时和重传从而保证可靠性。在两种情况下会使用 TCP 进行传输：</li>
+<li>快重传和快恢复<br>在接收方，要求每次接收到报文段都应该对最后一个已收到的有序报文段进行确认。例如已经接收到 M1 和 M2，此时收到 M4，应当发送对 M2 的确认。在发送方，如果收到三个重复确认，那么可以知道下一个报文段丢失，此时执行快重传，立即重传下一个报文段。例如收到三个 M2，则 M3 丢失，立即重传 M3。在这种情况下，只是丢失个别报文段，而不是网络拥塞。因此执行快恢复，令 ssthresh = cwnd / 2 ，cwnd = ssthresh，注意到此时直接进入拥塞避免。慢开始和快恢复的快慢指的是 cwnd 的设定值，而不是 cwnd 的增长速率。慢开始 cwnd 设定为 1，而快恢复 cwnd 设定为 ssthresh。<h1 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h1><h2 id="域名系统"><a href="#域名系统" class="headerlink" title="域名系统"></a>域名系统</h2>DNS 是一个分布式数据库，提供了主机名和 IP 地址之间相互转换的服务。这里的分布式数据库是指，每个站点只保留它自己的那部分数据。域名具有层次结构，从上到下依次为：根域名、顶级域名、二级域名。<br>DNS 可以使用 UDP 或者 TCP 进行传输，使用的端口号都为 53。大多数情况下 DNS 使用 UDP 进行传输，这就要求域名解析器和域名服务器都必须自己处理超时和重传从而保证可靠性。在两种情况下会使用 TCP 进行传输：</li>
 <li>如果返回的响应超过的 512 字节（UDP 最大只支持 512 字节的数据）。</li>
 <li>区域传送（区域传送是主域名服务器向辅助域名服务器传送变化的那部分数据）。<h2 id="文件传送协议"><a href="#文件传送协议" class="headerlink" title="文件传送协议"></a>文件传送协议</h2>使用 TCP 进行连接，它需要两个连接来传送一个文件：</li>
 <li>控制连接：服务器打开端口号 21 等待客户端的连接，客户端主动建立连接后，使用这个连接将客户端的命令传送给服务器，并传回服务器的应答。</li>
@@ -2368,7 +2381,7 @@ select * from (select * from table where col &gt; 1) as tmp where col &lt; 1</co
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-08-16 15:16:47" itemprop="dateModified" datetime="2020-08-16T15:16:47+08:00">2020-08-16</time>
+                <time title="修改时间：2020-09-12 11:29:39" itemprop="dateModified" datetime="2020-09-12T11:29:39+08:00">2020-09-12</time>
               </span>
             
           
@@ -2447,8 +2460,11 @@ select * from (select * from table where col &gt; 1) as tmp where col &lt; 1</co
 <h1 id="primitives"><a href="#primitives" class="headerlink" title="primitives"></a>primitives</h1><h1 id="malloc-free"><a href="#malloc-free" class="headerlink" title="malloc/free"></a>malloc/free</h1><ul>
 <li>维护一个空闲链表</li>
 <li>调用malloc函数时，它沿连接表寻找一个大到足以满足用户请求所需要的内存块。然后，将该内存块一分为二（一块的大小与用户请求的大小相等，另一块的大小就是剩下的字节）。接下来，将分配给用户的那块内存传给用户，并将剩下的那块（如果有的话）返回到连接表上。</li>
-<li>调用free函数时，它将用户释放的内存块连接到空闲链上。到最后，空闲链会被切成很多的小内存片段，如果这时用户申请一个大的内存片段，那么空闲链上可能没有可以满足用户要求的片段了。于是，malloc函数请求延时，并开始在空闲链上翻箱倒柜地检查各内存片段，对它们进行整理，将相邻的小空闲块合并成较大的内存块。如果无法获得符合要求的内存块，malloc函数会返回NULL指针，因此在调用malloc动态申请内存块时，一定要进行返回值的判断。</li>
 </ul>
+<ol>
+<li>当开辟的空间小于 128K 时，调用 brk（）函数，malloc 的底层实现是系统调用函数 brk（），其主要移动指针 _enddata(此时的 _enddata 指的是 Linux 地址空间中堆段的末尾地址，不是数据段的末尾地址)</li>
+<li>当开辟的空间大于 128K 时，mmap（）系统调用函数来在虚拟地址空间中（堆和栈中间，称为“文件映射区域”的地方）找一块空间来开辟。</li>
+</ol>
 <h1 id="LINUX-系统调用函数"><a href="#LINUX-系统调用函数" class="headerlink" title="LINUX 系统调用函数"></a>LINUX 系统调用函数</h1><p><img src="//georgep24.github.io/uncategorized/memory_control/memory2.png" alt></p>
 <h2 id="brk-和sbrk"><a href="#brk-和sbrk" class="headerlink" title="brk()和sbrk()"></a>brk()和sbrk()</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">brk</span><span class="params">(<span class="keyword">void</span> *addr)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sbrk</span><span class="params">(<span class="keyword">intptr_t</span> increment)</span></span>;</span><br></pre></td></tr></table></figure>
 
@@ -2482,7 +2498,10 @@ select * from (select * from table where col &gt; 1) as tmp where col &lt; 1</co
 <li><p>offset：被映射对象内容的起点</p>
 </li>
 </ul>
-<h1 id="SGI-STL-的-allocator"><a href="#SGI-STL-的-allocator" class="headerlink" title="SGI STL 的 allocator"></a>SGI STL 的 allocator</h1><p>基本思路是设计一个free_list[16]数组，负责管理从8bytes到128 bytes不同大小的内存块（chunk），每一个内存块都由连续的固定大小（fixed size block）的很多chunk组成，并用指针链表串接起来。当用户要获取此大小的内存时，就在free_list的链表找一个最近的free chunk回传给用户，同时将此chunk从free_list里删除，即把此chunk前后chunk指针链结起来。用户使用完释放的时候，则把此chunk放回到free_list中，放到最前面的start_free的位置。这样经过若干次allocator和deallocator后，free_list中的链表可能并不像初始的时候那么是chunk按内存分布位置依次链接的。假如free_list中不够时，allocator会自动再分配一块新的较大的内存区块来加入到free_list链表中。</p>
+<h1 id="SGI-STL-的-allocator"><a href="#SGI-STL-的-allocator" class="headerlink" title="SGI STL 的 allocator"></a>SGI STL 的 allocator</h1><ul>
+<li>STL 包含一级配置爱和二级配置器，对于大于128bytes的空间，直接使用第一级配置器第一级配置器以malloc()，free()，realloc()等C函数执行实际的内存配置、释放、重新配置等操作，并且能在内存需求不被满足的时候，调用一个指定的函数。</li>
+<li>小于128bytes的内存申请，使用内存池进行管理。基本思路是设计一个free_list[16]数组，负责管理从8bytes到128 bytes不同大小的内存块（chunk），每一个内存块都由连续的固定大小（fixed size block）的很多chunk组成，并用指针链表串接起来。当用户要获取此大小的内存时，就在free_list的链表找一个最近的free chunk回传给用户，同时将此chunk从free_list里删除，即把此chunk前后chunk指针链结起来。用户使用完释放的时候，则把此chunk放回到free_list中，放到最前面的start_free的位置。这样经过若干次allocator和deallocator后，free_list中的链表可能并不像初始的时候那么是chunk按内存分布位置依次链接的。假如free_list中不够时，allocator会自动再分配一块新的较大的内存区块来加入到free_list链表中。</li>
+</ul>
 
           
         
@@ -3171,7 +3190,7 @@ select * from (select * from table where col &gt; 1) as tmp where col &lt; 1</co
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-06-04 10:52:26" itemprop="dateModified" datetime="2020-06-04T10:52:26+08:00">2020-06-04</time>
+                <time title="修改时间：2020-09-12 11:29:41" itemprop="dateModified" datetime="2020-09-12T11:29:41+08:00">2020-09-12</time>
               </span>
             
           
@@ -3250,7 +3269,7 @@ select * from (select * from table where col &gt; 1) as tmp where col &lt; 1</co
             <h2 id="const-不可变"><a href="#const-不可变" class="headerlink" title="const(不可变)"></a>const(不可变)</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><pre><code>1. 修饰常量
 2. 修饰指针  指针常量和常量指针
 3. 常量引用  避免拷贝，避免对值的修改，不能使用非const引用指向const对象。
-4. 修饰成员函数   函数内部不能修改成员函数</code></pre><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> a1;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span>* p1 = a2;<span class="comment">//常量指针，指向常量的指针，保护指向的地址空间数据不可变。指针可变，可以修改const指针所指向的值的，但是不能通过const对象指针来进行，自以为指向const的指针。</span></span><br><span class="line"><span class="keyword">char</span>* p = a2;</span><br><span class="line">*p = a3;</span><br><span class="line"><span class="keyword">char</span>* <span class="keyword">const</span> p2 = a3;<span class="comment">//指针常量， 保护指针，指针自身的地址空间不可变，数据可变。</span></span><br><span class="line"><span class="comment">//不能把常量的地址赋给指针变量</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">get</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> val)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">get</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> *val)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> *<span class="keyword">const</span> val)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//file1.cpp</span></span><br><span class="line"><span class="keyword">int</span> <span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> cout2;</span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keyword">int</span> cout3;</span><br><span class="line"><span class="comment">//file2.cpp</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="built_in">cout</span>; <span class="comment">//在全局作用域里定义非const变量时，它在整个程序中都可以访问</span></span><br><span class="line"><span class="built_in">cout</span>++;</span><br><span class="line">cout2; <span class="comment">//error除非特别说明，在全局作用域声明的const变量是定义该对象的文件的局部变量，只存在于那个文件，不能被其他文件访问。</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keyword">int</span> cout3;</span><br><span class="line">cout3++;</span><br></pre></td></tr></table></figure>
+4. 修饰成员函数   函数内部不能修改成员函数</code></pre><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> a1;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span>* p1 = a2;<span class="comment">//常量指针，指向常量的指针，保护指向的地址空间数据不可变。指针可变，可以修改const指针所指向的地址，但是不能通过const对象指针来进行，自以为指向const的指针。</span></span><br><span class="line"><span class="keyword">char</span>* p = a2;</span><br><span class="line">*p = a3;</span><br><span class="line"><span class="keyword">char</span>* <span class="keyword">const</span> p2 = a3;<span class="comment">//指针常量， 保护指针，指针自身的地址空间不可变，数据可变。</span></span><br><span class="line"><span class="comment">//不能把常量的地址赋给指针变量</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">get</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> val)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">get</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> *val)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> *<span class="keyword">const</span> val)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//file1.cpp</span></span><br><span class="line"><span class="keyword">int</span> <span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> cout2;</span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keyword">int</span> cout3;</span><br><span class="line"><span class="comment">//file2.cpp</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="built_in">cout</span>; <span class="comment">//在全局作用域里定义非const变量时，它在整个程序中都可以访问</span></span><br><span class="line"><span class="built_in">cout</span>++;</span><br><span class="line">cout2; <span class="comment">//error除非特别说明，在全局作用域声明的const变量是定义该对象的文件的局部变量，只存在于那个文件，不能被其他文件访问。</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keyword">int</span> cout3;</span><br><span class="line">cout3++;</span><br></pre></td></tr></table></figure>
 
 <h2 id="static"><a href="#static" class="headerlink" title="static()"></a>static()</h2><h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h3><pre><code>1. 修饰普通变量，修改变量的存储区域和生命周期，使变量存储在静态区，在 main 函数运行前分配空间，如果有初始值就用初始值初始化，如果没有初始值系统用默认值初始化。
 2. 修饰普通函数，该函数仅在定义该函数的文件内才能使用。

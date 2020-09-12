@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://georgep24.github.io/uncategorized/memory_control/memory.png">
 <meta property="og:image" content="https://georgep24.github.io/uncategorized/memory_control/memory2.png">
-<meta property="og:updated_time" content="2020-08-16T07:16:47.270Z">
+<meta property="og:updated_time" content="2020-09-12T03:29:39.953Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内存管理侯捷">
 <meta name="twitter:description" content="内存分配方式  栈 栈内存分配运算内置于处理器的指令集中，效率很高，但是分配的内存容量有限。  堆 手动delete，程序结束后，OS自动回收。堆是一块连续的内存区域。这块内存区域的起始位置和结束位置，并且这块连续的内存区域可以被程序员随意使用，并且这块区域是很大。   全局/静态存储区 未初始化全局区和已初始化全局区   存储内容 栈：在栈中，第一个进栈的是主函数下一条指令的地址，然后是函数的各">
@@ -442,7 +442,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-08-16 15:16:47" itemprop="dateModified" datetime="2020-08-16T15:16:47+08:00">2020-08-16</time>
+                <time title="修改时间：2020-09-12 11:29:39" itemprop="dateModified" datetime="2020-09-12T11:29:39+08:00">2020-09-12</time>
               </span>
             
           
@@ -527,8 +527,11 @@
 <h1 id="primitives"><a href="#primitives" class="headerlink" title="primitives"></a>primitives</h1><h1 id="malloc-free"><a href="#malloc-free" class="headerlink" title="malloc/free"></a>malloc/free</h1><ul>
 <li>维护一个空闲链表</li>
 <li>调用malloc函数时，它沿连接表寻找一个大到足以满足用户请求所需要的内存块。然后，将该内存块一分为二（一块的大小与用户请求的大小相等，另一块的大小就是剩下的字节）。接下来，将分配给用户的那块内存传给用户，并将剩下的那块（如果有的话）返回到连接表上。</li>
-<li>调用free函数时，它将用户释放的内存块连接到空闲链上。到最后，空闲链会被切成很多的小内存片段，如果这时用户申请一个大的内存片段，那么空闲链上可能没有可以满足用户要求的片段了。于是，malloc函数请求延时，并开始在空闲链上翻箱倒柜地检查各内存片段，对它们进行整理，将相邻的小空闲块合并成较大的内存块。如果无法获得符合要求的内存块，malloc函数会返回NULL指针，因此在调用malloc动态申请内存块时，一定要进行返回值的判断。</li>
 </ul>
+<ol>
+<li>当开辟的空间小于 128K 时，调用 brk（）函数，malloc 的底层实现是系统调用函数 brk（），其主要移动指针 _enddata(此时的 _enddata 指的是 Linux 地址空间中堆段的末尾地址，不是数据段的末尾地址)</li>
+<li>当开辟的空间大于 128K 时，mmap（）系统调用函数来在虚拟地址空间中（堆和栈中间，称为“文件映射区域”的地方）找一块空间来开辟。</li>
+</ol>
 <h1 id="LINUX-系统调用函数"><a href="#LINUX-系统调用函数" class="headerlink" title="LINUX 系统调用函数"></a>LINUX 系统调用函数</h1><p><img src="//georgep24.github.io/uncategorized/memory_control/memory2.png" alt></p>
 <h2 id="brk-和sbrk"><a href="#brk-和sbrk" class="headerlink" title="brk()和sbrk()"></a>brk()和sbrk()</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">brk</span><span class="params">(<span class="keyword">void</span> *addr)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">sbrk</span><span class="params">(<span class="keyword">intptr_t</span> increment)</span></span>;</span><br></pre></td></tr></table></figure>
 
@@ -562,7 +565,10 @@
 <li><p>offset：被映射对象内容的起点</p>
 </li>
 </ul>
-<h1 id="SGI-STL-的-allocator"><a href="#SGI-STL-的-allocator" class="headerlink" title="SGI STL 的 allocator"></a>SGI STL 的 allocator</h1><p>基本思路是设计一个free_list[16]数组，负责管理从8bytes到128 bytes不同大小的内存块（chunk），每一个内存块都由连续的固定大小（fixed size block）的很多chunk组成，并用指针链表串接起来。当用户要获取此大小的内存时，就在free_list的链表找一个最近的free chunk回传给用户，同时将此chunk从free_list里删除，即把此chunk前后chunk指针链结起来。用户使用完释放的时候，则把此chunk放回到free_list中，放到最前面的start_free的位置。这样经过若干次allocator和deallocator后，free_list中的链表可能并不像初始的时候那么是chunk按内存分布位置依次链接的。假如free_list中不够时，allocator会自动再分配一块新的较大的内存区块来加入到free_list链表中。</p>
+<h1 id="SGI-STL-的-allocator"><a href="#SGI-STL-的-allocator" class="headerlink" title="SGI STL 的 allocator"></a>SGI STL 的 allocator</h1><ul>
+<li>STL 包含一级配置爱和二级配置器，对于大于128bytes的空间，直接使用第一级配置器第一级配置器以malloc()，free()，realloc()等C函数执行实际的内存配置、释放、重新配置等操作，并且能在内存需求不被满足的时候，调用一个指定的函数。</li>
+<li>小于128bytes的内存申请，使用内存池进行管理。基本思路是设计一个free_list[16]数组，负责管理从8bytes到128 bytes不同大小的内存块（chunk），每一个内存块都由连续的固定大小（fixed size block）的很多chunk组成，并用指针链表串接起来。当用户要获取此大小的内存时，就在free_list的链表找一个最近的free chunk回传给用户，同时将此chunk从free_list里删除，即把此chunk前后chunk指针链结起来。用户使用完释放的时候，则把此chunk放回到free_list中，放到最前面的start_free的位置。这样经过若干次allocator和deallocator后，free_list中的链表可能并不像初始的时候那么是chunk按内存分布位置依次链接的。假如free_list中不够时，allocator会自动再分配一块新的较大的内存区块来加入到free_list链表中。</li>
+</ul>
 
       
     </div>
