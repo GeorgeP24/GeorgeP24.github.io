@@ -108,7 +108,8 @@
 <meta property="og:image" content="https://georgep24.github.io/uncategorized/IO_model/model2.png">
 <meta property="og:image" content="https://georgep24.github.io/uncategorized/IO_model/model3.png">
 <meta property="og:image" content="https://georgep24.github.io/uncategorized/IO_model/select.png">
-<meta property="og:updated_time" content="2020-09-10T02:06:40.143Z">
+<meta property="og:image" content="https://georgep24.github.io/uncategorized/IO_model/AIO1.png">
+<meta property="og:updated_time" content="2020-09-27T13:12:40.126Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网络IO模型">
 <meta name="twitter:description" content="同步，阻塞 同步 同步通常是指一个任务的完成依赖于另外一个任务，只有等待被依赖的任务完成后，依赖的任务才能算完成，这是一种可靠的任务序列。要么都成功，要么都失败，两个任务的状态可保持一致。   异步 异步不需要等待被依赖的任务完成，只是通知被依赖的任务要完成什么工作，该任务就立即执行，只要整个任务完成就算完成了。至于被依赖的任务是否完成，另一任务无法确定，所以是不可靠的任务序列。   阻塞 阻塞调">
@@ -444,7 +445,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-09-10 10:06:40" itemprop="dateModified" datetime="2020-09-10T10:06:40+08:00">2020-09-10</time>
+                <time title="修改时间：2020-09-27 21:12:40" itemprop="dateModified" datetime="2020-09-27T21:12:40+08:00">2020-09-27</time>
               </span>
             
           
@@ -532,21 +533,74 @@
 <h2 id="阻塞IO模型"><a href="#阻塞IO模型" class="headerlink" title="阻塞IO模型"></a>阻塞IO模型</h2><pre><code>应用程序调用一个IO函数，导致应用程序阻塞，等待数据准备好。从内核拷贝到用户空间,IO函数返回成功指示。</code></pre><p><img src="//georgep24.github.io/uncategorized/IO_model/model1.png" alt></p>
 <h2 id="非阻塞IO模型"><a href="#非阻塞IO模型" class="headerlink" title="非阻塞IO模型"></a>非阻塞IO模型</h2><pre><code>我们把一个SOCKET接口设置为非阻塞就是告诉内核，当所请求的IO操作无法完成时，不要将进程睡眠，而是返回一个错误。这样我们的IO操作函数将不断的测试数据是否已经准备好，如果没有准备好，继续测试，直到数据准备好为止。</code></pre><p><img src="//georgep24.github.io/uncategorized/IO_model/model2.png" alt></p>
 <h2 id="IO复用模型"><a href="#IO复用模型" class="headerlink" title="IO复用模型"></a>IO复用模型</h2><pre><code>I/O复用模型会用到select、poll、epoll函数，这几个函数也会使进程阻塞，但是和阻塞I/O所不同的的，这两个函数可以同时阻塞多个I/O操作。而且可以同时对多个读操作，多个写操作的I/O函数进行检测，直到有数据可读或可写时，才真正调用I/O操作函数。</code></pre><p><img src="//georgep24.github.io/uncategorized/IO_model/model3.png" alt></p>
-<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><pre><code>select模型维护一个fd_set(long 数组)（维护文件句柄），查询就绪事件并返回。
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><pre><code>select模型维护一个fd_set(File descriptor,long 数组)（维护文件句柄），查询就绪事件并返回。
 
 select系统调用的目的是：在一段指定时间内，监听用户感兴趣的文件描述符上的可读、可写和异常事件。poll和select应该被归类为这样的系统 调用，它们可以阻塞地同时探测一组支持非阻塞的IO设备，直至某一个设备触发了事件或者超过了指定的等待时间——也就是说它们的职责不是做IO，而是帮助 调用者寻找当前就绪的设备。</code></pre><ul>
 <li>优点<br>  在单一线程注册多个socket，并发处理多个IO请求。</li>
 <li>存在问题<ol>
 <li>fd_set在每次调用select都需要拷贝到内核态，拷贝开销大，同时查询操作需要遍历fd_set，速度慢。</li>
-<li>fd_set大小被内核宏定义为1024（32位，64位2048）,不可变。<br><img src="//georgep24.github.io/uncategorized/IO_model/select.png" alt></li>
+<li>fd_set大小被内核宏定义为1024（32位，64位2048）,不可变。<br><img src="//georgep24.github.io/uncategorized/IO_model/select.png" alt><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">select</span><span class="params">(<span class="keyword">int</span> nfds, fd_set *readfds, fd_set *writefds,</span></span></span><br><span class="line"><span class="function"><span class="params">fd_set *exceptfds, struct timeval *timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FD_ZERO</span><span class="params">(fd_set *fdset)</span></span>;</span><br><span class="line"><span class="comment">//清空集合</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FD_SET</span><span class="params">(<span class="keyword">int</span> fd, fd_set *fdset)</span></span>;</span><br><span class="line"><span class="comment">//将一个给定的文件描述符加入集合之中</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FD_CLR</span><span class="params">(<span class="keyword">int</span> fd, fd_set *fdset)</span></span>;</span><br><span class="line"><span class="comment">//将一个给定的文件描述符从集合中删除</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FD_ISSET</span><span class="params">(<span class="keyword">int</span> fd, fd_set *fdset)</span></span>;</span><br><span class="line"><span class="comment">// 检查集合中指定的文件描述符是否可以读写</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//返回值：失败-1 超时0 成功&gt;0(就绪FD数量)</span></span><br></pre></td></tr></table></figure>
+
+</li>
 </ol>
 </li>
 </ul>
-<h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">poll</span><span class="params">(struct pollfd *fds, <span class="keyword">nfds_t</span> nfds, <span class="keyword">int</span> timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">pollfd</span> &#123;</span></span><br><span class="line">        <span class="keyword">int</span> fd;                         <span class="comment">// 需要被检测或选择的文件描述符</span></span><br><span class="line">        <span class="keyword">short</span> events;                   <span class="comment">// 对文件描述符fd上感兴趣的事件</span></span><br><span class="line">        <span class="keyword">short</span> revents;                  <span class="comment">// 文件描述符fd上当前实际发生的事件</span></span><br><span class="line">&#125; <span class="keyword">pollfd_t</span>;</span><br><span class="line"><span class="comment">//返回值为就绪文件数量，空为0，错误为1.</span></span><br></pre></td></tr></table></figure>
+<h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">poll</span><span class="params">(struct pollfd *fds, <span class="keyword">nfds_t</span> nfds, <span class="keyword">int</span> timeout)</span></span>;</span><br><span class="line"><span class="comment">//nfds_t nfds 记录数组fds中描述符的总数量</span></span><br><span class="line"><span class="comment">//timeout 等待的超时时间</span></span><br><span class="line"><span class="comment">//fd </span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">pollfd</span> &#123;</span></span><br><span class="line">        <span class="keyword">int</span> fd;                         <span class="comment">// 需要被检测或选择的文件描述符</span></span><br><span class="line">        <span class="keyword">short</span> events;                   <span class="comment">// 对文件描述符fd上感兴趣的事件</span></span><br><span class="line">        <span class="keyword">short</span> revents;                  <span class="comment">// 文件描述符fd上当前实际发生的事件</span></span><br><span class="line">&#125; <span class="keyword">pollfd_t</span>;</span><br><span class="line"><span class="comment">//返回值为就绪文件数量，空为0，错误为1.</span></span><br></pre></td></tr></table></figure>
 
-<p>poll与select差距不大，用pollfd替代fd_set，解决了文件描述符大小上限问题。struct pollfd *fds fds是一个struct pollfd类型的数组，用于存放需要检测其状态的socket描述符，并且调用poll函数之后fds数组不会被清空；一个pollfd结构体表示一个被监视的文件描述符，通过传递fds指示 poll() 监视多个文件描述符。其中，结构体的events域是监视该文件描述符的事件掩码，由用户来设置这个域，结构体的revents域是文件描述符的操作结果事件掩码，内核在调用返回时设置这个域</p>
-<p>nfds_t nfds 记录数组fds中描述符的总数量</p>
-<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3>
+<p>poll与select差距不大，用pollfd替代fd_set，解决了文件描述符大小上限问题。struct pollfd *fds fds是一个struct pollfd类型的数组，用于存放需要检测其状态的socket描述符，并且调用poll函数之后fds数组不会被清空；一个pollfd结构体表示一个被监视的文件描述符，通过传递fds指示 poll() 监视多个文件描述符。其中，结构体的events域是监视该文件描述符的事件掩码，由用户来设置这个域，结构体的revents域是文件描述符的操作结果事件掩码，内核在调用返回时设置这个域.</p>
+<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><p>epoll同样只告知那些就绪的文件描述符，而且当我们调用epoll_wait()获得就绪文件描述符时，返回的不是实际的描述符，而是一个代表就绪描述符数量的值，你只需要去epoll指定的一个数组中依次取得相应数量的文件描述符即可，这里也使用了内存映射（mmap）技术，这样便彻底省掉了这些文件描述符在系统调用时复制的开销。</p>
+<p>epoll是基于事件驱动的I/O方式，相对于select来说，epoll没有描述符个数限制，使用一个文件描述符管理多个描述符，将用户关心的文件描述符的事件存放到内核的一个事件表中，这样在用户空间和内核空间的copy只需一次。</p>
+<p>另一个本质的改进在于epoll采用基于事件的就绪通知方式。在select/poll中，进程只有在调用一定的方法后，内核才对所有监视的文件描述符进行扫描，而epoll事先通过epoll_ctl()来注册一个文件描述符，一旦基于某个文件描述符就绪时，内核会采用类似callback的回调机制，迅速激活这个文件描述符，当进程调用epoll_wait()时便得到通知。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_create</span><span class="params">(<span class="keyword">int</span> size)</span></span>;</span><br><span class="line"><span class="comment">//创建一个epoll句柄，参数size表明内核要监听的描述符数量。调用成功时返回一个epoll句柄描述符，失败时返回-1。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_ctl</span><span class="params">(<span class="keyword">int</span> epfd, <span class="keyword">int</span> op, <span class="keyword">int</span> fd, struct epoll_event *event)</span></span>;</span><br><span class="line"><span class="comment">/*函数注册要监听的事件类型</span></span><br><span class="line"><span class="comment">epfd 表示epoll句柄</span></span><br><span class="line"><span class="comment">op 表示fd操作类型，有如下3种</span></span><br><span class="line"><span class="comment">EPOLL_CTL_ADD 注册新的fd到epfd中</span></span><br><span class="line"><span class="comment">EPOLL_CTL_MOD 修改已注册的fd的监听事件</span></span><br><span class="line"><span class="comment">EPOLL_CTL_DEL 从epfd中删除一个fd</span></span><br><span class="line"><span class="comment">fd 是要监听的描述符</span></span><br><span class="line"><span class="comment">event 表示要监听的事件</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_wait</span><span class="params">(<span class="keyword">int</span> epfd, struct epoll_event * events, <span class="keyword">int</span> maxevents, <span class="keyword">int</span> timeout)</span></span>;</span><br><span class="line"><span class="comment">//函数等待事件的就绪，成功时返回就绪的事件数目，调用失败时返回 -1，等待超时返回 0。</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">epfd 是epoll句柄</span></span><br><span class="line"><span class="comment">events 表示从内核得到的就绪事件集合</span></span><br><span class="line"><span class="comment">maxevents 告诉内核events的大小</span></span><br><span class="line"><span class="comment">timeout 表示等待的超时事件</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//epoll_event 结构体</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> &#123;</span></span><br><span class="line">    <span class="keyword">__uint32_t</span> events;  <span class="comment">/* Epoll events */</span></span><br><span class="line">    <span class="keyword">epoll_data_t</span> data;  <span class="comment">/* User data variable */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">union</span> epoll_data &#123;</span><br><span class="line">    <span class="keyword">void</span> *ptr;</span><br><span class="line">    <span class="keyword">int</span> fd;</span><br><span class="line">    <span class="keyword">__uint32_t</span> u32;</span><br><span class="line">    <span class="keyword">__uint64_t</span> u64;</span><br><span class="line">&#125; <span class="keyword">epoll_data_t</span>;</span><br></pre></td></tr></table></figure>
+
+<p>EPOLL无须遍历整个被侦听的描述符集，只要遍历那些被内核IO事件异步唤醒而加入Ready队列的描述符集合就行了。</p>
+<p>Epoll的2种工作方式-水平触发（LT）和边缘触发（ET）</p>
+<ul>
+<li>LT：默认工作模式，即当epoll_wait检测到某描述符事件就绪并通知应用程序时，应用程序可以不立即处理该事件；下次调用epoll_wait时，会再次通知此事件.</li>
+<li>ET：当epoll_wait检测到某描述符事件就绪并通知应用程序时，应用程序必须立即处理该事件。如果不处理，下次调用epoll_wait时，不会再次通知此事件。（直到你做了某些操作导致该描述符变成未就绪状态了，也就是说边缘触发只在状态由未就绪变为就绪时只通知一次).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>–</th>
+<th>select</th>
+<th>poll</th>
+<th>epoll</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>操作方式</td>
+<td>遍历</td>
+<td>遍历</td>
+<td>callback</td>
+</tr>
+<tr>
+<td>底层实现</td>
+<td>数组</td>
+<td>链表</td>
+<td>红黑树</td>
+</tr>
+<tr>
+<td>IO效率</td>
+<td>线性遍历o(n)</td>
+<td>线性遍历 o(n)</td>
+<td>事件通知方式，每当fd就绪，系统注册的回调函数就会被调用，将就绪fd放到readyList里面，时间复杂度O(1)</td>
+</tr>
+<tr>
+<td>最大链接数</td>
+<td>1024（x86）或2048（x64）</td>
+<td>无上限</td>
+<td>无上限</td>
+</tr>
+<tr>
+<td>fd拷贝</td>
+<td>每次调用select，都需要把fd集合从用户态拷贝到内核态</td>
+<td>每次调用poll，都需要把fd集合从用户态拷贝到内核态</td>
+<td>调用epoll_ctl时拷贝进内核并保存，之后每次epoll_wait不拷贝</td>
+</tr>
+</tbody></table>
+<h2 id="信号驱动IO"><a href="#信号驱动IO" class="headerlink" title="信号驱动IO"></a>信号驱动IO</h2><h2 id="异步IO"><a href="#异步IO" class="headerlink" title="异步IO"></a>异步IO</h2><p>异步通知和异步IO（AIO),用户程序可以通过向内核发出I/O请求命令，不用等待I/O事件真正发生，可以继续做另外的事情，等I/O操作完成，内核会通过函数回调或者信号机制通知用户进程。这样很大程度提高了系统吞吐量。<br><img src="//georgep24.github.io/uncategorized/IO_model/AIO1.png" alt></p>
+
       
     </div>
 
@@ -851,7 +905,7 @@ select系统调用的目的是：在一段指定时间内，监听用户感兴�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#同步，阻塞"><span class="nav-number">1.</span> <span class="nav-text">同步，阻塞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#阻塞IO模型"><span class="nav-number">1.1.</span> <span class="nav-text">阻塞IO模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非阻塞IO模型"><span class="nav-number">1.2.</span> <span class="nav-text">非阻塞IO模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO复用模型"><span class="nav-number">1.3.</span> <span class="nav-text">IO复用模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#select"><span class="nav-number">1.3.1.</span> <span class="nav-text">select</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#poll"><span class="nav-number">1.3.2.</span> <span class="nav-text">poll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#epoll"><span class="nav-number">1.3.3.</span> <span class="nav-text">epoll</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#同步，阻塞"><span class="nav-number">1.</span> <span class="nav-text">同步，阻塞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#阻塞IO模型"><span class="nav-number">1.1.</span> <span class="nav-text">阻塞IO模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非阻塞IO模型"><span class="nav-number">1.2.</span> <span class="nav-text">非阻塞IO模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO复用模型"><span class="nav-number">1.3.</span> <span class="nav-text">IO复用模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#select"><span class="nav-number">1.3.1.</span> <span class="nav-text">select</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#poll"><span class="nav-number">1.3.2.</span> <span class="nav-text">poll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#epoll"><span class="nav-number">1.3.3.</span> <span class="nav-text">epoll</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号驱动IO"><span class="nav-number">1.4.</span> <span class="nav-text">信号驱动IO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步IO"><span class="nav-number">1.5.</span> <span class="nav-text">异步IO</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -437,7 +437,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-09-10 10:06:40" itemprop="dateModified" datetime="2020-09-10T10:06:40+08:00">2020-09-10</time>
+                <time title="修改时间：2020-09-27 21:12:40" itemprop="dateModified" datetime="2020-09-27T21:12:40+08:00">2020-09-27</time>
               </span>
             
           
@@ -519,21 +519,74 @@
 <h2 id="阻塞IO模型"><a href="#阻塞IO模型" class="headerlink" title="阻塞IO模型"></a>阻塞IO模型</h2><pre><code>应用程序调用一个IO函数，导致应用程序阻塞，等待数据准备好。从内核拷贝到用户空间,IO函数返回成功指示。</code></pre><p><img src="//georgep24.github.io/uncategorized/IO_model/model1.png" alt></p>
 <h2 id="非阻塞IO模型"><a href="#非阻塞IO模型" class="headerlink" title="非阻塞IO模型"></a>非阻塞IO模型</h2><pre><code>我们把一个SOCKET接口设置为非阻塞就是告诉内核，当所请求的IO操作无法完成时，不要将进程睡眠，而是返回一个错误。这样我们的IO操作函数将不断的测试数据是否已经准备好，如果没有准备好，继续测试，直到数据准备好为止。</code></pre><p><img src="//georgep24.github.io/uncategorized/IO_model/model2.png" alt></p>
 <h2 id="IO复用模型"><a href="#IO复用模型" class="headerlink" title="IO复用模型"></a>IO复用模型</h2><pre><code>I/O复用模型会用到select、poll、epoll函数，这几个函数也会使进程阻塞，但是和阻塞I/O所不同的的，这两个函数可以同时阻塞多个I/O操作。而且可以同时对多个读操作，多个写操作的I/O函数进行检测，直到有数据可读或可写时，才真正调用I/O操作函数。</code></pre><p><img src="//georgep24.github.io/uncategorized/IO_model/model3.png" alt></p>
-<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><pre><code>select模型维护一个fd_set(long 数组)（维护文件句柄），查询就绪事件并返回。
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><pre><code>select模型维护一个fd_set(File descriptor,long 数组)（维护文件句柄），查询就绪事件并返回。
 
 select系统调用的目的是：在一段指定时间内，监听用户感兴趣的文件描述符上的可读、可写和异常事件。poll和select应该被归类为这样的系统 调用，它们可以阻塞地同时探测一组支持非阻塞的IO设备，直至某一个设备触发了事件或者超过了指定的等待时间——也就是说它们的职责不是做IO，而是帮助 调用者寻找当前就绪的设备。</code></pre><ul>
 <li>优点<br>  在单一线程注册多个socket，并发处理多个IO请求。</li>
 <li>存在问题<ol>
 <li>fd_set在每次调用select都需要拷贝到内核态，拷贝开销大，同时查询操作需要遍历fd_set，速度慢。</li>
-<li>fd_set大小被内核宏定义为1024（32位，64位2048）,不可变。<br><img src="//georgep24.github.io/uncategorized/IO_model/select.png" alt></li>
+<li>fd_set大小被内核宏定义为1024（32位，64位2048）,不可变。<br><img src="//georgep24.github.io/uncategorized/IO_model/select.png" alt><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">select</span><span class="params">(<span class="keyword">int</span> nfds, fd_set *readfds, fd_set *writefds,</span></span></span><br><span class="line"><span class="function"><span class="params">fd_set *exceptfds, struct timeval *timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FD_ZERO</span><span class="params">(fd_set *fdset)</span></span>;</span><br><span class="line"><span class="comment">//清空集合</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FD_SET</span><span class="params">(<span class="keyword">int</span> fd, fd_set *fdset)</span></span>;</span><br><span class="line"><span class="comment">//将一个给定的文件描述符加入集合之中</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FD_CLR</span><span class="params">(<span class="keyword">int</span> fd, fd_set *fdset)</span></span>;</span><br><span class="line"><span class="comment">//将一个给定的文件描述符从集合中删除</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FD_ISSET</span><span class="params">(<span class="keyword">int</span> fd, fd_set *fdset)</span></span>;</span><br><span class="line"><span class="comment">// 检查集合中指定的文件描述符是否可以读写</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//返回值：失败-1 超时0 成功&gt;0(就绪FD数量)</span></span><br></pre></td></tr></table></figure>
+
+</li>
 </ol>
 </li>
 </ul>
-<h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">poll</span><span class="params">(struct pollfd *fds, <span class="keyword">nfds_t</span> nfds, <span class="keyword">int</span> timeout)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">pollfd</span> &#123;</span></span><br><span class="line">        <span class="keyword">int</span> fd;                         <span class="comment">// 需要被检测或选择的文件描述符</span></span><br><span class="line">        <span class="keyword">short</span> events;                   <span class="comment">// 对文件描述符fd上感兴趣的事件</span></span><br><span class="line">        <span class="keyword">short</span> revents;                  <span class="comment">// 文件描述符fd上当前实际发生的事件</span></span><br><span class="line">&#125; <span class="keyword">pollfd_t</span>;</span><br><span class="line"><span class="comment">//返回值为就绪文件数量，空为0，错误为1.</span></span><br></pre></td></tr></table></figure>
+<h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">poll</span><span class="params">(struct pollfd *fds, <span class="keyword">nfds_t</span> nfds, <span class="keyword">int</span> timeout)</span></span>;</span><br><span class="line"><span class="comment">//nfds_t nfds 记录数组fds中描述符的总数量</span></span><br><span class="line"><span class="comment">//timeout 等待的超时时间</span></span><br><span class="line"><span class="comment">//fd </span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">pollfd</span> &#123;</span></span><br><span class="line">        <span class="keyword">int</span> fd;                         <span class="comment">// 需要被检测或选择的文件描述符</span></span><br><span class="line">        <span class="keyword">short</span> events;                   <span class="comment">// 对文件描述符fd上感兴趣的事件</span></span><br><span class="line">        <span class="keyword">short</span> revents;                  <span class="comment">// 文件描述符fd上当前实际发生的事件</span></span><br><span class="line">&#125; <span class="keyword">pollfd_t</span>;</span><br><span class="line"><span class="comment">//返回值为就绪文件数量，空为0，错误为1.</span></span><br></pre></td></tr></table></figure>
 
-<p>poll与select差距不大，用pollfd替代fd_set，解决了文件描述符大小上限问题。struct pollfd *fds fds是一个struct pollfd类型的数组，用于存放需要检测其状态的socket描述符，并且调用poll函数之后fds数组不会被清空；一个pollfd结构体表示一个被监视的文件描述符，通过传递fds指示 poll() 监视多个文件描述符。其中，结构体的events域是监视该文件描述符的事件掩码，由用户来设置这个域，结构体的revents域是文件描述符的操作结果事件掩码，内核在调用返回时设置这个域</p>
-<p>nfds_t nfds 记录数组fds中描述符的总数量</p>
-<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3>
+<p>poll与select差距不大，用pollfd替代fd_set，解决了文件描述符大小上限问题。struct pollfd *fds fds是一个struct pollfd类型的数组，用于存放需要检测其状态的socket描述符，并且调用poll函数之后fds数组不会被清空；一个pollfd结构体表示一个被监视的文件描述符，通过传递fds指示 poll() 监视多个文件描述符。其中，结构体的events域是监视该文件描述符的事件掩码，由用户来设置这个域，结构体的revents域是文件描述符的操作结果事件掩码，内核在调用返回时设置这个域.</p>
+<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><p>epoll同样只告知那些就绪的文件描述符，而且当我们调用epoll_wait()获得就绪文件描述符时，返回的不是实际的描述符，而是一个代表就绪描述符数量的值，你只需要去epoll指定的一个数组中依次取得相应数量的文件描述符即可，这里也使用了内存映射（mmap）技术，这样便彻底省掉了这些文件描述符在系统调用时复制的开销。</p>
+<p>epoll是基于事件驱动的I/O方式，相对于select来说，epoll没有描述符个数限制，使用一个文件描述符管理多个描述符，将用户关心的文件描述符的事件存放到内核的一个事件表中，这样在用户空间和内核空间的copy只需一次。</p>
+<p>另一个本质的改进在于epoll采用基于事件的就绪通知方式。在select/poll中，进程只有在调用一定的方法后，内核才对所有监视的文件描述符进行扫描，而epoll事先通过epoll_ctl()来注册一个文件描述符，一旦基于某个文件描述符就绪时，内核会采用类似callback的回调机制，迅速激活这个文件描述符，当进程调用epoll_wait()时便得到通知。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_create</span><span class="params">(<span class="keyword">int</span> size)</span></span>;</span><br><span class="line"><span class="comment">//创建一个epoll句柄，参数size表明内核要监听的描述符数量。调用成功时返回一个epoll句柄描述符，失败时返回-1。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_ctl</span><span class="params">(<span class="keyword">int</span> epfd, <span class="keyword">int</span> op, <span class="keyword">int</span> fd, struct epoll_event *event)</span></span>;</span><br><span class="line"><span class="comment">/*函数注册要监听的事件类型</span></span><br><span class="line"><span class="comment">epfd 表示epoll句柄</span></span><br><span class="line"><span class="comment">op 表示fd操作类型，有如下3种</span></span><br><span class="line"><span class="comment">EPOLL_CTL_ADD 注册新的fd到epfd中</span></span><br><span class="line"><span class="comment">EPOLL_CTL_MOD 修改已注册的fd的监听事件</span></span><br><span class="line"><span class="comment">EPOLL_CTL_DEL 从epfd中删除一个fd</span></span><br><span class="line"><span class="comment">fd 是要监听的描述符</span></span><br><span class="line"><span class="comment">event 表示要监听的事件</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_wait</span><span class="params">(<span class="keyword">int</span> epfd, struct epoll_event * events, <span class="keyword">int</span> maxevents, <span class="keyword">int</span> timeout)</span></span>;</span><br><span class="line"><span class="comment">//函数等待事件的就绪，成功时返回就绪的事件数目，调用失败时返回 -1，等待超时返回 0。</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">epfd 是epoll句柄</span></span><br><span class="line"><span class="comment">events 表示从内核得到的就绪事件集合</span></span><br><span class="line"><span class="comment">maxevents 告诉内核events的大小</span></span><br><span class="line"><span class="comment">timeout 表示等待的超时事件</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//epoll_event 结构体</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> &#123;</span></span><br><span class="line">    <span class="keyword">__uint32_t</span> events;  <span class="comment">/* Epoll events */</span></span><br><span class="line">    <span class="keyword">epoll_data_t</span> data;  <span class="comment">/* User data variable */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">union</span> epoll_data &#123;</span><br><span class="line">    <span class="keyword">void</span> *ptr;</span><br><span class="line">    <span class="keyword">int</span> fd;</span><br><span class="line">    <span class="keyword">__uint32_t</span> u32;</span><br><span class="line">    <span class="keyword">__uint64_t</span> u64;</span><br><span class="line">&#125; <span class="keyword">epoll_data_t</span>;</span><br></pre></td></tr></table></figure>
+
+<p>EPOLL无须遍历整个被侦听的描述符集，只要遍历那些被内核IO事件异步唤醒而加入Ready队列的描述符集合就行了。</p>
+<p>Epoll的2种工作方式-水平触发（LT）和边缘触发（ET）</p>
+<ul>
+<li>LT：默认工作模式，即当epoll_wait检测到某描述符事件就绪并通知应用程序时，应用程序可以不立即处理该事件；下次调用epoll_wait时，会再次通知此事件.</li>
+<li>ET：当epoll_wait检测到某描述符事件就绪并通知应用程序时，应用程序必须立即处理该事件。如果不处理，下次调用epoll_wait时，不会再次通知此事件。（直到你做了某些操作导致该描述符变成未就绪状态了，也就是说边缘触发只在状态由未就绪变为就绪时只通知一次).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>–</th>
+<th>select</th>
+<th>poll</th>
+<th>epoll</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>操作方式</td>
+<td>遍历</td>
+<td>遍历</td>
+<td>callback</td>
+</tr>
+<tr>
+<td>底层实现</td>
+<td>数组</td>
+<td>链表</td>
+<td>红黑树</td>
+</tr>
+<tr>
+<td>IO效率</td>
+<td>线性遍历o(n)</td>
+<td>线性遍历 o(n)</td>
+<td>事件通知方式，每当fd就绪，系统注册的回调函数就会被调用，将就绪fd放到readyList里面，时间复杂度O(1)</td>
+</tr>
+<tr>
+<td>最大链接数</td>
+<td>1024（x86）或2048（x64）</td>
+<td>无上限</td>
+<td>无上限</td>
+</tr>
+<tr>
+<td>fd拷贝</td>
+<td>每次调用select，都需要把fd集合从用户态拷贝到内核态</td>
+<td>每次调用poll，都需要把fd集合从用户态拷贝到内核态</td>
+<td>调用epoll_ctl时拷贝进内核并保存，之后每次epoll_wait不拷贝</td>
+</tr>
+</tbody></table>
+<h2 id="信号驱动IO"><a href="#信号驱动IO" class="headerlink" title="信号驱动IO"></a>信号驱动IO</h2><h2 id="异步IO"><a href="#异步IO" class="headerlink" title="异步IO"></a>异步IO</h2><p>异步通知和异步IO（AIO),用户程序可以通过向内核发出I/O请求命令，不用等待I/O事件真正发生，可以继续做另外的事情，等I/O操作完成，内核会通过函数回调或者信号机制通知用户进程。这样很大程度提高了系统吞吐量。<br><img src="//georgep24.github.io/uncategorized/IO_model/AIO1.png" alt></p>
+
           
         
       
@@ -1529,7 +1582,7 @@ select系统调用的目的是：在一段指定时间内，监听用户感兴�
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-01-06 10:01:00" itemprop="dateModified" datetime="2020-01-06T10:01:00+08:00">2020-01-06</time>
+                <time title="修改时间：2020-09-15 15:32:57" itemprop="dateModified" datetime="2020-09-15T15:32:57+08:00">2020-09-15</time>
               </span>
             
           
@@ -2341,7 +2394,7 @@ select * from (select * from table where col &gt; 1) as tmp where col &lt; 1</co
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/uncategorized/memory_control/" class="post-title-link" itemprop="url">内存管理侯捷</a>
+                <a href="/uncategorized/memory_control/" class="post-title-link" itemprop="url">内存管理(ptmalloc,tcmalloc,jemalloc)</a>
               
             
           </h2>
@@ -2381,7 +2434,7 @@ select * from (select * from table where col &gt; 1) as tmp where col &lt; 1</co
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-09-14 14:45:53" itemprop="dateModified" datetime="2020-09-14T14:45:53+08:00">2020-09-14</time>
+                <time title="修改时间：2020-09-14 15:00:24" itemprop="dateModified" datetime="2020-09-14T15:00:24+08:00">2020-09-14</time>
               </span>
             
           
@@ -2407,7 +2460,7 @@ select * from (select * from table where col &gt; 1) as tmp where col &lt; 1</co
 
           
           
-            <span id="/uncategorized/memory_control/" class="post-meta-item leancloud_visitors" data-flag-title="内存管理侯捷">
+            <span id="/uncategorized/memory_control/" class="post-meta-item leancloud_visitors" data-flag-title="内存管理(ptmalloc,tcmalloc,jemalloc)">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -2497,7 +2550,7 @@ select * from (select * from table where col &gt; 1) as tmp where col &lt; 1</co
 <h1 id="ptmalloc-glibc"><a href="#ptmalloc-glibc" class="headerlink" title="ptmalloc(glibc)"></a>ptmalloc(glibc)</h1><ul>
 <li>ptmalloc 包含一个主分配区和多个非主分配区（非主分配区智能通过mmap()申请内存）。 当某个线程调用malloc的时候，会先查看线程私有变量中是否已经存在一个分配区，如果存在则尝试加锁，如果加锁失败则遍历arena链表试图获取一个没加锁的arena， 如果依然获取不到则创建一个新的非主分配区。</li>
 <li>分配的内存在ptmalloc中使用chunk表示，每个chunk至少需要8个字节额外的开销。用户free掉的内存不会马上归还操作系统，ptmalloc会统一管理heap和mmap区域的空闲chunk，避免了频繁的系统调用。</li>
-<li>ptmalloc将相似大小的chunk用双向链表链接起来,这样的一个链表被称为一个bin。Ptmalloc 一共维护了128个bin,并使用一个数组来存储这些bin。<br><img src="//georgep24.github.io/uncategorized/memory_control/memory3.png" alt></li>
+<li>ptmalloc将相似大小的chunk用双向链表链接起来,这样的一个链表被称为一个bin。Ptmalloc 一共维护了128个bin,并使用一个数组来存储这些bin。<br><img src="//georgep24.github.io/uncategorized/memory_control/ptmalloc1.png" alt></li>
 <li>数组中的第一个为 unsorted bin, 数组中从 2 开始编号的前 64 个 bin 称为 small bins, 同一个small bin中的chunk具有相同的大小。small bins后面的bin被称作large bins。<h2 id="分配步骤"><a href="#分配步骤" class="headerlink" title="分配步骤"></a>分配步骤</h2></li>
 </ul>
 <ol>
@@ -2505,18 +2558,18 @@ select * from (select * from table where col &gt; 1) as tmp where col &lt; 1</co
 <li>但是当很小的chunk释放的时候，ptmalloc会把它并入fast bin中。同样，某些时候，fast bin里的连续内存块会被合并并加入到一个unsorted bin里，然后再才进入普通bin里。</li>
 <li>所以malloc小内存的时候，是先查找fast bin，再查找unsorted bin，最后查找普通的bin，如果unsorted bin里的chunk不合适，则会把它扔到bin里。</li>
 <li>Ptmalloc的分配的内存顶部还有一个top chunk，如果前面的bin里的空闲chunk都不足以满足需要，就是尝试从top chunk里分配内存。如果top chunk里也不够，就要从操作系统里拿了。</li>
-<li>特别大的内存，会直接从系统mmap出来，不受chunk管理，这样的内存在回收的时候也会munmap还给操作系统。<h2 id="回收free"><a href="#回收free" class="headerlink" title="回收free"></a>回收free</h2>和分配过程反过来，加上一些chunk合并和从一个bin转移到另一个bin的操作。如果顶部有足够大的空闲chunk，则收缩堆顶并还给操作系统。<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2></li>
+<li>特别大的内存，会直接从系统mmap出来，不受chunk管理，这样的内存在回收的时候也会munmap还给操作系统。<h2 id="回收free"><a href="#回收free" class="headerlink" title="回收free"></a>回收free</h2>和分配过程反过来，加上一些chunk合并和从一个bin转移到另一个bin的操作。如果顶部有足够大的空闲chunk，则收缩堆顶并还给操作系统。<br><img src="//georgep24.github.io/uncategorized/memory_control/ptmalloc2.png" alt><h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2></li>
 <li>Ptmalloc默认后分配内存先释放，因为内存回收是从top chunk开始的,top chunk无法释放时，其他的也无法释放。</li>
 <li>多线程频繁分配和释放内存，会造成频繁加解锁。</li>
-<li>不定期分配长生命周期的内存，容易造成内碎片，影响内存回收。<br><img src="//georgep24.github.io/uncategorized/memory_control/memory4.png" alt></li>
+<li>不定期分配长生命周期的内存，容易造成内碎片，影响内存回收。</li>
 </ol>
 <h1 id="tcmalloc-google-thread-cache-malloc（线程缓存分配器"><a href="#tcmalloc-google-thread-cache-malloc（线程缓存分配器" class="headerlink" title="tcmalloc(google thread cache malloc（线程缓存分配器))"></a>tcmalloc(google thread cache malloc（线程缓存分配器))</h1><p><img src="//georgep24.github.io/uncategorized/memory_control/tcmalloc1.png" alt><br>其内存管理分为线程内存和中央堆两部分。</p>
 <h2 id="小对象分配"><a href="#小对象分配" class="headerlink" title="小对象分配"></a>小对象分配</h2><p>对于小块内存分配，其内部维护了几十个不同大小的分配器，和ptmalloc不同的是，它的每个分配器的大小差是不同的，依此按8字节、16字节、32字节等间隔开。在内存分配的时候，会找到最小复合条件的，比如833字节到1024字节的内存分配请求都会分配一个1024大小的内存块。如果这些分配器的剩余内存不够了，会向中央堆申请一些内存，打碎以后填入对应分配器中。同样，如果中央堆也没内存了，就向中央内存分配器申请内存。</p>
 <p>在线程缓存内的60个分配器（_文档上说60个，但是我在2.0的代码里看到得是86个_）分别维护了一个大小固定的自由空间链表，直接由这些链表分配内存的时候是不加锁的。但是中央堆是所有线程共享的，在由其分配内存的时候会加自旋锁(spin lock)。</p>
 <p>在线程内存池每次从中央堆申请内存的时候，分配多少内存也直接影响分配性能。申请地太少会导致频繁访问中央堆，也就会频繁加锁，而申请地太多会导致内存浪费。在tcmalloc里，这个每次申请的内存量是动态调整的，调整方式使用了类似把tcp窗口反过来用的慢启动（slow start）算法调整max_length，每次申请内存是申请max_length和每个分配器对应的num_objects_to_move中取小的值的个数的内存块。</p>
-<p>num_objects_to_move取值比较简单，是以64K为基准，并且最小不低于2，最大不高于32的值。也就是说，对于大于等于32K的分配器这个值为2（好像没有这样的分配器 class），对于小于2K的分配器，统一为32。</p>
-<h2 id="大内存分配"><a href="#大内存分配" class="headerlink" title="大内存分配"></a>大内存分配</h2><p>对于大内存分配(大于8个分页, 即32K)，tcmalloc直接在中央堆里分配。中央堆的内存管理是以分页为单位的，同样按大小维护了256个空闲空间链表，前255个分别是1个分页、2个分页到255个分页的空闲空间，最后一个是更多分页的小的空间。这里的空间如果不够用，就会直接从系统申请了。</p>
-<h2 id="分页管理"><a href="#分页管理" class="headerlink" title="分页管理"></a>分页管理</h2><p>Tcmalloc使用一种叫span的东东来管理内存分页，一个span可以包含几个连续分页。一个span的状态只有未分配(这时候在空闲链表中)，作为大对象分配，或作为小对象分配（这时候span内记录了小对象的class size)。</p>
+<p>num_objects_to_move取值比较简单，是以64K为基准，并且最小不低于2，最大不高于32的值。也就是说，对于大于等于32K的分配器这个值为2（好像没有这样的分配器 class），对于小于2K的分配器，统一为32。<br><img src="//georgep24.github.io/uncategorized/memory_control/tcmalloc2.png" alt></p>
+<h2 id="大内存分配"><a href="#大内存分配" class="headerlink" title="大内存分配"></a>大内存分配</h2><p>对于大内存分配(大于8个分页, 即32K)，tcmalloc直接在中央堆里分配。中央堆的内存管理是以分页为单位的，同样按大小维护了256个空闲空间链表，前255个分别是1个分页、2个分页到255个分页的空闲空间，最后一个是更多分页的小的空间。这里的空间如果不够用，就会直接从系统申请了。<br><img src="//georgep24.github.io/uncategorized/memory_control/tcmalloc3.png" alt></p>
+<h2 id="分页管理"><a href="#分页管理" class="headerlink" title="分页管理"></a>分页管理</h2><p>Tcmalloc使用一种叫span的东西来管理内存分页，一个span可以包含几个连续分页。一个span的状态只有未分配(这时候在空闲链表中)，作为大对象分配，或作为小对象分配（这时候span内记录了小对象的class size)。</p>
 <p>在资源释放的时候，首先计算其分页编号，然后再查找出它对应的span，如果它是一个小对象，则直接归入小对象分配器的空闲链表。等到空闲空间足够大以后划入中央堆。如果是大对象，则会把物理地址连续的前后的span也找出来，如果空闲则合并，并归入中央堆中。</p>
 <h1 id="jemalloc-facebook"><a href="#jemalloc-facebook" class="headerlink" title="jemalloc(facebook)"></a>jemalloc(facebook)</h1><ul>
 <li><p>Jemalloc 把内存分配分为了三个部分，第一部分类似tcmalloc，是分别以8字节、16字节、64字节等分隔开的small class；第二部分以分页为单位，等差间隔开的large class；然后就是huge class。内存块的管理也通过一种chunk进行，一个chunk的大小是2^k (默认4 MB)。通过这种分配实现常数时间地分配small和large对象，对数时间地查询huge对象的meta（使用红黑树）。</p>
@@ -2530,7 +2583,7 @@ select * from (select * from table where col &gt; 1) as tmp where col &lt; 1</co
 </li>
 <li><p>small/large对象查找metadata需要常量时间， huge对象通过全局红黑树在对数时间内查找。</p>
 </li>
-<li><p>虚拟内存被逻辑上分割成chunks（默认是4MB，1024个4k页），应用线程通过round-robin算法在第一次malloc的时候分配arena， 每个arena都是相互独立的，维护自己的chunks， chunk切割pages到small/large对象。free()的内存总是返回到所属的arena中，而不管是哪个线程调用free()。<br><img src="//georgep24.github.io/uncategorized/memory_control/jtmalloc2.png" alt></p>
+<li><p>虚拟内存被逻辑上分割成chunks（默认是4MB，1024个4k页），应用线程通过round-robin算法在第一次malloc的时候分配arena， 每个arena都是相互独立的，维护自己的chunks， chunk切割pages到small/large对象。free()的内存总是返回到所属的arena中，而不管是哪个线程调用free()。<br><img src="//georgep24.github.io/uncategorized/memory_control/jemalloc1.png" alt></p>
 </li>
 <li><p>Jemalloc也使用了分配区（arena）来维护内存。线程按第一次分配small或者large内存请求的顺序Round-Robin地选择一个分配区。每个分配区都维护了一系列分页，来提供small和large的内存分配请求。并且从一个分配区分配出去的内存块，在释放的时候一定会回到该分配区。</p>
 </li>
@@ -2544,7 +2597,7 @@ select * from (select * from table where col &gt; 1) as tmp where col &lt; 1</co
 <ol>
 <li>小内存（small class）： 线程缓存bin -&gt; 分配区bin(bin加锁) -&gt; 系统调用</li>
 <li>中型内存（large class）：分配区bin(bin加锁) -&gt; 系统调用</li>
-<li>大内存（huge class）： 直接mmap组织成N个chunk+全局huge红黑树维护(带缓存)<br><img src="//georgep24.github.io/uncategorized/memory_control/jtmalloc1.png" alt></li>
+<li>大内存（huge class）： 直接mmap组织成N个chunk+全局huge红黑树维护(带缓存)<br><img src="//georgep24.github.io/uncategorized/memory_control/jemalloc2.png" alt></li>
 </ol>
 
           
